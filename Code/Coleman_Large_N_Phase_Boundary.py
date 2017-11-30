@@ -29,7 +29,7 @@ def plot_phase_boundary():
     y = np.append(y, 0)
     right = np.linspace(max(x), 5.8, 10)
 
-    fig = plt.figure(figsize=(8, 8))
+    fig = plt.figure(figsize=(8.4, 8.4))
 
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
@@ -44,18 +44,19 @@ def plot_phase_boundary():
     plt.fill_between(right, 1.2, color='#8cccff')
 
     # Label the phases
-    plt.text(2.2, 0.55, r'$ | \Delta | > 0 $', fontsize=22)
-    plt.text(4.1, 0.97, r'$ \Delta = 0 $', fontsize=22)
+    plt.text(2.2, 0.55, r'$ | \Delta | > 0 $', fontsize=26)
+    plt.text(4.1, 0.97, r'$ \Delta = 0 $', fontsize=26)
 
     # Make improvements to the figure
-    plt.xlabel(r'$ \frac{T}{T_K} $', fontsize=22)
-    plt.ylabel(r'$ \frac{g \mu_B B}{T_K} $', fontsize=22)
+    plt.ylabel(r'$ \frac{T}{T_K} $', fontsize=26)
+    plt.xlabel(r'$ \frac{g \mu_B B}{T_K} $', fontsize=26)
 
     ax = plt.gca()
     ax.set_xlim([0, 5.8])
     ax.set_ylim([0, 1.2])
+    ax.tick_params(axis='both', labelsize=20)
 
-    plt.savefig("phase_diagram.pdf", dpi=300, format='pdf')
+    plt.savefig("phase_diagram.pdf", dpi=300, format='pdf', bbox_inches='tight')
     plt.clf()
 
 
