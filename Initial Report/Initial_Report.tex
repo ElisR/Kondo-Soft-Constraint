@@ -1,0 +1,130 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, total={6in, 10in}]{geometry}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage[usenames, dvipsnames]{color}
+
+\usepackage{pgfgantt}
+
+\DeclareMathOperator{\Tr}{Tr}
+
+\begin{document}
+
+\input{titlepage}
+
+\title{
+  Mean-Field Study of Kondo Phase Diagram \\
+  \large Initial Part III Project Report
+}
+\author{\textit{Supervisors:} Claudio Castelnovo \& Garry Goldstein}
+\date{\today}
+
+\maketitle
+
+\section{Introduction}
+
+Metallic systems with localised magnetic impurities have, over the years, been the subject of much research in condensed matter physics, falling under the broader branch of strongly correlated systems which are characterised by interactions being significant in comparison to the kinetic energy dispersion (bandwidth).
+
+The enormous theoretical challenge of studying strongly correlated systems, with their broad ranges of energy scales, means that one often turns to effective models to describe the low energy behaviour, introducing strict constraints that arise after \textit{projecting out} higher energy terms. One such effective model, studied in this project, is the Kondo model which (in its simplest single impurity flavour) has the following Hamiltonian: \begin{equation} H_{\text{Kondo}}=\sum_{k,\sigma}\epsilon_{k} c_{k,\sigma}^{\dagger}c^{}_{k,\sigma}+J\sum_{k}\vec{S}_{k}\cdot\vec{S}_{0} , \label{eq:KondoHamiltonian}\end{equation} in which conduction electrons $ c_{k,\sigma} $ have a Hamiltonian composed of the usual kinetic energy term as well as a term coupling to a (single) localised spin $ \vec{S}_{0} $ located at the origin.
+
+The Kondo model made its first appearance in 1964 when theorists were attempting to explain puzzling experimental observations made 30 years earlier that certain metals containing magnetic impurities showed minima in their resistivity as a function of temperature. Jun Kondo proposed the Kondo model to describe a new scattering mechanism introduced by magnetic impurities which accounted for the functional form of the resistivity. Since then, much attention has been devoted to other rich features of the general Kondo problem, with some simpler formulations being amenable to an exact solution via Bethe ansatz techniques. Often times, however, it is necessary to employ approximate methods to obtain results in more general cases, one such method being mean-field theory.
+
+Use of mean-field theory is far from ideal, however, since current formulations applied to the Kondo impurity model are known to give results in disagreement with the Bethe ansatz solution for a characteristic energy of the problem known as the Kondo temperature $ T_{K} $ and (by extension) the magnetic susceptibility at zero temperature. The heat capacity is also greatly underestimated by existing mean-field methods. Recently, a new mean-field approach has been proposed by Garry Goldstein, Claudio Castelnovo (supervising the project) and Claudio Chamon which has given improved estimates of these quantities, which may be a sign that this new variation is indeed an improvement over existing formulations.
+
+One significant aspect of the Kondo model that existing mean-field formulations have thus far failed to capture properly is the crossover from a Kondo to a paramagnetic phase in the temperature-field phase diagram, instead predicting a phase transition as in Figure~\ref{fig:phase_diagram}. The primary aim of this project is therefore to extend this new formulation to finite temperature, specifically to the temperature-field phase diagram and see whether a phase transition or a crossover is predicted. If the predicted behaviour is found to align with that of the exact Bethe ansatz solution, then the case for this new mean-field approach as an alternative to existing formulations would be greatly strengthened.
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.6\textwidth]{phase_diagram.pdf}
+  \caption{A representative phase diagram obtained from another mean field approach (with calculations found in \cite{ManyBodyPhysics}), which shows a distinct phase transition between two phases. The Kondo temperature $ T_K $ is used to make quantities dimensionless.}
+  \label{fig:phase_diagram}
+\end{figure}
+
+% Citation needed
+
+\section{Methodology} % Remember to fix the sigma subscripts
+
+The theoretical calculations of this project are framed in terms of the path integral, which is an approach to statistical mechanics reminiscent of Feynman's path integral formulation of quantum mechanics. The partition function can be written as the functional integral over fermionic paths: $$ Z = \Tr{e^{- \beta H}} = \int \mathcal{D} [c^\dagger, c]~e^{-\int_{0}^{\beta} \,d\tau~L}\,, $$ from which many properties of the system may then be derived. \footnote{One also replaces fermion operators with \emph{Grassman numbers} within the integral, which have the property of anti-commutation (among others).} Here, the equivalent \emph{action} involves integration of the Lagrangian $ L $ over an imaginary time $ \tau = i t / \hbar $ with an upper limit of $ \beta = \frac{1}{k_B T} $.
+
+One then begins to employ many `tricks' to make the problem more tractable. One such trick that proves to be useful, is the introduction of new boson operators, which sometimes (as we shall see) necessitates that hard constraints be applied in the form of Lagrange multipliers. \footnote{The way that constraints can be implemented into the Lagrangian is illustrated in the following example. Suppose that we wanted to implement the constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 $, say, which would be equivalent to having a partition function $$ Z = \Tr{\left[ e^{- \beta H}~\delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} \right]} . $$ We could then express the constraint as $$ \delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} = \int_{0}^{2 \pi} \,d\alpha~e^{- i \alpha (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} = \int_{0}^{2 \pi i k_B T} \frac{\,d \lambda}{2 \pi i k_B T} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)}, $$ where we have written $ \lambda = i \alpha k_B T $. Absorbing various factors into the measure of integration, we may now write: $$ Z = \int \, \mathcal{D} [\lambda]~\Tr{\left[ e^{- \beta H} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} \right]} \,. $$ Imposing this constraint can therefore be seen to be equivalent to modifying the original path integral and including an extra term in the Lagrangian: $$ L \rightarrow L - \lambda \left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right) \,. $$ In fact, this is actually the Read-Newns constraint that is imposed on the occupation of the fermions $ f^{}_{\sigma} $ (with $ \sigma \in \{ \uparrow , \downarrow \}$) representing the localised spin of the magnetic impurity.}
+
+The essence of mean-field theory is that we avoid performing the actual functional integration by approximating the integral by its saddle point, a step also known as the stationary phase approximation. In making this approximation, we are essentially imposing self-consistency conditions on whatever fields now appear in $ L $, making them take on their mean values. Thankfully, these mean-field self-consistency equations are exactly what result from directly minimising the effective action with respect to the auxiliary fields, which is what this project will involve.
+
+One existing mean-field approach is that of Read and Newns \cite{ReadNewns}, which represents the $ \vec{S}_0 $ term of the Hamiltonian in Eq~\eqref{eq:KondoHamiltonian} in terms of slave fermions $ f^{}_{\sigma} $, with occupation numbers obeying the hard constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 \,. $ The new mean-field approach that is being proposed reformulates this constraint as: \begin{equation} (1 - n_{\uparrow} - n_{\downarrow})^2 = n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) = 0 . \label{eq:HardConstraint}\end{equation} Implementing this into the Lagrangian is formally equivalent, but problematic within mean-field theory because one later imposes: \[ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle = 0\,, \] which, for such a positive semi-definite operator, enforces the exact constraint and leads to a diverging mean-field parameter. \footnote{To see this, one can appreciate that by virtue of positive semi-definiteness, the mean-field condition \[ \frac{\, \delta Z}{\, \delta \lambda(\tau)} \Bigr|_{\bar{\lambda}} = 0 \] essentially becomes a condition on the integrand itself (namely something like $ P e^{- \int \, d\tau \bar{\lambda} P} = 0 $ for the constraint $ P $), which forces $ \bar{\lambda} \rightarrow \infty $.}
+
+A resolution to this issue is to begin by introducing an auxiliary non-interacting fermion $ h $ that is constrained to be trivially empty through imposing $ h^{\dagger} h = 0 $. One then combines this constraint with that of Eq~\eqref{eq:HardConstraint} by imposing instead: \begin{equation} n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) - K h^{\dagger} h = 0\,, \end{equation} such that $ K > 0, K \neq 1 $ now encapsulates both constraints. Notice that this has introduced an arbitrary parameter $ K $ into the problem and thus a new degree of freedom, but has allowed us to circumvent the issues related to the previous hard constraint within mean-field theory. For this reason, this approach to mean-field theory has been internally referred to as the \emph{soft constraint approach}.
+
+Proceeding in a similar fashion to the Read-Newns approach and incorporating four Kotliar-Ruckenstein \cite{KotliarRuckenstein} slave bosons, one obtains the following Lagrangian: \begin{eqnarray} L = \sum_{k,\sigma} c^{\dagger}_{k,\sigma} \left( \frac{d}{\,d\tau} + \epsilon_k - \mu \right) c^{}_{k,\sigma} + \sum_{\sigma} f^{\dagger}_{\sigma} \frac{d}{\,d\tau} f^{}_{\sigma} + h^{\dagger} \frac{d}{\,d\tau}h + \\
+e^{\dagger} \frac{d}{\,d\tau} e  + \sum_{\sigma} p^{\dagger}_{\sigma} \frac{d}{\,d\tau} p^{}_{\sigma} + d^{\dagger} \frac{d}{\,d\tau} d + \\
+\sum_{\sigma} \lambda^{}_{\sigma} (f^{\dagger}_{\sigma} f^{}_{\sigma} - p^{\dagger}_{\sigma} p^{}_{\sigma} - d^{\dagger}_{\sigma} d^{}_\sigma ) + \lambda_{\text{KR}} \left( e^{\dagger} e + \sum_{\sigma} p^{\dagger}_{\sigma} p^{}_{\sigma} + d^{\dagger} d \right) + \\
+\lambda_{\text{SC}} ( e^{\dagger} e + d^{\dagger} d - K h^{\dagger} h) + \\
+2 \frac{V V^{\ast}}{J} + \sum_{k,\sigma} \left( V^{\ast} c^{\dagger}_{k,\sigma} z^{}_{\sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} z^{\dagger}_{\sigma} c^{}_{k,\sigma} \right) \,. \end{eqnarray} The slave bosons $ e $, $ p_{\uparrow} $, $ p_{\downarrow} $ and $ d $ represent empty, singly occupied and doubly occupied states, respectively, as long as the electron operator is suitably transformed to `update the books', so to speak: \footnote{The conventional transformation $ z^{}_{\sigma} \rightarrow (1 - d^{\dagger} d - p^{\dagger}_{\sigma} p^{}_{\sigma})^{- 1 / 2} z^{}_{\sigma} (1 - e^{\dagger} e - p^{\dagger}_{- \sigma} p^{}_{- \sigma})^{- 1 / 2} $ is also applied, but is not relevant to this discussion.} \begin{equation} f^{}_{\sigma} \rightarrow z^{}_{\sigma} f^{}_{\sigma}\,, \qquad z_{\sigma} = e^{\dagger} p^{}_{\sigma} + p^{\dagger}_{-\sigma} d \,. \end{equation} A so-called Hubbard-Stratonovich transformation has also been applied to remove certain unpleasant terms in the Lagrangian, framing the interaction in terms of a new bosonic field $ V $.
+
+From here, one may then derive the Helmholtz free energy and other quantities of interest within mean-field theory. The freedom in the parameter $ K $ allows for a whole family of mean-field solutions, from which one may obtain a single solution by tuning $ K $ to fit a known property of the Kondo model, for instance the Kondo temperature $ T_K $. Having tuned this parameter, other predictions about the system are made possible.
+
+\section{Current Project Progress}
+
+Thus far I have attended a series of three lectures by Garry Goldstein giving an introduction to theoretical techniques which will be useful for the project such as path integrals and diagrammatic perturbation theory for fermions. \footnote{This lecture series drew on material found in Piers Coleman's textbook on the subject, which I will continue to use as a knowledge resource for the project.}
+
+After covering these preliminaries, the established Read-Newns \cite{ReadNewns} mean-field formulation and its application to the Kondo model at finite temperature was presented. Also of particular relevance was the concept of slave bosons, used as a way of writing certain terms of the Hamiltonian in terms of new bosonic operators. (This representation is utilised by the soft constraint approach and, upon entering the realm of mean-field, these bosonic operators are replaced by complex numbers which minimise the overall action.) Finally, the series concluded with a demonstration of the soft constraint approach applied to the $ U \rightarrow \infty $ Anderson model and later the Kondo model itself, outlining the progress made thus far at zero temperature.
+
+At this point, no obvious problems have been identified with the project and it is clear what the first steps of the project shall entail.
+
+\section{Projected Timeline}
+
+The theoretical nature of the project means that the projected timeline shown in Figure~\ref{fig:gantt} is of course preliminary in many ways.
+
+\begin{figure}
+\centering
+\begin{ganttchart}[
+  hgrid,
+  vgrid={*{6}{draw=none}, dotted},
+  x unit=0.04cm,
+  y unit chart=0.8cm,
+  y unit title=0.8cm,
+  time slot format=isodate,
+  today=2017-11-26,
+  link bulge=50,
+]{2017-11-01}{2018-05-31}
+  \gantttitlecalendar{year, month=shortname} \\
+  \ganttbar{Introductory Lectures}{2017-11-13}{2017-11-17}\\
+  \ganttbar{Initial Report / Planning}{2017-11-20}{2017-12-01}\\
+  \ganttbar{Revision Hiatus}{2017-12-01}{2018-01-17}\\
+  \ganttbar{Zero Field Study}{2018-01-18}{2018-02-14}\\
+  \ganttbar{Finite Field Study}{2018-02-14}{2018-03-04}\\
+  \ganttbar{Group Presentation}{2018-03-10}{2018-03-15}\\
+  \ganttbar{Revision Hiatus}{2018-03-18}{2018-04-25}\\
+  \ganttbar{Final Report Writing}{2018-04-11}{2018-05-14}
+\end{ganttchart}
+\caption{A Gantt chart showing a possible timeline for the project.}
+\label{fig:gantt}
+\end{figure}
+
+In this plan, a period for exam preparation has been included, which seems to drastically cut down the available time for the project. In reality, it is likely that some time will be spent during the vacation period making preliminary calculations and reading more of Piers Coleman's book.
+
+Otherwise, the first step in the project will be to solve the mean-field conditions on the free energy $ F = - \frac{1}{\beta} \ln{Z} $ at finite temperature in the absence of an applied magnetic field. At this stage, it should become more apparent how one would then deal with a finite field $ B $, needed to produce a phase diagram. It may turn out that the resulting mean-field conditions may require numerical solutions or use of computer algebra systems such as \texttt{Mathematica} or \texttt{SymPy}, rather than solutions by hand.
+
+Upon completing these calculations, I should be in a position to orally present my results and write a project report.
+
+\begin{thebibliography}{1}
+
+\bibitem{ManyBodyPhysics}
+P. Coleman
+\emph{Introduction to Many Body Physics}
+Cambridge University Press (2015)
+
+\bibitem{KotliarRuckenstein}
+G. Kotliar and A. E. Ruckenstein
+\emph{New Functional Integral Approach to Strongly Correlated Fermi Systems: The Gutzwiller Approximation as a Saddle Point}
+Phys. Rev. Lett. \textbf{57}, 1362 (1986)
+
+\bibitem{ReadNewns}
+N. Read, and D. M. Newns
+\emph{A New Functional Integral Formalism for the Degenerate Anderson Model.} Journal of Physics C: Solid State Physics 16.29 (1983)
+
+\end{thebibliography}
+
+\end{document}

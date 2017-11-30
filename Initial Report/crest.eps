@@ -1,0 +1,597 @@
+%!PS-Adobe-3.1 EPSF-3.0
+%%Title: Arms and Text, University of Cambridge
+%%Creator: P Hazel, 1986, MJ Rutter, 2005 & 2009
+%%BoundingBox: 0 0 306 375
+%%LanguageLevel: 2
+%%DocumentData: Clean7Bit
+%%EndComments
+
+save
+gsave
+
+50 dict begin
+
+% This EPS is heavily based on Phil Hazel's original version.
+%
+% Four versions are available, by changing the digit in the line.
+% "arg 4 def" below.
+%
+% 1 B&W filled, very similar to PH's original
+% 2 B&W outline, similar to PH's original, but book is also in outline
+% 3 Colour, very similar to PH's original
+% 4 Colour, closer to the Old Schools' House Style version
+% 5 B&W, otherwise as 4
+% 6 B&W, as 5 but shield edge is white
+
+/arg 4 def
+
+% PH's original used only arcs. This has unfortunate consequences when
+% the outlines of the lions are drawn, for the direction of the line-
+% segment between two almost-touching arcs is ill-defined. This leads
+% to problems with mitres. The important parts of the lions have thus been
+% redefined without the use of arcs, and in a slightly different co-ordinate
+% system.
+
+5 setmiterlimit
+
+/ol false def
+
+/olwidth 4 def
+
+/htadj {pop} def
+
+/outline { ol {gsave 0 setgray olwidth setlinewidth stroke grestore newpath}
+              {stroke} ifelse } def
+
+/mtrx matrix def
+/lionfix{closepath filled {gsave lioncolour fill grestore outline}
+            {stroke} ifelse}def
+/toefix{filled {gsave lioncolour fill grestore outline}
+            {stroke} ifelse}def
+
+% rotation ang1 ang2 sx sy x y
+/ea{/savematrix mtrx currentmatrix def
+translate 5 -1 roll rotate scale 0 0 1 5 -2 roll arc
+savematrix setmatrix}def
+
+/ec{/savematrix mtrx currentmatrix def
+translate 5 -1 roll rotate scale 0 0 1 5 -2 roll arcn
+savematrix setmatrix}def
+
+/db /rlineto load def /dt /lineto load def /mt /moveto load def
+/gfgo {gsave filled {fill} if grestore outline} def
+/gfgco {gsave filled {fill} if grestore closepath outline} def
+
+% (current point) (tangent) speed tangent point endpoint
+% leaves new tangent on stack
+
+/bs { 4 copy
+      exch 4 1 roll
+      sub neg 3 1 roll
+      sub exch
+      2 copy
+      dup mul exch
+      dup mul add sqrt
+      dup 4 1 roll
+      div 3 1 roll
+      exch div exch
+      9 2 roll
+      7 4 roll
+      dup 4 1 roll
+      mul 3 1 roll
+      mul exch
+      currentpoint
+      exch 4 1 roll add
+      3 1 roll add exch
+      6 2 roll
+      curveto
+    } bind def
+
+/ls { 3 copy
+      dup
+      4 -1 roll
+      mul
+      3 1 roll
+      mul
+      rlineto
+      pop
+} bind def
+
+/reverse { 2 1 roll neg 2 1 roll neg } bind def
+
+% outline of head and tail of all lions
+/lion1 {
+-100 -400 translate
+    259 197 moveto
+309 179 334 216 309 252
+4 copy
+exch 4 1 roll
+sub neg 3 1 roll
+sub exch
+2 copy
+dup mul exch
+dup mul add sqrt
+dup 4 1 roll
+div 3 1 roll
+exch div exch
+8 2 roll
+curveto
+15 ls
+20 273 274 283 258 bs
+reverse
+25 ls
+25 237 289 246 272 bs
+reverse
+35 ls
+10 196 312 206 292 bs
+reverse
+32 200 353 252 327 bs
+105 355 355 316 374 bs
+pop pop
+.35 -1
+16 310 344 292 354 bs
+38 201 376 185 345 bs
+42 179 270 282 239 bs
+20 300 208 272 215 bs
+40 224 231 154 231 bs
+pop pop
+-.55 1
+22 145 268 129 255 bs pop pop
+
+% The next bit, the face, needs to be symmetric about x=100
+
+currentpoint % needed to construct final point of last curve
+146 279 146 306 139 327 %curveto
+164 300 171 359 146 353 %curveto
+140 383 140 383 115 369 %curveto
+115 390 108 400 100 400 %curveto
+
+6 {23 index} repeat curveto
+6 {17 index} repeat curveto
+6 {11 index} repeat curveto
+6 copy curveto
+
+pop pop
+4 {
+200 2 index sub 1 index
+200 6 index sub 5 index
+200 10 index sub 9 index
+curveto 6 {pop} repeat
+} repeat
+
+% currentpoint = 71 255
+55 271 49 240 50 187 curveto
+} def
+
+% raised front leg, all lions
+/lion2 {
+%    50 187 moveto
+-1 .2
+5 41 192 27 184 bs
+5 14 182 9 193 bs
+50 -11 264 -8 298 bs
+18 -1 305 -1 321 bs
+30 -41 384 -46 366 bs
+52 -51 313 -36 306 bs
+pop pop -1 -.22
+10 -54 306 -56 299 bs
+30 -50 265 -41 261 bs
+pop pop -1 -.25
+10 -56 260 -55 255 bs
+40 -40 212 -25 207 bs
+pop pop -1 -.35
+10 -42 200 -38 190 bs
+20 -20 160 -3 163 bs
+pop pop -1 -.45
+10 -19 152 -15 146 bs
+25 5 120 11 122 bs
+20 21 130 36 135 bs
+15 50 140 59 148 bs pop pop
+} def
+
+% other front leg, top two lions
+/lion3 {
+%    59 148 moveto
+.2 -1
+50 23 62 -5 32 bs
+5 -20 22 -26 15 bs
+15 -42 -14 -26 -14 bs
+20 15 12 15 24 bs
+reverse
+40 42 -21 51 63 bs
+pop pop
+69 16 83 43 73 98 curveto
+83 52 99 95 99 148 curveto
+110 128 131 131 131 149 curveto
+} def
+
+% forward rear leg, top two lions
+/lion4 {
+%    131 149 moveto
+186 155 lineto
+-2 -0.9 38
+255 76 188 36 bs
+55 141 19 125 9 bs
+10 110 -22 133 -15 bs
+20 152 2 168 6 bs pop pop
+162 -24 180 -30 208 34 curveto
+211 5 245 55 225 71 curveto
+245 55 268 74 253 96 curveto
+-1 -2 10 235 84 231 96 bs
+14 241 105 242 121 bs pop pop
+} def
+
+% final rear leg, top two lions
+/lion5 {
+% 242 121 moveto
+1 -1.3
+20 265 105 283 84 bs
+11 293 65 255 8 bs
+45 275 -40 290 11 bs
+pop pop 0 -1
+35
+317 -30 317 14 bs
+20 313 48 305 48 bs
+pop pop
+322 48 323 62 310 94 curveto
+318 88 318 88 323 145 curveto
+294 93 300 181 259 197 curveto
+} def
+
+% Toe,  all lions, front raised leg, and line between that leg and body
+/lion6{90 0 360 23 11 1 281 ea toefix
+51 187 moveto
+51 174 54 161 60 148 curveto stroke
+}def
+
+% Toe, top lions, front leg
+/lion7{10 0 360 23 15 -13 52 ea toefix}def
+% Toe, top lions, forward hind leg
+/lion8{-5 0 360 25 10 133 26 ea toefix}def
+
+% Toe, top lions, back hind leg, and line between rear legs
+/lion9{50 0 360 21 10 248 17 ea toefix
+186 155 moveto
+200 150 210 150 220 167 curveto
+242 121 lineto stroke
+}def
+
+/lion10{
+arg 4 ge {1 setlinejoin} {} ifelse
+% ruff
+69 214 moveto
+75 173 94 173 100 215 curveto
+109 195 123 195 130 223 curveto
+144 222 144 222 154 231 curveto
+stroke
+
+% mouth, symmetric about x=100
+81 297 moveto
+arg 4 ge
+{95 283 105 283 119 297 curveto}
+{100 284 lineto 119 297 lineto}
+ifelse
+116 234 84 234  81 297 curveto closepath
+stroke
+
+% eyes, symmetric about x=100
+gsave 100 0 translate lioneyecolour 2 setlinewidth
+2 {
+arg 4 ge {
+26 348 moveto
+7 333 lineto
+10 316 lineto
+closepath gsave fill grestore stroke
+}{
+31 345 moveto
+7 333 lineto
+7 316 lineto
+closepath fill
+} ifelse
+-1 1 scale
+} repeat
+grestore
+0 setlinejoin
+
+% line in tail
+252 350 moveto
+arg 4 ge {280 335 315 325 337 340} {280 335 294 329 334 329} ifelse
+curveto stroke
+} def
+
+% rear legs, bottom right lion
+/lion11{
+162 153 lineto
+-0.5 -1 45 ls
+36 171 66 138 36 bs
+70 ls
+10 71 -18 62 -27 bs
+65 69 -105 95 -30 bs pop pop
+94 -68 130 -53 134 3 curveto
+138 -26 169 -11 163 19 curveto
+168 4 183 23 179 42 curveto
+11 -9 1 196 36 191 52 bs
+30 180 100 195 126 bs
+15 213 150 213 169 bs pop pop
+% belly
+222 169 lineto
+1 -1.3 15 238 147 258 140 bs
+9 274 127 225 96 bs
+50 230 23 247 88 bs pop pop
+241 45 280 78 273 114 curveto
+281 105 292 116 286 132 curveto
+297 126 309 135 291 156 curveto
+275 167 264 178 259 197 curveto
+}def
+
+% hind toes and line over hind leg, bottom right lion
+/lion12{30 0 360 23 15 50 -19 ea toefix
+35 0 360 17 11 217 101 ea toefix
+162 153 moveto 213 169 lineto stroke
+}def
+
+% lower front leg and rear legs, bottom left lion
+/lion13{
+1 -.29 40 ls
+8 115 121 99 112 bs
+60 ls
+40 40 22 77 75 bs
+pop pop
+64 8 122 30 105 86 curveto
+118 71 143 88 134 121 curveto
+155 128 159 134 157 157 curveto
+% belly
+203 157 lineto
+-.55 -1. 10 192 141 200 123 bs
+30 ls
+15 221 74 207 60 bs
+60 ls
+53 150 -31 188 10 bs pop pop
+176 -28 210 -27 206 17 curveto
+225 9 235 32 226 48 curveto
+252 42 247 49 241 68 curveto
+272 71 248 80 246 116 curveto
+% end first rear leg
+1 -1.4 22 ls
+8 284 72 281 53 bs
+100 ls
+70 313 -56 285 -26 bs pop pop
+310 -60 319 -17 296 10 curveto
+320 10 320 35 300 63 curveto
+315 59 325 84 315 106 curveto
+270 105 285 179 259 197 curveto
+}def
+
+% bottom left lion, line between rear two legs,
+% and one toe on each of non-raised legs
+/lion14{
+203 157 moveto
+210 157 215 162 222 167 curveto
+246 116 lineto stroke
+10 0 360 19 10 40 90 ea toefix
+13 0 360 17 10 151 20 ea toefix
+60 0 360 21 11 254 -43 ea toefix
+}def
+
+% lower front leg, bottom right lion
+/lion15 {
+.12 -1
+15 66 110 42 90 bs
+80 ls
+80 10 -8 15 45 bs pop pop
+13 -11 48 13 53 75 curveto
+62 55 77 61 76 83 curveto
+85 62 104 110 99 148 curveto
+110 128 131 131 132 149 curveto
+}def
+
+% bottom right lion, front lower toe
+/lion16{10 0 360 23 15 -13 67 ea toefix}def
+
+153 3  translate
+0.25 0.25 scale
+  arg type /booleantype eq { /arg arg {1} {0} ifelse def} if
+
+  arg 3 eq arg 4 eq or
+    {
+    % colour definitions
+    /erminecolour	{ 0 0 0 setrgbcolor } def
+    /lioncolour		{ 1 .9 0 setrgbcolor } def
+    /lioneyecolour	{ 1 0 0 setrgbcolor } def
+    /bgcolour		{ 1 0 0 setrgbcolor } def
+    /crosscolour	{ 1 1 1 setrgbcolor } def
+    /bookcolour		{ 1 0 0 setrgbcolor } def
+    /bktrimcolour	{ 1 .9 0 setrgbcolor } def
+    /filled		true def
+    }
+    {
+    /erminecolour	{ 0 setgray } def
+    /lioncolour		{ 1 setgray } def
+    /lioneyecolour	{ 0 setgray } def
+    /bgcolour		{ 0 setgray } def
+    /crosscolour	{ 1 setgray } def
+    /bookcolour		{ 0 setgray } def
+    /bktrimcolour	{ 1 setgray } def
+    /filled		arg 1 eq arg 5 eq or arg 6 eq or def
+    /bktrimcolour       { filled { 1 } { 0 } ifelse setgray } def
+    }
+    ifelse
+
+  arg 4 eq
+    {
+    /lioneyecolour	{ 0 0 0 setrgbcolor } def 
+    /bgcolour           { 0.93 0.16 0.22 setrgbcolor } def
+    /bookcolour         /bgcolour load def
+    /lioncolour         { 1 0.82 0  setrgbcolor } def
+    /bktrimcolour       /lioncolour load def
+    } if
+
+  arg 4 ge
+    {
+    /ol                 true def
+    /olwidth 10 def
+    /htadj {add} def
+    }
+    if
+    
+  %outline
+  bgcolour
+  0 1475 moveto 600 1475 lineto
+  600 343 0 0 500 arcto 4 {pop} repeat
+  0 0 lineto
+  
+  reversepath -1 1 scale
+  600 1475 lineto
+  600 343 0 0 500 arcto 4 {pop} repeat
+  0 0 lineto -1 1 scale closepath
+  
+  gsave crosscolour fill grestore
+
+  bgcolour
+  15 setlinewidth
+  gsave newpath
+  
+  125 1475 moveto 125 1000 -25 htadj lineto 600 1000 -25 htadj lineto
+  filled {600 1475 lineto fill} if
+
+  -125 1475 moveto -125 1000 -25 htadj lineto -600 1000 -25 htadj lineto
+  filled {-600 1475 lineto fill} if
+
+  125 75 moveto 125 700 25 htadj lineto 600 700 25 htadj lineto
+  filled {600 343 0 0 500 arcto 4 {pop} repeat fill}
+  {20 setlinewidth stroke} ifelse
+
+  -125 75 moveto -125 700 25 htadj lineto -600 700 25 htadj lineto
+  filled {-600 343 0 0 500 arcto 4 {pop} repeat fill}
+  {20 setlinewidth stroke} ifelse
+
+  grestore arg 4 ge {0 setgray 18 setlinewidth} if
+  arg 6 eq {1 setgray} if stroke bgcolour
+
+  % ermine
+  % use slightly wider flecks than PH's original if House Style
+  /ermine
+  arg 4 ge
+  {{0 115 10 0 360 arc erminecolour fill
+    2 122 moveto 2 50 20 28 30 18 curveto
+    8 20 lineto 0 0 lineto -8 20 lineto
+    -30 18 lineto -20 28 -2 50 -2 122 curveto
+    closepath fill}}
+  {{0 115 10 0 360 arc erminecolour fill
+    172 107 170 180 210 arc
+    8 20 lineto 0 0 lineto -8 20 lineto
+    -172 107 170 -30 0 arc
+    closepath fill}}
+   ifelse def
+
+
+  [[0 1170] [63 1045] [63 1295]
+   [225 850 -20 htadj] [375 850 -20 htadj] [525 850 -20 htadj]
+   [300 730 20 htadj] [450 730 20 htadj] [0 275] [0 540] [63 120] [63 400]]
+    {
+    aload pop 2 copy
+    gsave translate ermine
+    grestore
+    % if x ne 0, repeat with -x
+    1 index 0 gt {gsave -1 1 scale translate ermine grestore} {pop pop}
+    ifelse
+    }
+    forall
+
+  %book
+  gsave 0 745 10 htadj translate 10 setlinewidth
+  0 0 moveto
+
+  60 0 lineto 60 -80 lineto 100 -80 lineto 100 0 lineto
+  140 0 lineto 140 225 -30 htadj lineto
+  70 213 -30 htadj 20 37 143 arc 0 213 -30 htadj 20 37 90 arc
+
+  reversepath -1 1 scale
+  60 0 lineto 60 -80 lineto 100 -80 lineto 100 0 lineto
+  140 0 lineto 140 225 -30 htadj lineto
+  70 213 -30 htadj 20 37 143 arc 0 213 -30 htadj 20 37 90 arc
+  -1 1 scale
+  
+  bookcolour
+  filled {gfgo} {stroke} ifelse
+
+  arg 4 ge {8} {4} ifelse setlinewidth
+  ol {0 setgray -140 195 -30 htadj moveto 280 0 rlineto stroke} if
+
+  bktrimcolour
+  /olwidth olwidth 2 div def
+  0 220 -30 htadj filled ol not and {olwidth 2 mul sub} if 12 0 180 arc
+  -12 183 -30 htadj lineto 12 183 -30 htadj lineto gfgco
+  
+  2 {
+  4 setlinewidth
+  70 220 -30 htadj filled ol not and {olwidth 2 mul sub} if 12 0 180 arc
+  58 183 -30 htadj lineto 82 183 -30 htadj lineto gfgco
+
+  3 setlinewidth  
+
+  % clasps and studs
+  arg 4 ge {
+    /olwidth olwidth 2 mul def
+    60 0 moveto 60 -80 lineto 100 -80 lineto 100 0 lineto gfgco
+    /olwidth olwidth 2 div def
+    0 setgray 60 -55 moveto 100 -55 lineto stroke
+    bktrimcolour
+    100 35 10 0 360 arc gfgo
+    100 165 -30 htadj 10 0 360 arc gfgo
+  }
+  {
+  80 -22 12 0 180 arc
+  80 -43 12 180 0 arc  gfgco
+  80 -67 6 0 360 arc gfgo
+  105 25 8 0 360 arc gfgo
+  105 180 -30 htadj 8 0 360 arc gfgo
+  } ifelse
+  
+  -1 1 scale } repeat
+
+  /olwidth olwidth 2 mul def
+  gsave 2 1 scale
+  0 112.5 -23 htadj 30 arg 4 ge {4 add} if 0 360 arc
+  gsave filled {fill} if grestore
+  ol { 2 setlinewidth 0 setgray stroke } {newpath} ifelse
+  bookcolour
+  0 112.5 -23 htadj 25 0 360 arc gsave filled {fill} {stroke} ifelse grestore
+  ol { 2 setlinewidth 0 setgray stroke } {newpath} ifelse
+  bktrimcolour
+  0 112.5 -23 htadj 10 0 360 arc gsave fill grestore
+  ol { 2 setlinewidth 0 setgray stroke } {newpath} ifelse
+  grestore
+  
+  grestore % matches book
+
+%lions
+4 setlinewidth
+arg 4 ge {0 setgray 5 setlinewidth /olwidth 0.8 olwidth mul def} if
+arg 5 ge {/ol false def} if
+
+gsave -405 1450 -10 htadj translate
+lion1 lion2 lion3 lion4 lion5 lionfix lion6
+lion7 lion8 lion9 lion10
+grestore
+
+gsave -400 675 10 htadj translate
+lion1 lion2 lion13 lionfix lion6
+lion14 lion10
+grestore
+
+gsave 322 1450 -10 htadj translate
+lion1 lion2 lion3 lion4 lion5 lionfix lion6
+lion7 lion8 lion9 lion10
+grestore
+
+gsave 317 675 10 htadj translate
+lion1 lion2 lion15 lion11 lionfix lion6
+lion16 lion12 lion10
+grestore 
+
+grestore
+
+
+end
+restore

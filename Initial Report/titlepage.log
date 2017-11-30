@@ -1,0 +1,334 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2017.10.22)  21 NOV 2017 19:16
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**titlepage
+(./titlepage.tex
+LaTeX2e <2017-04-15>
+Babel <3.12> and hyphenation patterns for 84 language(s) loaded.
+
+! LaTeX Error: Environment titlepage undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.39 \begin{titlepage}
+                       % Suppresses displaying the page number on the title ...
+
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.42 	\center
+              % Centre everything on the page
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 42--42
+[] 
+ []
+
+! Undefined control sequence.
+<recently read> \LARGE 
+                       
+l.48 	\textsc{\LARGE University of Cambridge}
+                                             \\[1.5cm] % Main heading such a...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (54.67194pt too wide) in paragraph at lines 48--48
+ \OT1/cmr/m/sc/10 University 
+ []
+
+
+Overfull \hbox (11.71107pt too wide) in paragraph at lines 48--48
+ \OT1/cmr/m/sc/10 of 
+ []
+
+
+Overfull \hbox (25.23872pt too wide) in paragraph at lines 48--48
+ \OT1/cmr/m/sc/10 Cam- 
+ []
+
+
+Overfull \hbox (33.07764pt too wide) in paragraph at lines 48--48
+ \OT1/cmr/m/sc/10 bridge 
+ []
+
+! Undefined control sequence.
+<recently read> \Large 
+                       
+l.50 	\textsc{\Large Part III Physics}
+                                      \\[0.5cm] % Major heading such as cour...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (23.94148pt too wide) in paragraph at lines 50--50
+ []\OT1/cmr/m/sc/10 Part 
+ []
+
+
+Overfull \hbox (12.74983pt too wide) in paragraph at lines 50--50
+ \OT1/cmr/m/sc/10 III 
+ []
+
+
+Overfull \hbox (37.772pt too wide) in paragraph at lines 50--50
+ \OT1/cmr/m/sc/10 Physics 
+ []
+
+! Undefined control sequence.
+<recently read> \large 
+                       
+l.52 	\textsc{\large Initial Project Report}
+                                            \\[0.5cm] % Minor heading such a...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (33.4109pt too wide) in paragraph at lines 52--52
+ []\OT1/cmr/m/sc/10 Initial 
+ []
+
+
+Overfull \hbox (41.2164pt too wide) in paragraph at lines 52--52
+ \OT1/cmr/m/sc/10 Project 
+ []
+
+
+Overfull \hbox (17.35541pt too wide) in paragraph at lines 52--52
+ \OT1/cmr/m/sc/10 Re- 
+ []
+
+
+Overfull \hbox (23.19986pt too wide) in paragraph at lines 52--52
+ \OT1/cmr/m/sc/10 port 
+ []
+
+! Undefined control sequence.
+l.60 	{\huge
+            \bfseries Mean-Field Study of Kondo Phase Diagram}\\[0.4cm] % Ti...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+
+Overfull \hbox (31.99982pt too wide) in paragraph at lines 60--60
+ []\OT1/cmr/bx/n/10 Mean- 
+ []
+
+
+Overfull \hbox (25.28459pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 Field 
+ []
+
+
+Overfull \hbox (29.70818pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 Study 
+ []
+
+
+Overfull \hbox (9.26384pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 of 
+ []
+
+
+Overfull \hbox (33.29149pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 Kondo 
+ []
+
+
+Overfull \hbox (29.64703pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 Phase 
+ []
+
+
+Overfull \hbox (15.84714pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 Di- 
+ []
+
+
+Overfull \hbox (9.42354pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 a- 
+ []
+
+
+Overfull \hbox (25.65958pt too wide) in paragraph at lines 60--60
+ \OT1/cmr/bx/n/10 gram 
+ []
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.70 			\normalsize
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no E in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no . in font nullfont!
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 75.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 75.
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.79 			\normalsize
+                   
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no C in font nullfont!
+Missing character: There is no l in font nullfont!
+Missing character: There is no a in font nullfont!
+Missing character: There is no u in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no o in font nullfont!
+Missing character: There is no . in font nullfont!
+
+Overfull \hbox (3276.74998pt too wide) in paragraph at lines 68--85
+ []$[]$ 
+ []
+
+
+Overfull \hbox (3276.74998pt too wide) in paragraph at lines 68--85
+ []$ 
+ []
+
+! Undefined control sequence.
+l.92 	{\large
+             \today} % Date, change the \today to a set date if you want to ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.92 	{\large\today
+                   } % Date, change the \today to a set date if you want to ...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+! Undefined control sequence.
+l.99 	\includegraphics
+                      [width=0.18\textwidth]{crest.eps}\\[1cm] % Include a d...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no [ in font nullfont!
+Missing character: There is no w in font nullfont!
+Missing character: There is no i in font nullfont!
+Missing character: There is no d in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no h in font nullfont!
+Missing character: There is no = in font nullfont!
+Missing character: There is no 0 in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no 8 in font nullfont!
+! Missing number, treated as zero.
+<to be read again> 
+                   ]
+l.99 	\includegraphics[width=0.18\textwidth]
+                                            {crest.eps}\\[1cm] % Include a d...
+A number should have been here; I inserted `0'.
+(If you can't figure out why I needed to see a number,
+look up `weird error' in the index to The TeXbook.)
+
+! Illegal unit of measure (pt inserted).
+<to be read again> 
+                   ]
+l.99 	\includegraphics[width=0.18\textwidth]
+                                            {crest.eps}\\[1cm] % Include a d...
+Dimensions can be in units of em, ex, in, pt, pc,
+cm, mm, dd, cc, nd, nc, bp, or sp; but yours is a new one!
+I'll assume that you meant to say pt, for printer's points.
+To recover gracefully from this error, it's best to
+delete the erroneous units; e.g., type `2' to delete
+two letters. (See Chapter 27 of The TeXbook.)
+
+Missing character: There is no ] in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no r in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no s in font nullfont!
+Missing character: There is no t in font nullfont!
+Missing character: There is no . in font nullfont!
+Missing character: There is no e in font nullfont!
+Missing character: There is no p in font nullfont!
+Missing character: There is no s in font nullfont!
+
+! LaTeX Error: \begin{document} ended by \end{titlepage}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.105 \end{titlepage}
+                     
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+)
+! Emergency stop.
+<*> titlepage
+             
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 20 strings out of 492990
+ 279 string characters out of 6135004
+ 54787 words of memory out of 5000000
+ 3675 multiletter control sequences out of 15000+600000
+ 4595 words of font info for 17 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 20i,3n,18p,149b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
+!  ==> Fatal error occurred, no output PDF file produced!
