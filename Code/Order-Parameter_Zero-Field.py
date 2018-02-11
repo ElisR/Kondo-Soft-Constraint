@@ -37,10 +37,11 @@ def MF_Δ(T):
 
     digamma_inverse = np.vectorize(digamma_inv)
 
-    psi_tilde = np.log(1 / (2 * np.pi * T)) - 0.5 * np.log(ρ * J) + (1 - 1 / z2) / (ρ * J)
+    psi_tilde = np.log(1 / (2 * np.pi * T))
+    - 0.5 * np.log(ρ * J) + (1 - 1 / z2(T)) / (ρ * J)
 
     argument_tilde = digamma_inverse(psi_tilde)
-    Δ = np.multiply((argument_tilde - 0.5) * (2 * np.pi / z2), T)
+    Δ = np.multiply((argument_tilde - 0.5) * (2 * np.pi / z2(T)), T)
 
     return Δ
 
@@ -88,10 +89,10 @@ def F(T, Δ):
 
     f = 2 * Δ / (np.pi * J * ρ) - 4 * T * np.real(
         np.log(special.gamma(0.5 +
-                             (1j * z2 * Δ +
+                             (1j * z2(T) * Δ +
                               np.exp(1 / (ρ * J)) / np.sqrt(ρ * J)) /
                              (2j * np.pi * T)) /
-               special.gamma(0.5 + (z2 * Δ /
+               special.gamma(0.5 + (z2(T) * Δ /
                                     (2 * np.pi * T)))))
 
     return f
@@ -109,6 +110,17 @@ def MF_F(T):
     f = F(T, Δ0)
 
     return f
+
+
+def z2(T, B=0):
+    """
+    Returns the value of z^2 at a particular temperature
+    Trying to see if a temperature dependence can remove phase transition
+    """
+
+    z2_inverse = (1 - 0.5 * ρ * J * np.log(ρ * J))# - ρ * J * np.log(T) * np.tanh(4 * T)
+
+    return 1 / z2_inverse
 
 
 def plot_F_vs_Δ():
@@ -164,7 +176,7 @@ def plot_F_vs_Δ():
                  np.max(Fs) + 0.1 * (np.max(Fs) - np.min(Fs))])
     ax.tick_params(axis='both', labelsize=20)
 
-    plt.savefig("F_vs_delta", dpi=300, format='pdf', bbox_inches='tight')
+    plt.savefig("F_vs_delta.pdf", dpi=300, format='pdf', bbox_inches='tight')
     plt.clf()
 
 
@@ -193,17 +205,17 @@ def plot_d2F_vs_T():
 
     ax.tick_params(axis='both', labelsize=20)
 
-    plt.savefig("F_vs_T", dpi=300, format='pdf', bbox_inches='tight')
+    plt.savefig("d2F_vs_T.pdf", dpi=300, format='pdf', bbox_inches='tight')
     plt.clf()
 
 
 def main():
     # Setting various parameters of the problem
 
-    global ρ, J, z2
+    global ρ, J
     ρ = 0.4
     J = 0.4
-    z2 = 1 / (1 - 0.5 * ρ * J * np.log(ρ * J))
+    #z2 = 1 / (1 - 0.5 * ρ * J * np.log(ρ * J))
 
     plot_Δ_vs_T()
     plot_F_vs_Δ()
