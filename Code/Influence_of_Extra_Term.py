@@ -10,7 +10,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.special as special
-from scipy.misc import derivative
+import scipy.optimize as optimize
 
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
@@ -33,7 +33,7 @@ def digamma_inv(y):
     return x
 
 
-def MF_delta(T, k):
+def MF_delta(T, k_T):
     """
     Find the value of delta predicted by the mean-field equations
     """
@@ -41,12 +41,142 @@ def MF_delta(T, k):
     digamma_inverse = np.vectorize(digamma_inv)
 
     psi_tilde = np.log(1 / (2 * np.pi * T))
-    - 0.5 * np.log(rho * J) + (1 - 1 / z2(T, k)) / (rho * J)
+    - 0.5 * np.log(rho * J) + (1 - 1 / z2(T, k_T)) / (rho * J)
 
     argument_tilde = digamma_inverse(psi_tilde)
-    delta = np.multiply((argument_tilde - 0.5) * (2 * np.pi / z2(T, k)), T)
+    delta = np.multiply((argument_tilde - 0.5) * (2 * np.pi / z2(T, k_T)), T)
 
-    return delta
+    return (delta >= 0) * delta
+
+
+def MF_equation_lambda(lambda_SC, T, K_T):
+    """
+    Defining the MF equation defining lambda_SC
+    """
+
+    k_T = k(lambda_SC, T, K_T)
+
+    constant_part = np.pi * J * rho * lambda_SC / 2
+    difficult_part = MF_delta(T, k_T) * (1 - 2 * k_T) / (k_T * (1 - k_T))
+
+    return constant_part - difficult_part
+
+
+def MF_lambda_SC(T, K_T):
+    """
+    Solving for the mean-field value of λ_SC at particular temperature
+    i.e. Finds the root of MF_equation_lambda()
+    """
+
+    MF_lambda_SC = optimize.brentq(MF_equation_lambda, 0, 200, args=(T, K_T))
+
+    return MF_lambda_SC
+
+
+def K(T):
+    """
+    Returns the value for the soft-constraint parameter K
+    This is the standard value
+    """
+
+    K_0 = 0.5 - 0.5 * np.sqrt(-0.5 * rho * J * np.log(rho * J))
+
+    return K_0
+
+def K_exp(T):
+    """
+    Returns an SC parameter decaying exponentially
+    """
+
+    Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
+    K_0 = 0.5 - 0.5 * np.sqrt(-0.5 * rho * J * np.log(rho * J))
+
+    K_T = K_0 * np.exp(- T / Tc)
+
+    return K_T
+
+def K_grow(T):
+    """
+    Returns an SC
+    """
+
+    Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
+    alpha = 2 * Tc / np.log(-0.5 * rho * J * np.log(rho * J))
+
+    K_T = 0.5 * (1 - np.exp((Tc - T) / alpha))
+
+    return K_T
+
+
+def k(lambda_SC, T, K_T):
+    """
+    Returns the value of the temperature dependent κ
+    """
+
+    return K_T / (1 + np.exp(- K_T * lambda_SC / T))
+
+
+def plot_delta_vs_T():
+    """
+    Plots the *new* behaviour of the order parameter with temperature
+    Includes the new temperature dependence of kappa
+    """
+
+    # Measure T in units of T_K
+    Ts = np.linspace(0.01, 1.2, 250)
+
+    lambdas = np.zeros(np.size(Ts))
+    ks = np.zeros(np.size(Ts))
+
+    deltas = np.zeros(np.size(Ts))
+    deltas_up = np.zeros(np.size(Ts))
+    deltas_down = np.zeros(np.size(Ts))
+
+    for i in range(np.size(Ts)):
+
+        T = Ts[i]
+
+        lambda_SC = MF_lambda_SC(T, K(T))
+        deltas[i] = MF_delta(T, k(lambda_SC, T, K(T)))
+
+        lambda_SC_up = MF_lambda_SC(T, K_exp(T))
+        deltas_up[i] = MF_delta(T, k(lambda_SC_up, T, K_exp(T)))
+
+        lambda_SC_down = MF_lambda_SC(T, 0.5)
+        deltas_down[i] = MF_delta(T, k(lambda_SC_up, T, 0.5))
+
+        lambdas[i] = lambda_SC
+        ks[i] = k(lambda_SC, T, K(T))
+
+    z2s = 4 * np.multiply(ks, (1 - ks))
+
+    fig = plt.figure(figsize=(8.4, 8.4))
+
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    plt.fill_between(np.linspace(0, np.max(Ts), 10),
+                     0, -0.5, color='#dddddd')
+
+    plt.fill_between(Ts, deltas_up, deltas_down,
+                     facecolor='red', alpha=0.5)
+
+    plt.plot(Ts, deltas, "k-")
+
+
+    plt.xlabel(r'$ T / T_K $', fontsize=26)
+    plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
+
+    ax = plt.gca()
+    ax.set_xlim([0, np.max(Ts)])
+    ax.set_ylim([-0.1, 1.1 * np.max(deltas)])
+    ax.tick_params(axis='both', labelsize=20)
+
+    plt.axhline(y=0, linestyle='--', color='k')
+
+    plt.savefig("new_delta_vs_T.pdf", dpi=300,
+                format='pdf', bbox_inches='tight')
+    plt.clf()
 
 
 def plot_graphical_solution():
@@ -63,12 +193,11 @@ def plot_graphical_solution():
     for i in range(np.size(Ts)):
         T = Ts[i]
 
-        K = 0.5 - 0.5 * np.sqrt(- 0.5 * rho * J * np.log(rho * J))
-        k = K / (1 + np.exp(- K * lambdas / T))
-        delta = MF_delta(T, k)
+        k_T = k(lambdas, T, K(T))
+        delta = MF_delta(T, k_T)
 
         linear_part[i, :] = np.pi * J * rho * lambdas / (2 * delta)
-        fermi_part[i, :] = (1 - 2 * k) / (k * (1 - k))
+        fermi_part[i, :] = (1 - 2 * k_T) / (k_T * (1 - k_T))
 
     # Plot the graphical solution, using colours
 
@@ -84,10 +213,10 @@ def plot_graphical_solution():
     for i in range(np.size(Ts)):
         colorVal = scalarMap.to_rgba(Ts[i])
 
-        plt.plot(lambdas, linear_part[i, :], "r-",
+        plt.plot(lambdas, linear_part[i, :],
                  label=r'$ \pi J \rho \lambda_{SC} / 2 \Delta $',
                  color=colorVal)
-        plt.plot(lambdas, fermi_part[i, :], "b-",
+        plt.plot(lambdas, fermi_part[i, :],
                  label=r'$ (1 - 2 \kappa) / \kappa (1 - \kappa) $',
                  color=colorVal)
 
@@ -123,6 +252,7 @@ def main():
     J = 0.4
 
     plot_graphical_solution()
+    plot_delta_vs_T()
 
 
 if __name__ == '__main__':
