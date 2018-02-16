@@ -68,9 +68,51 @@ def MF_lambda_SC(T, K_T):
     i.e. Finds the root of MF_equation_lambda()
     """
 
-    MF_lambda_SC = optimize.brentq(MF_equation_lambda, 0, 200, args=(T, K_T))
+    MF_lambda_SC = optimize.brentq(MF_equation_lambda, 0, 20, args=(T, K_T))
 
     return MF_lambda_SC
+
+
+def F(T, delta, lambda_SC, k_T):
+    """
+    Return the value of the free energy for temperature, hybridisation field
+    """
+
+    f_original = 2 * delta / (np.pi * J * rho) - 4 * T * np.real(
+        np.log(special.gamma(0.5 +
+                             (1j * z2(T, k_T) * delta +
+                              np.exp(1 / (rho * J)) / np.sqrt(rho * J)) /
+                             (2j * np.pi * T)) /
+               special.gamma(0.5 + (z2(T, k_T) * delta /
+                                    (2 * np.pi * T)))))
+
+    f_extra = lambda_SC * k_T - T * np.log(1 + np.exp(K(T) * lambda_SC / T))
+
+    f = f_original + f_extra
+
+    return f
+
+
+def MF_F(T):
+    """
+    Return the mean-field free energy at a given temperature
+    """
+
+    # Set the soft-constraint parameter
+    K_T = K(T)
+
+    # Calculate the Lagrange multiplier
+    lambda_SC = MF_lambda_SC(T, K_T)
+
+    # Include the temperature dependent occupation
+    k_T = k(lambda_SC, T, K_T)
+
+    # Calculate the value of the hybridisation field
+    delta = MF_delta(T, k_T)
+
+    f = F(T, delta, lambda_SC, k_T)
+
+    return f
 
 
 def K(T):
@@ -83,6 +125,7 @@ def K(T):
 
     return K_0
 
+
 def K_exp(T):
     """
     Returns an SC parameter decaying exponentially
@@ -94,6 +137,7 @@ def K_exp(T):
     K_T = K_0 * np.exp(- T / Tc)
 
     return K_T
+
 
 def K_grow(T):
     """
@@ -235,6 +279,42 @@ def plot_graphical_solution():
     plt.clf()
 
 
+def plot_F_vs_T():
+    """
+    Plotting the second derivative of free energy wrt temperature
+    """
+
+    Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
+    Ts = np.linspace(0.05, Tc + 0.2, 1001)
+
+    MF_Fs = np.zeros(np.size(Ts))
+
+    for i in range(np.size(Ts)):
+        T = Ts[i]
+        MF_Fs[i] = MF_F(T)
+
+    # MF_d2Fs = derivative(MF_F, Ts, n=2, dx=0.001, order=3)
+
+    fig = plt.figure(figsize=(8.4, 8.4))
+
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    plt.plot(Ts, MF_Fs, "r-", label="Mean-Field C")
+
+    plt.xlabel(r'$ T / T_K $', fontsize=26)
+    plt.ylabel(r'$ F / T_K $', fontsize=26)
+
+    ax = plt.gca()
+    ax.set_xlim([0, np.max(Ts)])
+
+    ax.tick_params(axis='both', labelsize=20)
+
+    plt.savefig("new_F_vs_T.pdf", dpi=300, format='pdf', bbox_inches='tight')
+    plt.clf()
+
+
+
 def z2(T, k, B=0):
     """
     Returns the value of z^2 at a particular temperature
@@ -251,8 +331,9 @@ def main():
     rho = 0.4
     J = 0.4
 
-    plot_graphical_solution()
-    plot_delta_vs_T()
+    #plot_graphical_solution()
+    #plot_delta_vs_T()
+    plot_F_vs_T()
 
 
 if __name__ == '__main__':
