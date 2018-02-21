@@ -46,33 +46,46 @@ def MF_Δ(T):
     return Δ
 
 
+def t(δ):
+    """
+    Defining parametric T in terms of δ
+    """
+
+    z2 = 1 / (1 - 0.5 * ρ * J * np.log(ρ * J))
+
+    t = (1 / (2 * np.pi)) * (1 / np.sqrt(ρ * J)) *\
+        np.exp((1 - 1 / z2) / (ρ * J)) *\
+        np.exp(- special.digamma(0.5 + z2 * δ / (2 * np.pi)))
+
+    return t
+
+
 def plot_Δ_vs_T():
     """
     Plots the behaviour of the order parameter with temperature
     """
 
-    # Measure T in units of T_K
-    T = np.linspace(0.01, 1.2, 100)
+    δs = np.linspace(-0.1, 100, 1000)
 
-    # Calculate the order parameter in units of T_K
-    Δ = MF_Δ(T)
+    x = t(δs)
+    y = np.multiply(δs, x)
 
     fig = plt.figure(figsize=(8.4, 8.4))
 
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    plt.fill_between(np.linspace(0, np.max(T), 10),
+    plt.fill_between(np.linspace(0, np.max(x), 10),
                      0, -0.5, color='#dddddd')
 
     # Plot the figure
-    plt.plot(T, Δ, "k-")
+    plt.plot(x, y, "k-")
 
     plt.xlabel(r'$ T / T_K $', fontsize=26)
     plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
 
     ax = plt.gca()
-    ax.set_xlim([0, np.max(T)])
+    ax.set_xlim([0, np.max(x)])
     ax.set_ylim([-0.18, 1.25])
     ax.tick_params(axis='both', labelsize=20)
 
@@ -218,8 +231,8 @@ def main():
     #z2 = 1 / (1 - 0.5 * ρ * J * np.log(ρ * J))
 
     plot_Δ_vs_T()
-    plot_F_vs_Δ()
-    plot_d2F_vs_T()
+    #plot_F_vs_Δ()
+    #plot_d2F_vs_T()
 
 
 if __name__ == '__main__':
