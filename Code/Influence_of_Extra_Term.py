@@ -160,6 +160,33 @@ def k(lambda_SC, T, K_T):
     return K_T / (1 + np.exp(- K_T * lambda_SC / T))
 
 
+def plot_lambda_vs_T():
+    """
+    Plotting the value of lambda against temperature
+    Mainly for debugging the parametric plot
+    """
+
+    Ts = np.linspace(0.01, 1.2, 250)
+
+    lambdas = np.zeros(np.size(Ts))
+    ss = np.zeros(np.size(Ts))
+
+    for i in range(np.size(Ts)):
+        T = Ts[i]
+
+        lambdas[i] = MF_lambda_SC(T, K(T))
+        ss[i] = lambdas[i] / T
+
+    fig = plt.figure(figsize=(8.4, 8.4))
+
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    plt.plot(Ts, ss, "k-")
+
+    plt.show()
+
+
 def plot_delta_vs_T():
     """
     Plots the *new* behaviour of the order parameter with temperature
@@ -314,7 +341,6 @@ def plot_F_vs_T():
     plt.clf()
 
 
-
 def z2(T, k, B=0):
     """
     Returns the value of z^2 at a particular temperature
@@ -333,8 +359,8 @@ def main():
 
     #plot_graphical_solution()
     #plot_delta_vs_T()
-    plot_F_vs_T()
-
+    #plot_F_vs_T()
+    plot_lambda_vs_T()
 
 if __name__ == '__main__':
     main()
