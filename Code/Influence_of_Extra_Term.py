@@ -20,17 +20,14 @@ def digamma_inv(y):
     """
     Inverse digamma function
     Returns x given y: psi(x) = y
-    TODO: make this part vectorized from the beginning
     """
 
-    x = (np.exp(y) + 0.5) if (y >= -2.22) else (-1 / (y + special.digamma(1)))
+    start = (np.exp(y) + 0.5) if (y >= -2.22) else (-1 / (y + special.digamma(1)))
 
-    # Using Newton-Raphson for this monotonic function
-    # May have to change to a convergence condition
-    for i in range(1, 20):
-        x = x - (special.digamma(x) - y) / special.polygamma(1, x)
+    def inv(x):
+        return special.digamma(x) - y
 
-    return x
+    return np.min(optimize.fsolve(inv, start))
 
 
 def MF_delta(T, k_T):
@@ -121,7 +118,7 @@ def K(T):
     This is the standard value
     """
 
-    K_0 = 0.5 - 0.5 * np.sqrt(-0.5 * rho * J * np.log(rho * J))
+    K_0 = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
     return K_0
 
@@ -132,7 +129,7 @@ def K_exp(T):
     """
 
     Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
-    K_0 = 0.5 - 0.5 * np.sqrt(-0.5 * rho * J * np.log(rho * J))
+    K_0 = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
     K_T = K_0 * np.exp(- T / Tc)
 
@@ -166,7 +163,7 @@ def plot_lambda_vs_T():
     Mainly for debugging the parametric plot
     """
 
-    Ts = np.linspace(0.01, 1.2, 250)
+    Ts = np.linspace(0.2, 1.2, 250)
 
     lambdas = np.zeros(np.size(Ts))
     ss = np.zeros(np.size(Ts))
@@ -182,9 +179,17 @@ def plot_lambda_vs_T():
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    plt.plot(Ts, ss, "k-")
+    plt.plot(Ts, lambdas, "k-")
+    plt.plot(Ts, ss, "r-")
 
-    plt.show()
+    plt.xlabel(r'$ T / T_K $', fontsize=26)
+    plt.ylabel(r'$ \beta \lambda $', fontsize=26)
+
+    ax = plt.gca()
+    ax.tick_params(axis='both', labelsize=20)
+
+    plt.savefig("s_vs_T_solve_OG.pdf",
+                dpi=300, format='pdf', bbox_inches='tight')
 
 
 def plot_delta_vs_T():
