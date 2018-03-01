@@ -8,7 +8,7 @@ def Tc(b):
     Defining the parametric T in terms of difficult expressions
     """
 
-    K = 0.5 - 0.5 * np.sqrt(-0.5 * rho * J * np.log(rho * J))
+    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
     z2 = K * (2 - K)
 

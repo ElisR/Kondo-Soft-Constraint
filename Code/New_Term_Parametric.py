@@ -9,44 +9,77 @@ import matplotlib.colors as colors
 import matplotlib.cm as cmx
 
 
-def MF_equation_s(s, T):
+def digamma_inv(y):
     """
-    The MF equation for lambda_SC and T
+    Inverse digamma function
+    Returns x given y: psi(x) = y
     """
+
+    def starter(yi):
+        start_pt = -1 / (yi + special.digamma(1))
+
+        if (yi >= -2.22):
+            start_pt = np.exp(yi) + 0.5
+
+        return start_pt
+
+    def inv(x):
+        return special.digamma(x) - y
+
+    return np.max(optimize.fsolve(inv, np.vectorize(starter)(y)))
+
+
+# TODO: Fix the vectorised form of this equation
+def MF_lambda_SC(Temp):
 
     K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
-    k_T = K / (1 + np.exp(- K * s))
+    def MF_equation_lambda(lambda_SC, T):
 
-    z2 = 4 * k_T * (1 - k_T)
+        k_T = K / (1 + np.exp(- K * lambda_SC / T))
+        z2 = 4 * k_T * (1 - k_T)
 
-    eq = special.digamma(0.5 + J * rho * z2 * z2 * s /
-                         (16 * (1 - 2 * k_T))) +\
-        np.log(T) + np.log(2 * np.pi) -\
-        0.5 * np.log(rho * J) + (1 - 1 / z2) / (rho * J)
+        eq = special.digamma(0.5 + J * rho * z2 * z2 * lambda_SC /
+                             (16 * T * (1 - 2 * k_T))) +\
+            np.log(T) + np.log(2 * np.pi) +\
+            0.5 * np.log(rho * J) - (1 - 1 / z2) / (rho * J)
 
-    return eq
+        return eq
 
+    return optimize.fsolve(MF_equation_lambda, 0, args=(Temp))
 
-def MF_equation_lambda(lambda_SC, T):
+def plot_eq_vs_lambda():
     """
-    The MF equation again
+    Investigating the nature of the MF equation
     """
 
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
+    T = 0.6
 
-    K = K
+    lambdas = np.linspace(-20, 20, 250)
+    lambda_soln = optimize.fsolve(MF_equation_lambda, 20, args=(T))
 
-    k_T = K / (1 + np.exp(- K * lambda_SC / T))
+    eqs = np.zeros(np.size(lambdas))
 
-    z2 = 4 * k_T * (1 - k_T)
+    for i in range(np.size(eqs)):
+        eqs[i] = MF_equation_lambda(lambdas[i], T)
 
-    eq = special.digamma(0.5 + J * rho * z2 * z2 * lambda_SC /
-                         (16 * T * (1 - 2 * k_T))) +\
-        np.log(T) + np.log(2 * np.pi) -\
-        0.5 * np.log(rho * J) + (1 - 1 / z2) / (rho * J)
+    fig = plt.figure(figsize=(8.4, 8.4))
 
-    return eq
+    plt.rc('text', usetex=True)
+    plt.rc('font', family='serif')
+
+    plt.plot(lambdas, eqs, "r-", label=("T = " + str(T)))
+    plt.plot(lambda_soln, MF_equation_lambda(lambda_soln, T), "k.")
+
+    plt.xlabel(r'$ \lambda $', fontsize=26)
+    plt.ylabel(r'$ MF_{eq}(\lambda) $', fontsize=26)
+
+    ax = plt.gca()
+    ax.tick_params(axis='both', labelsize=20)
+    ax.legend()
+
+    plt.savefig("eq_vs_lambda.pdf",
+                dpi=300, format='pdf', bbox_inches='tight')
 
 
 def plot_lambda_vs_T():
@@ -54,34 +87,36 @@ def plot_lambda_vs_T():
     Trying to nail down the form of lambda_SC against temperature
     """
 
-    Ts = np.linspace(0.2, 4, 250)
+    Ts = np.linspace(0.2, 1.2, 250)
 
     lambdas = np.zeros(np.size(Ts))
-    ss = np.zeros(np.size(Ts))
+
+    ss_parametric = np.linspace(0, 45, 1000)
+    ts = t(ss_parametric)
+    lambdas_parametric = np.multiply(ss_parametric, ts)
 
     for i in range(np.size(Ts)):
         T = Ts[i]
 
-        lambdas[i] = np.min(optimize.fsolve(MF_equation_lambda, 0, args=(T)))
+        lambdas[i] = MF_lambda_SC(T)
         lambdas[i] = (lambdas[i] >= 0) * lambdas[i]
-        ss[i] = lambdas[i] / T
 
     fig = plt.figure(figsize=(8.4, 8.4))
 
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    # Both give the same thing...
-    plt.plot(Ts, ss, "r-")
-    plt.plot(Ts, lambdas, "k-")
+    plt.plot(Ts, lambdas, "r-", label="fsolve")
+    plt.plot(ts, lambdas_parametric, "k--", label="parametric")
 
     plt.xlabel(r'$ T / T_K $', fontsize=26)
-    plt.ylabel(r'$ \beta \lambda $', fontsize=26)
+    plt.ylabel(r'$ \lambda $', fontsize=26)
 
     ax = plt.gca()
     ax.tick_params(axis='both', labelsize=20)
+    ax.legend()
 
-    plt.savefig("s_vs_T_solve.pdf",
+    plt.savefig("s_vs_T.pdf",
                 dpi=300, format='pdf', bbox_inches='tight')
 
 
@@ -111,23 +146,6 @@ def t(s):
     return T
 
 
-def ln_t(s):
-    """
-    Returns the logarithm of temperature for given s
-    Function for debugging
-    """
-
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
-    k_T = K / (1 + np.exp(- K * s))
-    z2 = 4 * k_T * (1 - k_T)
-
-    lnt = - (special.digamma(0.5 + J * rho * z2 * z2 * s /
-                             (16 * (1 - 2 * k_T))) +
-             np.log(2 * np.pi) +
-             0.5 * np.log(rho * J) - (1 - 1 / z2) / (rho * J))
-
-    return lnt
-
 def delta(s):
     """
     Returns the mean-field hybridisation field at a given non-affine parameter
@@ -150,7 +168,6 @@ def plot_delta_vs_T():
     ss = np.linspace(0, 45, 1000)
 
     ts = t(ss)
-    ln_ts = ln_t(ss)
     deltas = delta(ss)
 
     fig = plt.figure(figsize=(8.4, 8.4))
@@ -163,9 +180,7 @@ def plot_delta_vs_T():
 
     # Plot the figure
     plt.plot(ts, deltas, "r-")
-    #plt.plot(np.exp(ln_ts), ss, "k-")
-    #plt.plot(ts, ss, "r-")
-    plt.plot(np.exp(ln_ts), deltas, "k-")
+    plt.plot(ts, ss, "k-")
 
     plt.xlabel(r'$ T / T_K $', fontsize=26)
     plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
@@ -192,6 +207,7 @@ def main():
 
     plot_delta_vs_T()
     plot_lambda_vs_T()
+    #plot_eq_vs_lambda()
 
 
 if __name__ == '__main__':

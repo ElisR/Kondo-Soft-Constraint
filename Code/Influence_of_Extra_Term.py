@@ -27,7 +27,7 @@ def digamma_inv(y):
     def inv(x):
         return special.digamma(x) - y
 
-    return np.min(optimize.fsolve(inv, start))
+    return np.max(optimize.fsolve(inv, start))
 
 
 def MF_delta(T, k_T):
@@ -35,37 +35,35 @@ def MF_delta(T, k_T):
     Find the value of delta predicted by the mean-field equations
     """
 
-    digamma_inverse = np.vectorize(digamma_inv)
+    z2 = 4 * k_T * (1 - k_T)
 
-    psi_tilde = np.log(1 / (2 * np.pi * T))
-    - 0.5 * np.log(rho * J) + (1 - 1 / z2(T, k_T)) / (rho * J)
+    psi_tilde = - np.log(2 * np.pi) - np.log(T)
+    - 0.5 * np.log(rho * J) + (1 - 1 / z2) / (rho * J)
 
-    argument_tilde = digamma_inverse(psi_tilde)
-    delta = np.multiply((argument_tilde - 0.5) * (2 * np.pi / z2(T, k_T)), T)
+    argument_tilde = digamma_inv(psi_tilde)
+    delta = (argument_tilde - 0.5) * (2 * T * np.pi / z2)
 
     return (delta >= 0) * delta
 
 
-def MF_equation_lambda(lambda_SC, T, K_T):
-    """
-    Defining the MF equation defining lambda_SC
-    """
-
-    k_T = k(lambda_SC, T, K_T)
-
-    constant_part = np.pi * J * rho * lambda_SC / 2
-    difficult_part = MF_delta(T, k_T) * (1 - 2 * k_T) / (k_T * (1 - k_T))
-
-    return constant_part - difficult_part
-
-
-def MF_lambda_SC(T, K_T):
+def MF_lambda_SC(Temp):
     """
     Solving for the mean-field value of λ_SC at particular temperature
     i.e. Finds the root of MF_equation_lambda()
     """
 
-    MF_lambda_SC = optimize.brentq(MF_equation_lambda, 0, 20, args=(T, K_T))
+    def MF_equation(lambda_SC, T):
+
+        K_T = K(T)
+
+        k_T = K_T / (1 + np.exp(- K_T * lambda_SC / T))
+
+        constant_part = np.pi * J * rho * lambda_SC / 2
+        difficult_part = MF_delta(T, k_T) * (1 - 2 * k_T) / (k_T * (1 - k_T))
+
+        return constant_part - difficult_part
+
+    MF_lambda_SC = optimize.fsolve(MF_equation, 0, args=(Temp))
 
     return MF_lambda_SC
 
@@ -171,7 +169,7 @@ def plot_lambda_vs_T():
     for i in range(np.size(Ts)):
         T = Ts[i]
 
-        lambdas[i] = MF_lambda_SC(T, K(T))
+        lambdas[i] = MF_lambda_SC(T)
         ss[i] = lambdas[i] / T
 
     fig = plt.figure(figsize=(8.4, 8.4))
@@ -344,15 +342,6 @@ def plot_F_vs_T():
 
     plt.savefig("new_F_vs_T.pdf", dpi=300, format='pdf', bbox_inches='tight')
     plt.clf()
-
-
-def z2(T, k, B=0):
-    """
-    Returns the value of z^2 at a particular temperature
-    Trying to see if a temperature dependence can remove phase transition
-    """
-
-    return 4 * k * (1 - k)
 
 
 def main():
