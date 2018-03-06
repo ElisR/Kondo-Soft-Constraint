@@ -8,35 +8,19 @@ import scipy.optimize as optimize
 import matplotlib.colors as colors
 import matplotlib.cm as cmx
 
-
-def digamma_inv(y):
-    """
-    Inverse digamma function
-    Returns x given y: psi(x) = y
-    """
-
-    def starter(yi):
-        start_pt = -1 / (yi + special.digamma(1))
-
-        if (yi >= -2.22):
-            start_pt = np.exp(yi) + 0.5
-
-        return start_pt
-
-    def inv(x):
-        return special.digamma(x) - y
-
-    return np.max(optimize.fsolve(inv, np.vectorize(starter)(y)))
+global rho, J
+rho = 0.4
+J = 0.4
 
 
 # TODO: Fix the vectorised form of this equation
 def MF_lambda_SC(Temp):
 
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
+    K_T = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
     def MF_equation_lambda(lambda_SC, T):
 
-        k_T = K / (1 + np.exp(- K * lambda_SC / T))
+        k_T = K_T / (1 + np.exp(- K_T * lambda_SC / T))
         z2 = 4 * k_T * (1 - k_T)
 
         eq = special.digamma(0.5 + J * rho * z2 * z2 * lambda_SC /
@@ -48,76 +32,43 @@ def MF_lambda_SC(Temp):
 
     return optimize.fsolve(MF_equation_lambda, 0, args=(Temp))
 
-def plot_eq_vs_lambda():
+
+
+
+
+def F(s):
     """
-    Investigating the nature of the MF equation
-    """
-
-    T = 0.6
-
-    lambdas = np.linspace(-20, 20, 250)
-    lambda_soln = optimize.fsolve(MF_equation_lambda, 20, args=(T))
-
-    eqs = np.zeros(np.size(lambdas))
-
-    for i in range(np.size(eqs)):
-        eqs[i] = MF_equation_lambda(lambdas[i], T)
-
-    fig = plt.figure(figsize=(8.4, 8.4))
-
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
-
-    plt.plot(lambdas, eqs, "r-", label=("T = " + str(T)))
-    plt.plot(lambda_soln, MF_equation_lambda(lambda_soln, T), "k.")
-
-    plt.xlabel(r'$ \lambda $', fontsize=26)
-    plt.ylabel(r'$ MF_{eq}(\lambda) $', fontsize=26)
-
-    ax = plt.gca()
-    ax.tick_params(axis='both', labelsize=20)
-    ax.legend()
-
-    plt.savefig("eq_vs_lambda.pdf",
-                dpi=300, format='pdf', bbox_inches='tight')
-
-
-def plot_lambda_vs_T():
-    """
-    Trying to nail down the form of lambda_SC against temperature
+    Returns the mean field free energy
+    Function of the non-affine parameter
     """
 
-    Ts = np.linspace(0.2, 1.2, 250)
+    z2 = 4 * k(s) * (1 - k(s))
+    D = np.exp(1 / (rho * J)) / np.sqrt(rho * J)
 
-    lambdas = np.zeros(np.size(Ts))
+    F_orig = (s * z2 / (2 * (1 - 2 * k(s))) -
+              4 * np.real(
+        special.loggamma(0.5 +
+                         s * J * rho * z2 * z2 / (16 * (1 - 2 * k(s))) +
+                         D / (2 * np.pi * 1j * t(s))) -
+        special.loggamma(0.5 +
+                         s * J * rho * z2 * z2 / (16 * (1 - 2 * k(s)))))
+              ) * t(s)
 
-    ss_parametric = np.linspace(0, 45, 1000)
-    ts = t(ss_parametric)
-    lambdas_parametric = np.multiply(ss_parametric, ts)
+    F_extra = t(s) * (K(s) * s / (1 + np.exp(- K(s) * s)) -
+                      np.log(1 + np.exp(- K(s) * s)))
 
-    for i in range(np.size(Ts)):
-        T = Ts[i]
+    return (F_orig + F_extra)
 
-        lambdas[i] = MF_lambda_SC(T)
-        lambdas[i] = (lambdas[i] >= 0) * lambdas[i]
+def K(s):
+    """
+    Returns the value of the soft-constraint parameter
+    """
 
-    fig = plt.figure(figsize=(8.4, 8.4))
+    K_0 = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
-
-    plt.plot(Ts, lambdas, "r-", label="fsolve")
-    plt.plot(ts, lambdas_parametric, "k--", label="parametric")
-
-    plt.xlabel(r'$ T / T_K $', fontsize=26)
-    plt.ylabel(r'$ \lambda $', fontsize=26)
-
-    ax = plt.gca()
-    ax.tick_params(axis='both', labelsize=20)
-    ax.legend()
-
-    plt.savefig("s_vs_T.pdf",
-                dpi=300, format='pdf', bbox_inches='tight')
+    return K_0 * (1 + np.exp(- K_0 * s * (1 + np.exp(- K_0 * s * (1 + np.exp(- K_0 * s))))))
+    #return K_0 * (1 + 0.5 * np.exp(- 1 * s))
+    #return K_0
 
 
 def k(s):
@@ -126,15 +77,12 @@ def k(s):
     Modification comes from thermal occupation of "empty" pseudo-fermions
     """
 
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
-
-    return K / (1 + np.exp(- K * s))
+    return K(s) / (1 + np.exp(- K(s) * s))
 
 
 def t(s):
     """
     Returns normalised temperature for given value of non-affine parameter
-    Slightly buggy?
     """
 
     T = (1 / (2 * np.pi)) * (1 / np.sqrt(rho * J)) *\
@@ -151,64 +99,9 @@ def delta(s):
     Returns the mean-field hybridisation field at a given non-affine parameter
     """
 
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
-    k_T = K / (1 + np.exp(- K * s))
+    k_T = k(s)
     z2 = 4 * k_T * (1 - k_T)
 
     d = np.pi * J * rho * z2 * s * t(s) / (8 * (1 - 2 * k_T))
 
     return d
-
-
-def plot_delta_vs_T():
-    """
-    Plotting delta vs T using a robust parametric plot, with extra term
-    """
-
-    ss = np.linspace(0, 45, 1000)
-
-    ts = t(ss)
-    deltas = delta(ss)
-
-    fig = plt.figure(figsize=(8.4, 8.4))
-
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
-
-    #plt.fill_between(np.linspace(0, np.max(ts), 10),
-    #                 0, -0.5, color='#dddddd')
-
-    # Plot the figure
-    plt.plot(ts, deltas, "r-")
-    plt.plot(ts, ss, "k-")
-
-    plt.xlabel(r'$ T / T_K $', fontsize=26)
-    plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
-
-    ax = plt.gca()
-    #ax.set_xlim([0, np.max(ts)])
-    #ax.set_ylim([-0.18, 1.25])
-    ax.tick_params(axis='both', labelsize=20)
-
-    #plt.axhline(y=0, linestyle='--', color='k')
-
-
-    plt.savefig("new_s_vs_T_parametric.pdf",
-                dpi=300, format='pdf', bbox_inches='tight')
-    plt.clf()
-
-
-def main():
-    # Setting various parameters of the problem
-
-    global rho, J
-    rho = 0.4
-    J = 0.4
-
-    plot_delta_vs_T()
-    plot_lambda_vs_T()
-    #plot_eq_vs_lambda()
-
-
-if __name__ == '__main__':
-    main()
