@@ -1,0 +1,175 @@
+% Beamer Presentation
+
+\documentclass[13pt]{beamer}
+\usetheme{metropolis}
+\usepackage{eulervm}
+\usepackage{appendixnumberbeamer}
+\usepackage{amsmath}
+
+\DeclareMathOperator{\Tr}{Tr}
+
+\setsansfont[BoldFont={Fira Sans}]{Fira Sans Light}
+\setmonofont{Fira Mono}
+\metroset{block=fill}
+
+\title{Mean-Field Study of Kondo Phase Diagram}
+\date{\today}
+\author{Elis Roberts} % Should probably include supervisors
+\institute{University of Cambridge}
+
+\begin{document}
+  \maketitle
+
+  \begin{frame}{Plan}
+  \setbeamertemplate{section in toc}[sections numbered]
+  \tableofcontents[hideallsubsections]
+  \end{frame}
+
+  \section{Introduction}
+
+  \begin{frame}{Kondo Model}
+    Single localised spin interacting with conduction electrons $c^{}_{k,\sigma} $
+
+    \vfill
+
+    \begin{block}{Model Hamiltonian}
+    $$ H_{\text{Kondo}}=\sum_{k,\sigma}\epsilon_{k} c_{k,\sigma}^{\dagger}c^{}_{k,\sigma}+J\vec{S}\cdot\vec{s}(0) $$
+    \end{block}
+
+  Can map spin \textsc{DOF}s of impurity onto fermions $ f^{}_{\sigma} $
+
+  \end{frame}
+
+  \begin{frame}{Path Integral $ \rightarrow $ Mean-Field Theory}
+
+  \begin{itemize}
+    \item Project framed in terms of path integral
+    \item Treats Boltzmann sum as a functional integral over field configurations
+  \end{itemize}
+
+    \begin{block}{Many-Body Path Integral}
+      $$ Z = \Tr{e^{- \beta H}} = \int \mathcal{D} [c^\dagger, c]~e^{-\int_{0}^{\beta} \,d\tau~L} $$
+    \end{block}
+
+  \begin{itemize}
+    \item Similar to Feynman path integral approach, but with \textit{imaginary time} $ \tau = i t / \hbar $ and associated Lagrangian $ L $
+  \end{itemize}
+
+  \begin{block}{Mean-Field Theory}
+    Avoid this difficult integral by making stationary phase approximation \hfill i.e. \textit{minimise}
+  \end{block}
+
+  \end{frame}
+
+  \begin{frame}{New Fields}
+
+  \begin{itemize}
+    \item Lagrangian similar to original Hamiltonian, with extra dynamical terms: $ L = H_{\text{Kondo}} + c^\dagger \partial_\tau c$
+    \item \textbf{But}, interaction term introduces difficult non-quadratic terms
+
+    \begin{alertblock}{Resolution} % Make W boson analogy
+      Introduce a new field $ V $ that mediates this interaction:
+      \begin{figure}
+        \centering
+        \includegraphics[width=0.95\textwidth]{Figures/V_field.png}
+      \end{figure}
+    \end{alertblock}
+  \end{itemize}
+
+  \end{frame}
+
+  \begin{frame}{Constraints}
+
+  \begin{itemize}
+    \item Making such variable changes sometimes requires \textbf{constraints}
+  
+
+  \begin{exampleblock}{e.g. Spin-1/2 $ \rightarrow $ Fermion Mapping}
+  $$ s_z = \tfrac{1}{2} (f^{\dagger}_{\uparrow} f^{}_{\uparrow} - f^{\dagger}_{\downarrow} f^{}_{\downarrow}), \quad s_{+} = f^{\dagger}_{\uparrow} f^{}_{\downarrow}, \quad s_{-} = f^{\dagger}_{\downarrow} f^{}_{\uparrow} $$
+
+  Representation isn't faithful unless we impose the constraint: $$ f^{\dagger}_{\uparrow} f^{}_{\uparrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} = 1 $$
+  \end{exampleblock}
+
+    \item These constraints are implemented by adding Lagrange multipliers $ \{ \lambda_i \}$ and extremesing wrt these too - \textit{e.g.} $$ L \quad \supset \quad \lambda_{\text{RN}} (f^{\dagger}_{\uparrow} f^{}_{\uparrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} - 1) $$
+
+  \end{itemize}
+  \end{frame}
+
+  % Want to mention that there may be multiple ways to implement a constraint, but these differ in how they act at mean field level
+
+  \begin{frame}{Soft-Constraint Approach}
+
+  \begin{itemize}
+    \item Now consider rewriting the same constraint: $$ (1 - n_{\uparrow} - n_{\downarrow})^2 = n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) = 0 $$
+    \item \textbf{But} this can't be done at mean-field level since $$ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle \neq 0 $$
+
+    \end{itemize}
+
+    \begin{block}{Soft-Constraint}
+      How about introducing a new fermion $ h $ obeying $ h^{\dagger} h^{} = 0 $, but combining these constraints by instead imposing $$ (1 - n_{\uparrow} - n_{\downarrow})^2 - K h^{\dagger} h^{} = 0 \quad ? $$
+    \end{block}
+
+  \end{frame}
+
+  \begin{frame}{Soft-Constraint Approach}
+
+  \begin{itemize}
+    \item How could $ (1 - n_{\uparrow} - n_{\downarrow})^2 - K h^{\dagger} h^{} = 0 $ be any better?
+    \item Have introduced a new free parameter $ K $ into description
+    \item Provided $ K > 0 $ and $ K \neq 1 $, constraint operator now has positive \textit{and} negative eigenvalues: $$ \{ \quad 1, \quad (1 - K), \quad 0, \quad -K \quad \} $$
+  \end{itemize}
+
+  \begin{block}{Consequence}
+  New composite constraint picks out both constraints, while stilll being possible at mean-field level
+  \end{block}
+  \end{frame}
+
+  \section{Finite Temperature Study}
+
+  \begin{frame}{Solving Mean-Field Equations}
+
+  Generate MF equations via minimisation:
+  $$ \frac{\partial F_{\text{MF}}}{\partial \Delta} = 0, \qquad \frac{\partial F_{\text{MF}}}{\partial \lambda_{\text{SC}}} = 0, \qquad \ldots $$
+
+  \end{frame}
+
+  \begin{frame}{Deriving Heat Capacity}
+  \end{frame}
+
+  \begin{frame}{Unavoidable Phase Transition?}
+  \end{frame}
+
+  \begin{frame}{Behaviour of Order Parameter $ \Delta $}
+  \end{frame}
+
+  \section{Finite Field Study}
+
+  \begin{frame}{Incorporating $ B \neq 0 $}
+  \end{frame}
+
+  \begin{frame}{Increased Difficulty of Mean-Field Equations}
+  \end{frame}
+
+  \section{Conclusion}
+
+  \begin{frame}[standout]
+  Questions?
+  \end{frame}
+
+  \appendix
+
+  \section{Backup}
+
+  \begin{frame}{Final Lagrangian}
+    \begin{equation}
+    \begin{align*}
+    L &= \sum_{k,\sigma} c^{\dagger}_{k,\sigma} \left( \frac{d}{\,d\tau} + \epsilon_k - \mu \right) c^{}_{k,\sigma} + \sum_{\sigma} f^{\dagger}_{\sigma} \frac{d}{\,d\tau} f^{}_{\sigma} + h^{\dagger} \frac{d}{\,d\tau}h \\
+    &+ e^{\dagger} \frac{d}{\,d\tau} e  + \sum_{\sigma} p^{\dagger}_{\sigma} \frac{d}{\,d\tau} p^{}_{\sigma} + d^{\dagger} \frac{d}{\,d\tau} d \\
+    &+ \sum_{\sigma} \lambda^{}_{\sigma} (f^{\dagger}_{\sigma} f^{}_{\sigma} - p^{\dagger}_{\sigma} p^{}_{\sigma} - d^{\dagger} d^{} ) \\
+    &+ \lambda_{\text{KR}} ( e^{\dagger} e + \sum_{\sigma} p^{\dagger}_{\sigma} p^{}_{\sigma} + d^{\dagger} d - 1 ) + \lambda_{\text{SC}} ( e^{\dagger} e + d^{\dagger} d - K h^{\dagger} h) \\
+    &+ 2 \frac{V V^{\ast}}{J} + \sum_{k,\sigma} \left( V^{\ast} c^{\dagger}_{k,\sigma} z^{}_{\sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} z^{\dagger}_{\sigma} c^{}_{k,\sigma} \right)
+    \end{align*}
+    \end{equation}
+  \end{frame}
+
+\end{document}

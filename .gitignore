@@ -1,3 +1,25 @@
 Books/
 
 Redundant/
+
+*.gz
+
+*.log
+
+*.blg
+
+*.aux
+
+*.bbl
+
+*.toc
+
+*.fls
+
+*.fdb_latexmk
+
+*.snm
+
+*.out
+
+*.nav
