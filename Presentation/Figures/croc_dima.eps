@@ -1,0 +1,271 @@
+%!PS-Adobe-2.0 EPSF-2.0
+%%BoundingBox: 0 0 556 225
+%%LanguageLevel: 3
+%%Creator: MJ Rutter, 2008
+%%DocumentData: Clean7Bit
+%%EndComments
+
+% This EPS file produces a representation of the cartoon crocodile as
+% drawn by Dima Khmelnitskii, but, with the appropriate definitiions
+% below, filled in with bricks in the style of Eric Gill's crocodile on
+% the old Mond laboratory.
+
+gsave
+/DeviceGray setcolorspace
+20 dict begin
+
+% Alter the following line to adjust type of crocodile.
+% define detail as follows:
+% 0  outline only, not recommended
+% 1  add lines separating legs from body and each other and eye
+
+/detail 1 def
+
+% Alter the following line to control whether the "ear" is drawn
+% (set to true or false)
+
+/ear true def
+
+% Alter the following line to control whether the crocodile is
+% a mere outline, or is filled
+
+/filled true def
+
+% The next statement controls how the croc is filled
+
+% Fill with uniform grey
+
+/fillpat { 0.8 setgray } def
+
+% Fill with brick pattern
+
+%/fillpat { /Pattern setcolorspace brickpattern setcolor } def
+
+% For a bolder croc, use
+% /setlw { 2 mul
+% For a standard croc, use
+% /setlw { % 2 mul
+    
+/setlw { 2 mul
+    setlinewidth } bind def
+
+
+% ***********************************************
+% *** End of variables designed to be altered ***
+% ***********************************************
+
+0 setgray
+2 setlw
+0 setlinejoin
+
+% (current point) (tangent) speed tangent point endpoint
+% leaves new tangent on stack
+
+/bs { 4 copy
+      exch 4 1 roll
+      sub neg 3 1 roll
+      sub exch
+      2 copy
+      dup mul exch
+      dup mul add sqrt
+      dup 4 1 roll
+      div 3 1 roll
+      exch div exch
+      9 2 roll
+      7 4 roll
+      dup 4 1 roll
+      mul 3 1 roll
+      mul exch
+      currentpoint
+      exch 4 1 roll add
+      3 1 roll add exch
+      6 2 roll
+      curveto
+    } bind def
+
+
+/savept { currentpoint /sy exch def /sx exch def } def
+
+% Bricks
+
+/sc 0.8 def
+
+/brick {
+    /DeviceGray setcolorspace
+    <</ImageType 1 /Width 140  /Height 64
+    /ImageMatrix [1 0 0 -1 0 64]
+    /DataSource
+<~s4IA+!(-_o#RCbC#7CkF$4RCO%1sQm&J#Ba+rM:5*%<-`.OZPi-S7)=2_?^H0IJ5-9K>7'
+77^!@.lL1':.A2J7n?)K^]4`J!'gOC!<Ec4s24mU!!!'&!<E0#zz!!!$$!sAc3
+s24mr&-)_6!<E?-":,54z!!*'$!tbYZ&ebs6OWm(i@;uH+;3DY=1IGW&TqWf!;K@B*
+nGh2B#QXr+!'^JWET?*Ig0GRAJ4[IiH]3F;NI%G=@ifUHX,:c7`uLi&e>%c=kIUW21QMQ$
+AbqWM*X76o$M,O9@mD"S\J@<MHorG=KB,Tpj5Z9'%3\."@ir3$8ubEkDH&p(+c[J!jKIN^
+cgn^17gY291#FaB`5f0,+*Co[;],!.J_R@aC-3h'^<=*h1<.DsF*W:X+>/<VqM=U3aAr>=
+W2-CL;KRGH73u+go8hn9cCNp.9E`72+Y*+hr.*W#ZjUJ+\0M""X@p5468"Hg&@:F2^46Rb
+NS2ir$)%\_\Tr$>-2mbR]U"M(a@&^;V.af^5r>_(1&P'p8EOEBEjr&.a=CCreH7TIns,bD
+j)N2hAp$f/_cOKf--!c&]P9G(Ii5pr1\&+Yk`.P1C-eT?OW_`6-c4m1dB_V1rr>s(HV'du
+9;g`Ekr?+p[NAh56eYBUlq+D>8(&!=m(WH5OjAso/9i6OP">e>(WJ@:Ff!G=A,$L138!'6
+%]**f"AFJ02AQk^1cK1>NK-9j]3T55*%!oB46BC"R-!&,qJ5OKN+a/P+0WZ7U2b1rY@Z>N
+ZVQW%F"fFo>^:]4NZT*ddJ8t[6-F@ceLhXV^;os_+cck^q,ou&`uLiP`<R>%o8E8jnF5f2
+mY,tORu[YpWY)Et8piNWk6O;?<`1ADRbPhG6m'rccZFI^;KRL)CL6+d/-@FiW8IJUWB(`Y
+,*C+b8?[VYUa2q_22qA3SMV[YbkE(?VM$4;=L0Z/%<Ak])C1"',[+mBZZ4Xq\#h(=?mJ^%
+g8?QJno<J";Kgm=LVm*ES0A"n_^<i$*Kac(HV-)D=!jM1\(Yg]?GrHcIn3"M>4MS?j-Xbh
+rB-B^N0[0"]mu**2Mpl<[5U#aO1&\#`ag,@HDGU)mZk9HN].peAT(OfR/H^&Y>i$UEcd_F
+HD'Ce3QT]iYRY\4W]9p+)80,Of`~>
+    /DCTDecode filter
+    /BitsPerComponent 8 /Decode [0 1]
+    >> image
+} def
+
+<< /PaintType 1 /PatternType 1 /TilingType 1
+   /BBox [0 0 140 64] /XStep 140 /YStep 64
+   /PaintProc { begin brick end }
+>> 
+[sc 0 0 sc neg 0 0]
+makepattern /brickpattern exch def
+
+
+/dcroc {
+
+% start at tip of tail and work anticlockwise
+
+443 203 moveto
+2 -1
+20 520 109 459 109 bs
+
+% back
+
+12 427 125 417 125 bs
+7 410 114 398 114 bs
+10 383 121 373 121 bs
+5 364 115 359 115 bs
+8 348 124 340 124 bs
+8 326 109 314 119 bs
+
+ear detail 0 gt and {savept} if
+
+% ear (?)
+
+detail 0 gt ear not or {
+    10 285 135 285 114 bs
+%    pop pop 285 135 274 156 252 173 curveto }
+    pop pop 0 1 21 267 163 252 173 bs}
+    if
+
+ear {
+detail 0 gt {sx sy moveto} if
+pop pop 0 1
+20 295 188  252 173 bs pop pop -3 13 sqrt div 2 13 sqrt div} if
+
+% head
+
+54 184 145 184 130 bs
+
+% snout, top
+
+pop pop
+-1 0
+8 175 136 167 136 bs
+12 153 129 145 129 bs
+10 136 135 126 135 bs
+5 118 129 113 129 bs
+8 103 137 95 137 bs
+5 88 132 86 130 bs
+
+% snout, end
+
+pop pop
+-1.3 3
+23 -22 132  57 67 bs
+
+% jaw
+
+pop pop
+0 1
+10 65 81 75 81 bs
+20 128 67 148 67 bs
+
+% smile
+
+detail 0 gt { savept
+45 198 67 199 72 bs
+sx sy moveto } if
+
+pop pop
+-2 -1
+10 140 41 168 41 bs
+20 212 49 232 49 bs
+10 256 47 266 47 bs
+10 277 50 281 52 bs
+
+% front leg
+pop pop
+
+detail 0 gt { savept
+281 60 280 60 286 70 curveto
+sx sy moveto } if
+
+0 -1
+7 288 41 288 36 bs
+8 266 32 266 27 bs
+8 284 20 332 20 bs
+8 346 32 346 39 bs
+
+detail 0 gt { savept
+8 341 49 337 58 bs
+sx sy moveto } if
+
+
+% belly
+pop pop
+370 24 376 25 413 41 curveto
+
+% hind leg
+detail 0 gt { savept
+-2 3
+6 412 67 420 71 bs pop pop
+sx sy moveto } if
+
+2 -3
+5 424 32 410 27 bs
+15 390 18 422 17 bs
+5 445 15 459 18 bs
+15 480 25 473 43 bs
+
+detail 0 gt { savept
+3 471 48 468 52 bs
+sx sy moveto } if
+
+% underside of tail
+
+pop pop
+1 0
+25 536 80 536 119 bs
+31 490 203 443 203 bs
+pop pop
+
+} def
+
+filled {
+   save
+   /detail 0 def dcroc
+   fillpat closepath fill
+   restore
+} if
+
+dcroc stroke
+443 203 currentlinewidth 0.5 mul 0 360 arc fill
+
+
+% eye
+
+229 129 18 0 360 arc stroke
+
+% pupil
+
+229 129 18 -75 50 arc 
+245 125 18 105 230 arc closepath fill
+
+end
+grestore
+%%EOF
