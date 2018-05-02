@@ -14,7 +14,7 @@
 
 \title{Mean-Field Study of Kondo Phase Diagram}
 \date{\today}
-\author{\textbf{Elis Roberts} - \textit{supervised by} Claudio Castelnovo \textit{\&} Garry Goldstein} % Should probably include supervisors
+\author{\textbf{Elis Roberts} - \textit{supervised by} Claudio Castelnovo \textit{\&} Garry Goldstein}
 \institute{University of Cambridge}
 \titlegraphic{\hfill\includegraphics[height=1cm]{Figures/croc_dima.eps}}
 
@@ -93,7 +93,7 @@
   \begin{frame}{Constraints}
 
   \begin{itemize}
-    \item Making such variable changes sometimes requires \textbf{constraints}
+    \item Making such variable changes may require \textbf{constraints}
   
 
   \begin{exampleblock}{\textit{e.g.} Spin-1/2 $ \rightarrow $ Fermion Mapping}
@@ -102,17 +102,15 @@
   Unfaithful representation unless constraint imposed: $$ f^{\dagger}_{\uparrow} f^{}_{\uparrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} = 1 $$
   \end{exampleblock}
 
-    \item Implement constraints by adding Lagrange multipliers $ \{ \lambda_i \}$ and extremesing wrt these too: $$ L \quad = \quad \ldots \quad + \quad \lambda_{\text{RN}} (f^{\dagger}_{\uparrow} f^{}_{\uparrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} - 1) $$
+    \item Implement constraints by adding Lagrange multipliers $ \{ \lambda_i \}$ and extremesing too: $$ L \quad = \quad \ldots \quad + \quad \lambda_{\text{RN}} (f^{\dagger}_{\uparrow} f^{}_{\uparrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} - 1) $$
 
   \end{itemize}
   \end{frame}
 
-  % Want to mention that there may be multiple ways to implement a constraint, but these differ in how they act at mean field level
-
   \begin{frame}{Soft-Constraint Approach}
 
   \begin{itemize}
-    \item Now consider rewriting the same constraint: $$ (1 - n_{\uparrow} - n_{\downarrow})^2 = n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) = 0 $$
+    \item Now consider rewriting the same constraint: $$ (1 - n_{\uparrow} - n_{\downarrow})^2 = 0 $$
     \item Equivalent \textbf{but} can't be done at mean-field level since $$ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle \neq 0 $$
 
     \end{itemize}
@@ -231,13 +229,15 @@
 
   \end{frame}
 
-  %\section{Finite Field Study}
+  \begin{frame}{Unavoidable Phase Transition?}
+    \begin{itemize}
+      \item Can't seem to remove this phase transition
+      \item $ K $ still limited by $ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle \leq 1 $
+      \item Choosing $ K(T) $ made complicated since $ \widetilde{K} = K \langle h^{\dagger} h \rangle $
+      \item Have thermal occupation of $ h $ fermion too: $$ \langle h^{\dagger} h \rangle = \frac{1}{1 + e^{- \beta K \lambda_{\text{SC}}}} $$
+    \end{itemize}
 
-  %\begin{frame}{Incorporating $ B \neq 0 $}
-  %\end{frame}
-
-  %\begin{frame}{Increased Difficulty of Mean-Field Equations}
-  %\end{frame}
+  \end{frame}
 
   \section{Conclusion}
 
@@ -250,10 +250,6 @@
     \item SC introduces a new free parameter into description, but is seemingly not enough to remove second-order PT
   \end{itemize}
 
-  \end{frame}
-
-  \begin{frame}[standout]
-  Questions?
   \end{frame}
 
   \appendix
