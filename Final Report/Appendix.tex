@@ -1,0 +1,51 @@
+% !TEX root = Final_Report.tex
+
+\appendix
+
+\section{Constraints in the Lagrangian}
+\label{sec:Constraints}
+
+The way that constraints can be implemented into the Lagrangian is illustrated in the following example. Suppose that we wanted to implement the constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 $, say, which would be equivalent to having a partition function $$ Z = \Tr{\left[ e^{- \beta H}~\delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} \right]} . $$ We could then express the constraint as $$ \delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} = \int_{0}^{2 \pi} \frac{\,d\alpha}{2 \pi}~e^{- i \alpha (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} = \int_{0}^{2 \pi i k_B T} \frac{\,d \lambda}{2 \pi i k_B T} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)}, $$ where we have written $ \lambda = i \alpha k_B T $. Absorbing various factors into the measure of integration, we may now write: $$ Z = \int \, \mathcal{D} [\lambda]~\Tr{\left[ e^{- \beta H} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} \right]} \,. $$ Imposing this constraint can therefore be seen to be equivalent to modifying the original path integral and including an extra term in the Lagrangian: $$ L \rightarrow L - \lambda \left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right) \,. $$ In fact, this is actually the Read-Newns constraint that is imposed on the occupation of the fermions $ f^{}_{\sigma} $ (with $ \sigma \in \{ \uparrow , \downarrow \}$) representing the localised spin of the magnetic impurity.
+
+\section{Divergent Mean-Field Parameter}
+\label{sec:Divergence}
+
+To see why imposing $ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle = 0 $ leads to a divergent mean-field parameter, one may appreciate that by virtue of positive semi-definiteness, the mean-field condition \[ \frac{\, \delta Z}{\, \delta \lambda(\tau)} \Bigr|_{\bar{\lambda}} = 0 \] essentially becomes a condition on the integrand itself (namely something like $ P e^{- \int \, d\tau \bar{\lambda} P} = 0 $ for the constraint $ P $), which forces $ \bar{\lambda} \rightarrow \infty $.
+
+\section{Deriving the Helmholtz Free Energy}
+\label{sec:Free_Energy}
+
+The Lagrangian of Eq~\eqref{eq:Lagrangian} now has all fermionic fields in quadratic form, since this was the purpose of the auxiliary bosons in the first place. One may therefore perform standard Gaussian integration over the Grassman variables to get an expression involving the determinant of the action,
+
+% TODO: Make this equation less of an eyesore
+
+\[
+L \quad = \quad \sum_{\sigma}
+\begin{pmatrix} \cdots & c^{\dagger}_{k,\sigma} & \cdots & f^{\dagger}_{\sigma} \end{pmatrix}
+\begin{pmatrix} & & & \\ &(\epsilon_{k} + \partial_{\tau}) \delta_{k, k'} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} + \partial_{\tau}) \end{pmatrix}
+\begin{pmatrix} \vdots \\ c^{\dagger}_{k',\sigma} \\ \vdots \\ f^{\dagger}_{\sigma} \end{pmatrix}
+\quad + \quad \hdots
+\]
+
+\[
+\rightarrow \qquad \sum_{\sigma, n} \quad \ln \det
+\begin{pmatrix} & & & \\ &(\epsilon_{k} - i \omega_{n}) \delta_{k, k'} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} - i \omega_{n}) \end{pmatrix}
+\quad + \quad \hdots \quad ,
+\]
+
+which involves a summation over Matsubara frequencies $ \omega_{n} $. The mean-field impurity electron contribution to the Helmholtz free energy is therefore
+
+\[
+F = - T \sum_{\sigma, n} \ln{\left(- i \omega_{n} + \lambda_{\sigma} + \sum_{k} \frac{z_{\sigma}^{2} |V|^{2}}{i \omega_{n} - \epsilon_{k}}\right)} \quad + \quad \cdots \quad ,
+\]
+
+where $ \cdots $ now includes the conduction electron contribution and all the other constraint terms previously present in the Lagrangian.
+
+% Pages 675, 679 & 730 (+ 593 for the sgn(omega) part)
+% All it does is put in V*z instead of V
+
+% Will have to involve some Matsubara frequency stuff
+% Go through the derivation of the Helmholtz free energy for the question, which should be pretty similar to Piers Coleman's result
+% Probably leave this until last because it isn't essential
+
+\section{Manipulating the Mean-Field Equations}
