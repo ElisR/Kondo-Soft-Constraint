@@ -1,5 +1,7 @@
+% !TEX root = Final_Report.tex
+
 \documentclass[12pt]{article}
-\usepackage[a4paper, total={6.5in, 10in}]{geometry}
+\usepackage[a4paper, total={6.5in, 9.5in}]{geometry}
 %\usepackage[utf8]{inputenc}
 
 \usepackage{amsmath}
@@ -87,7 +89,7 @@ One existing mean-field approach is that of Read and Newns \cite{ReadNewns}, whi
 
 A resolution to this issue is to begin by introducing an auxiliary non-interacting fermion $ h $ that is constrained to be trivially empty through imposing $ h^{\dagger} h = 0 $. One then combines this constraint with that of Eq~\eqref{eq:HardConstraint} by imposing instead: \begin{equation} n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) - K h^{\dagger} h = 0\,, \end{equation} such that $ K > 0, K \neq 1 $ now encapsulates both constraints. Notice that this has introduced an arbitrary parameter $ K $ into the problem and thus a new degree of freedom, but has allowed us to circumvent the issues related to the previous hard constraint within mean-field theory. For this reason, this approach to mean-field theory has been internally referred to as the \emph{soft constraint approach}.
 
-Proceeding in a similar fashion to the Read-Newns approach and incorporating four Kotliar-Ruckenstein \cite{KotliarRuckenstein} slave bosons, one obtains the following Lagrangian:
+Proceeding in a similar fashion to the Read-Newns approach and incorporating four Kotliar-Ruckenstein (KR) \cite{KotliarRuckenstein} slave bosons, one obtains the following Lagrangian:
 \begin{align}
 \begin{split}
 L \quad = \quad &\sum_{k,\sigma} c^{\dagger}_{k,\sigma} \left( \frac{d}{\,d\tau} + \epsilon_k - \mu \right) c^{}_{k,\sigma} + \sum_{\sigma} f^{\dagger}_{\sigma} \frac{d}{\,d\tau} f^{}_{\sigma} + h^{\dagger} \frac{d}{\,d\tau}h \\
@@ -97,7 +99,7 @@ L \quad = \quad &\sum_{k,\sigma} c^{\dagger}_{k,\sigma} \left( \frac{d}{\,d\tau}
 &+ 2 \frac{V V^{\ast}}{J} + \sum_{k,\sigma} \left( V^{\ast} c^{\dagger}_{k,\sigma} z^{}_{\sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} z^{\dagger}_{\sigma} c^{}_{k,\sigma} \right) \,.\label{eq:Lagrangian}
 \end{split}
 \end{align}
-The slave bosons $ e $, $ p_{\uparrow} $, $ p_{\downarrow} $ and $ d $ represent empty, singly occupied and doubly occupied states, respectively, as long as the fermion operator is suitably transformed to `update the books', so to speak: \footnote{The conventional transformation $ z^{}_{\sigma} \rightarrow (1 - d^{\dagger} d - p^{\dagger}_{\sigma} p^{}_{\sigma})^{- 1 / 2} z^{}_{\sigma} (1 - e^{\dagger} e - p^{\dagger}_{- \sigma} p^{}_{- \sigma})^{- 1 / 2} $ is also applied, but is not relevant to this discussion.} \begin{equation} f^{}_{\sigma} \rightarrow z^{}_{\sigma} f^{}_{\sigma}\,, \qquad z_{\sigma} = e^{\dagger} p^{}_{\sigma} + p^{\dagger}_{-\sigma} d \,. \end{equation} A so-called Hubbard-Stratonovich transformation has also been applied to remove certain unpleasant terms in the Lagrangian, framing the interaction in terms of a new bosonic field $ V $.
+The slave bosons $ e $, $ p_{\uparrow} $, $ p_{\downarrow} $ and $ d $ represent empty, singly occupied and doubly occupied states, respectively, as long as the fermion operator is suitably transformed to `update the books', so to speak: \footnote{The conventional transformation $ z^{}_{\sigma} \rightarrow (1 - d^{\dagger} d - p^{\dagger}_{\sigma} p^{}_{\sigma})^{- 1 / 2} z^{}_{\sigma} (1 - e^{\dagger} e - p^{\dagger}_{- \sigma} p^{}_{- \sigma})^{- 1 / 2} $ is also applied, but is not relevant to this discussion.} \begin{equation} f^{}_{\sigma} \rightarrow z^{}_{\sigma} f^{}_{\sigma}\,, \qquad z_{\sigma} = e^{\dagger} p^{}_{\sigma} + p^{\dagger}_{-\sigma} d \,. \end{equation} A Hubbard-Stratonovich transformation has also been applied to remove certain unpleasant terms in the Lagrangian, framing the interaction in terms of a new bosonic field $ V $.
 
 % Don't say that the conventional transformation is not relevant, mention the slave boson review i.e. that including this means that the U=0 Anderson model can be recovered
 % In this representation we have chosen to quantize along the z-axis, though it is possible to use Kotliar-Ruckenstein slave bosons in a rotationally invariant way
@@ -110,7 +112,7 @@ As a first step towards constructing the temperature-field phase diagram, it wil
 
 \subsection{Obtaining Mean-Field Equations}
 
-We start by deriving the self-consistency equations that must hold for the mean-field description of the system. Since $ F = - k_{\text{B}} T \ln{Z} $, searching for the minimal action is equivalent to directly minimising of $ F $, illustrating a correspondence between the path integral and a more traditional way of approaching mean-field theory. Having introduced new bosonic fields Lagrangian of Eq~\eqref{eq:Lagrangian}, all fermionic fields may be integrated out as outlined in Appendix~\ref{sec:Free_Energy} to obtain an effective free energy
+We start by deriving the self-consistency equations that must hold for the mean-field description of the system. Since $ F = - k_{\text{B}} T \ln{Z} $ \footnote{We shall set $ k_{\text{B}} = 1 $ for the remainder of the project.}, searching for the minimal action is equivalent to directly minimising of $ F $, illustrating a correspondence between the path integral and a more traditional way of approaching mean-field theory. Having introduced new bosonic fields to the Lagrangian of Eq~\eqref{eq:Lagrangian}, all fermionic fields may be integrated out as outlined in Appendix~\ref{sec:Free_Energy} to obtain an effective free energy
 \begin{align}
 \begin{split}
 F \quad = \quad & \overbrace{- 2 T~\Re~{\sum_{\sigma}\ln{\left[\frac{\widetilde{\Gamma}(\xi_{\sigma} + D)}{\widetilde{\Gamma}(\xi_{\sigma})} \right]}}}^{F_0} + \frac{2 \Delta}{\pi \rho J} - \sum_{\sigma} \lambda_{\sigma} (p_{\sigma}^2 + d^2)\\
@@ -119,7 +121,7 @@ F \quad = \quad & \overbrace{- 2 T~\Re~{\sum_{\sigma}\ln{\left[\frac{\widetilde{
 \end{split}
 \end{align}
 
-in terms of the \textit{gamma function} $ \widetilde{\Gamma} (z) \equiv \Gamma (\frac{1}{2} + \frac{z}{2 \pi i T}) $ and $ \xi_{\sigma} = \lambda_{\sigma} + i |z_{\sigma}|^2 \Delta $, a complex resonance-level energy made slightly different by the inclusion of the Kotliar-Ruckenstein term.
+in terms of the \textit{gamma function} $ \widetilde{\Gamma} (z) \equiv \Gamma (\frac{1}{2} + \frac{z}{2 \pi i T}) $ and $ \xi_{\sigma} = \lambda_{\sigma} + i |z_{\sigma}|^2 \Delta $, a complex resonance-level energy made slightly different by the inclusion of the KR term.
 
 % Give an explanation of terms
 
@@ -127,9 +129,10 @@ Note that the temperature dependence of this free energy is solely contained in 
 
 \begin{equation}
 \frac{\partial F}{\partial \Delta} = 0 \implies \sum_{\sigma} \left[ \frac{\partial F_{0}}{\partial \xi_{\sigma}} - \frac{\partial F_{0}}{\partial \overline{\xi_{\sigma}}} \right] i z^2_{\sigma} = - \frac{2}{\pi J \rho} ~ .
+\label{eq:MF_delta}
 \end{equation}
 
-Though strictly free to only treat bosonic variables as complex numbers, we also restrict our search to real solutions, leading to one equation for each Kotliar-Ruckenstein boson \footnote{This may be partly justified by the phase invariance of most terms apart from $ | z_{\sigma} |^2 $.}: % Give more information in the footnote about how giving different phases to e d p could mess things up
+Though strictly free to only treat bosonic variables as complex numbers, we also restrict our search to real solutions, leading to one equation for each KR boson \footnote{This may be partly justified by the phase invariance of most terms apart from $ | z_{\sigma} |^2 $.}: % Give more information in the footnote about how giving different phases to e d p could mess things up
 
 \begin{align}
 \frac{\partial F}{\partial d} = 0 &\implies \sum_{\sigma} \left[ \frac{\partial F_{0}}{\partial \xi_{\sigma}} - \frac{\partial F_{0}}{\partial \overline{\xi_{\sigma}}} \right] \frac{\partial z^2_{\sigma}}{\partial d} ~ i \Delta = -d ~ ( \lambda_{\text{KR}} + \lambda_{\text{SC}} -  \sum_{\sigma} \lambda_{\sigma} ) ~ , \label{eq:MF_d} \\
@@ -137,33 +140,21 @@ Though strictly free to only treat bosonic variables as complex numbers, we also
 \frac{\partial F}{\partial p_{\sigma}} = 0 &\implies \sum_{s} \left[ \frac{\partial F_{0}}{\partial \xi_{s}} - \frac{\partial F_{0}}{\partial \overline{\xi_{s}}} \right] \frac{\partial z^2_{s}}{\partial p_{\sigma}} ~ i \Delta = - p_{\sigma} ~ (\lambda_{\text{KR}} - \lambda_{\sigma}) ~ . \label{eq:MF_p}
 \end{align}
 
-Use of the chain rule means that the difficult derivative term
+The form of the $ \partial z^2_{\sigma} $ derivative terms are irrelevant for the time being, but are found in Appendix~\ref{sec:MF_eq_details}. Use of the chain rule means that the difficult derivative term
 \begin{equation}
 \frac{\partial F_{0}}{\partial \xi_{\sigma}} - \frac{\partial F_{0}}{\partial \overline{\xi_{\sigma}}} = \frac{i}{\pi} \Re{( \widetilde{\psi}(\xi_{\sigma} + D) - \widetilde{\psi}(\xi_{\sigma}))}
 \end{equation}
 appears many times, where $ \psi(z) \equiv \frac{d}{\,dz}(\ln{\Gamma(z)}) $ defines the \textit{digamma function}.
 
-The remaining derivatives of $ z^2_{\sigma} $ may be calculated quite easily as:
-\begin{equation}
-\frac{\partial z^2_{\sigma}}{\partial d} = \left( \frac{d}{1 - d^2 - p^2_{\sigma}} + \frac{p_{-\sigma}}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial e} = \left( \frac{e}{1 - e^2 - p^2_{-\sigma}} + \frac{p_{\sigma}}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~,
-\end{equation}
-
 % Change all the - \sigma to a \overline{\sigma}
 
-\begin{equation}
-\frac{\partial z^2_{\sigma}}{\partial p_{\sigma}} = \left( \frac{p_{\sigma}}{1 - d^2 - p^2_{\sigma}} + \frac{e}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial p_{-\sigma}} = \left( \frac{p_{\sigma}}{1 - e^2 - p^2_{\sigma}} + \frac{d}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~.
-\end{equation}
-
 Finally, imposing Lagrange multiplier constraints completes the set of mean-field equations:
-
 \begin{align}
 \frac{\partial F}{\partial \lambda_{\sigma}} = 0 &\implies \left[ \frac{\partial F_{0}}{\partial \xi_{\sigma}} + \frac{\partial F_{0}}{\partial \overline{\xi_{\sigma}}} \right] = (p^2_{\sigma} + d^2) ~ , \label{eq:MF_lambda_sigma} \\
 \frac{\partial F}{\partial \lambda_{\text{KR}}} = 0 &\implies e^2 + \sum_{\sigma} p^2_{\sigma} + d^2 = 1 ~ , \label{eq:MF_lambda_KR} \\
-\frac{\partial F}{\partial \lambda_{\text{SC}}} = 0 &\implies e^2 + d^2 = K \langle h^{\dagger} h \rangle ~ , \label{eq:MF_lambda_SC}
+\frac{\partial F}{\partial \lambda_{\text{SC}}} = 0 &\implies e^2 + d^2 = K \langle h^{\dagger} h \rangle \equiv \kappa ~ , \label{eq:MF_lambda_SC}
 \end{align}
-
 where the other combination of difficult derivatives is
-
 \begin{equation}
 \frac{\partial F_{0}}{\partial \xi_{\sigma}} + \frac{\partial F_{0}}{\partial \overline{\xi_{\sigma}}} = - \frac{1}{\pi} \Im{( \widetilde{\psi}(\xi_{\sigma} + D) - \widetilde{\psi}(\xi_{\sigma}))} ~ .
 \end{equation}
@@ -178,27 +169,64 @@ where the other combination of difficult derivatives is
 
 \subsection{Solving Mean-Field Equations}
 
-Our aim now is to self-consistently satisfy the mean-field equations derived above. The absence of any magnetic field means that there is nothing to favour any particular configuration of the magnetic impurity, so we should expect the existence of a solution with $ p_{\uparrow} = p_{\downarrow} $ and $ \lambda_{\uparrow} = \lambda_{\downarrow} $, allowing us to drop spin indices $ \sigma $ throughout.
-
-Next, we shall make use of particle-hole symmetry to equate $ e^2 = d^2 $, which will dramatically simplify the mean-field equations. \footnote{Particle-hole symmetry comes out as a necessity in the Read-Newns mean-field approach, but here it is motivated by the belief that empty and doubly occupied pseudo-fermion states should be equally unphysical.}
-
-Subtracting Eq~\eqref{eq:MF_e} and Eq~\eqref{eq:MF_d} now immediately implies $ \lambda_{\sigma} = 0 $, which means that the complex energy $ \xi = i z^2 \Delta $ is now purely imaginary.
+Our aim is to self-consistently satisfy the mean-field equations derived above. The absence of any magnetic field means that there is nothing to favour any particular configuration of the magnetic impurity, so we should expect the existence of a solution with $ p_{\uparrow} = p_{\downarrow} $ and $ \lambda_{\uparrow} = \lambda_{\downarrow} $, allowing us to drop spin indices $ \sigma $. Next, we shall make use of particle-hole symmetry to equate $ e^2 = d^2 $, which will dramatically simplify the mean-field equations. \footnote{Particle-hole symmetry comes out as a necessity in the Read-Newns mean-field approach, but here it is motivated by the belief that empty and doubly occupied pseudo-fermion states should be equally unphysical.}
 
 % Want to have some discussion of particle hole symmetry
 
-\subsubsection{Importance of $ \lambda_{\text{SC}} > 0 $}
+These simplifications mean that the occupation of each KR boson is entirely determined by $ \kappa $ as:
+\begin{equation}
+e^2 = d^2 = \frac{1}{2} ~ \kappa \quad \text{and} \quad p^2 = \frac{1}{2} (1 - \kappa) ~ .
+\end{equation}
 
-In identifying $ \kappa = K \langle h^{\dagger} h \rangle $ as a free parameter, we should be certain that $ \lambda_{\textsc{SC}} > 0 $, since the thermal occupation of $ h $ takes on a familiar Fermi-Dirac form $$ \langle h^{\dagger} h \rangle = - \frac{1}{K} \frac{\partial F_{\text{h}}}{\partial \lambda_{\text{SC}}} = \frac{1}{1 + e^{- \beta K \lambda_{\text{SC}}}} ~. $$ If one were to find that $ \lambda_{\text{SC}} < 0 $, then in the zero-temperature limit one would have $ \langle h^{\dagger} h \rangle \rightarrow 0 $ meaning that the freedom to choose $ \kappa $ would disappear, thereby nullifying any freedom to choose the soft-constraint parameter $ K $.
+Subtracting Eq~\eqref{eq:MF_e} and Eq~\eqref{eq:MF_d} immediatley implies $ \lambda_{\sigma} = 0 $, which means that the complex energy $ \xi = i z^2 \Delta $ is now purely imaginary. Combining Eq~\eqref{eq:MF_lambda_sigma} and Eq~\eqref{eq:MF_lambda_KR} leads to $$ \frac{1}{2} = \frac{\partial F_0}{\partial \xi} + \frac{\partial F_0}{\partial \overline{\xi}} \approx - \frac{1}{\pi} \Im{\left[ \ln{\frac{D}{2 \pi i T}} - \widetilde{\psi}(\xi) \right]} ~ , $$ where we have used the large bandwidth $ D \gg T, \xi $ to make the leading order approximation that $ \psi(z) \approx \ln{z} $ for large $ z $. Taking the principal value of the complex logarithm then leads to the result that $$ \Im{\left[ \psi \left( \frac{1}{2} + \frac{\xi}{2 \pi i T} \right) \right] = 0} ~ , $$ which is merely consistent with the $ \lambda_{\sigma} = 0 $ conclusion that arose immediately from particle-hole symmetry and so tells us nothing new.
+
+Turning to Eq~\eqref{eq:MF_delta} and making the same approximations, we may derive an implicit relation for $ \Delta $ in terms of $ T $ and $ \kappa $, similar to that found in \cite{ManyBodyPhysics}:
+\begin{equation}
+\psi \left( \frac{1}{2} + \frac{z^2 \Delta}{2 \pi T} \right) = \ln{\frac{D}{2 \pi T}} - \frac{1}{J \rho z^2} ~ .
+\label{eq:soln_delta}
+\end{equation}
+Finding the finite-temperature behaviour of the order parameter is therefore a case of inverting this relation for $ \Delta $, though it will not be possible to find an expression in terms of elementary functions. % Maybe citation
+
+\subsubsection{Importance of $ \lambda_{\text{SC}} \geq 0 $}
+
+In identifying $ \kappa = K \langle h^{\dagger} h \rangle $ as a free parameter, we should be certain that $ \lambda_{\textsc{SC}} > 0 $, since the thermal occupation of $ h $ takes on a familiar Fermi-Dirac form $$ \langle h^{\dagger} h \rangle = - \frac{1}{K} \frac{\partial F_{\text{h}}}{\partial \lambda_{\text{SC}}} = \frac{1}{1 + e^{- \beta K \lambda_{\text{SC}}}} ~. $$ If one were to find that $ \lambda_{\text{SC}} < 0 $, then the zero-temperature limit would have $ \langle h^{\dagger} h \rangle \rightarrow 0 $, thereby nullifying any freedom to choose $ K $.
+
+Solving the remainder of the mean-field equations for $ \lambda_{\text{SC}} $, we find that
+\begin{equation}
+\lambda_{\text{SC}} = \frac{2 \Delta}{\pi J \rho} \left( 4 + \frac{1}{\kappa} + \frac{1}{1 - \kappa} \right) \geq 0 ~,
+\label{eq:soln_lambda_SC} % Might want to double check this equation
+\end{equation} which means $ \langle h^{\dagger} h \rangle \in (\frac{1}{2}, ~ 1) $ and so we may indeed treat $ \kappa $ as our free parameter (for the time being).
 
 \subsection{Zero-Temperature Heat Capacity}
 
-As a quick check of validity of the above solution, one hopes that the zero-temperature limit should reproduce the leading order temperature dependence obtained from expanding the Fermi function around $ T = 0 $, something that has already been done using the soft-constraint.
+As a quick check of validity of the above solution, one hopes that the zero-temperature limit should reproduce the leading order temperature dependence obtained from expanding the Fermi function around $ T = 0 $, something that has already been done using the soft-constraint approach \cite{Draft}.
 
-Knowing that this particular response function is derived from the free energy as $ C = \frac{\partial E}{\partial T} = - T \frac{\partial^{2} F}{\partial T ^2} $, we start by finding the leading order behaviour of $ \frac{\partial F}{\partial T} $.
+Knowing that this particular response function is derived from the free energy as $ C = \frac{\partial E}{\partial T} = - T \frac{\partial^{2} F}{\partial T ^2} $, we start by finding the leading order behaviour of $ \frac{\partial F}{\partial T} $ from the minimised form of the free energy:
+\begin{equation}
+F^{\star} = \underbrace{- 4 T ~ \Re{ ~ \ln{\left[ \frac{\widetilde{\Gamma}(i z^2 \Delta + D)}{\widetilde{\Gamma}(i z^2 \Delta)} \right]}}}_{F_0^{\star}} + \frac{2 \Delta}{\pi J \rho} + \overbrace{\kappa \lambda_{\text{SC}}  - T \ln{\left( 1 + e^{\beta K \lambda_{\text{SC}}} \right)}}^{F_{\text{h}}^{\star}} ~ .
+\end{equation}
+It can be seen that the final term $ F_{\text{h}}^{\star} \approx - \kappa \lambda_{\text{SC}} e^{- \beta K \lambda_{\text{SC}}} $ will vanish quickly as $ T \rightarrow 0 $ in comparison to the first two terms, so we may safely neglect this contribution at leading order in $ T $.
 
-% Need to double check the lambda_SC terms disappear
+Anticipating that explicitly calculating the inverse of Eq~\eqref{eq:soln_delta} will be somewhat difficult, we may find an expression for $ \frac{d \Delta}{d T} $ by inverting the chain rule $$ \frac{d \psi}{dT} = \frac{d \psi}{du} \frac{\partial u}{\partial \Delta} \frac{d \Delta}{d T} + \frac{d \psi}{du} \frac{\partial u}{\partial T} \implies \frac{d \Delta}{d T} = \left( \frac{d \psi}{dT} \left[ \frac{d \psi}{d u} \right]^{-1} - ~ \frac{\partial u}{\partial T} \right) \left[ \frac{\partial u}{\partial \Delta} \right]^{-1} ,$$ where $ u \equiv \frac{1}{2} + \frac{z^2 \Delta}{2 \pi T} $ denotes the argument of $ \psi(u) $. Thus, the only non-trivial derivative term left to calculate is $ \left[ \frac{d \psi}{d u} \right]^{-1} $ which, using the asymptotic expansion of $ \ln{\Gamma(u)} $ \footnote{The asymptotic expansion of $ \ln{\Gamma(u)} $, known as \textit{Stirling's series}, is given by $$ \ln{\Gamma(u)} = \frac{1}{2} \ln{2 \pi} + u (\ln{u} - 1) - \frac{1}{2} \ln{u} + \frac{1}{12u} - \frac{1}{360 u^3} + \ldots ~. $$}, is calculated as $ \left[ \frac{d \psi}{du} \right]^{-1} = ~ u - \frac{1}{2} + \frac{1}{12 u} + \ldots ~ . $ This gives the leading-order temperature dependence of the order parameter as
+\begin{equation}
+\frac{d \Delta}{d T} \approx - \frac{\pi^2}{3} \frac{T}{z^4 \Delta} ~ ,
+\label{eq:delta_derivative}
+\end{equation}
+reproducing a previous result in \cite{Draft}.
 
-The finite-temperature mean-field equations therefore provide an alternative derivation of the zero-temperature heat capacity, needed for the Wilson ratio.
+The remaining derivative may be performed by using the same asymptotic expansion of the first line of
+\begin{align*}
+- \frac{1}{4} \frac{d F_{0}^{\star}}{dT} =& ~ \Re \ln{\widetilde{\Gamma}(i z^2 \Delta + D)} - \Re \ln{\widetilde{\Gamma}(i z^2 \Delta)} - \Re{\left[ \frac{D}{2 \pi i T} ~ \widetilde{\psi}(i z^2 \Delta + D) \right]} \\
+& + \frac{z^2}{2 \pi} \left( \frac{d \Delta}{d T} - \frac{\Delta}{T} \right) \Re{\left[ \widetilde{\psi}(i z^2 \Delta + D) - \widetilde{\psi}(i z^2 \Delta) \right]} \\
+=& - \frac{\pi}{6} \frac{T}{z^2 \Delta} + \frac{1}{2 \pi J \rho} \frac{d \Delta}{d T} + \ldots ~ .
+\end{align*}
+
+Upon combining all derivative terms, the zero-temperature heat capacity is found to be
+\begin{equation}
+C = \frac{2 \pi}{3} \frac{T}{z^2 \Delta} + \ldots ~ ,
+\label{eq:heat_capacity}
+\end{equation}
+once again reassuringly consistent with the result obtained from the first-order correction to the Fermi function \cite{Draft}. The finite-temperature mean-field equations therefore provide an alternative derivation of this limit of the heat capacity.
 
 % Maybe put some of the calculations into an appendix?
 % Mention that this had already been done in the draft paper by using a Fermi function approximation
@@ -220,11 +248,17 @@ The finite-temperature mean-field equations therefore provide an alternative der
 \input{Appendix}
 
 \begin{thebibliography}{1}
+% Maybe look at doing the bibliography with a separate .bib file
 
 \bibitem{ManyBodyPhysics}
 P. Coleman
 \emph{Introduction to Many Body Physics}
 Cambridge University Press (2015)
+
+\bibitem{Draft}
+G. Goldstein, C. Castelnovo and C. Chamon
+\emph{Mean-Field Method for Handling Null Constraints on Positive-Semidefinite Operators}
+Draft (2017)
 
 \bibitem{KotliarRuckenstein}
 G. Kotliar and A. E. Ruckenstein
@@ -238,6 +272,8 @@ N. Read, and D. M. Newns
 % Include Piers Coleman's slave boson mean field theory paper
 % Include large N
 % Include the Slave boson review
+
+% Give reference for Stirling's series http://mathworld.wolfram.com/StirlingsSeries.html
 
 \end{thebibliography}
 

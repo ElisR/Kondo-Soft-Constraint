@@ -5,7 +5,7 @@
 \section{Constraints in the Lagrangian}
 \label{sec:Constraints}
 
-The way that constraints can be implemented into the Lagrangian is illustrated in the following example. Suppose that we wanted to implement the constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 $, say, which would be equivalent to having a partition function $$ Z = \Tr{\left[ e^{- \beta H}~\delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} \right]} . $$ We could then express the constraint as $$ \delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} = \int_{0}^{2 \pi} \frac{\,d\alpha}{2 \pi}~e^{- i \alpha (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} = \int_{0}^{2 \pi i k_B T} \frac{\,d \lambda}{2 \pi i k_B T} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)}, $$ where we have written $ \lambda = i \alpha k_B T $. Absorbing various factors into the measure of integration, we may now write: $$ Z = \int \, \mathcal{D} [\lambda]~\Tr{\left[ e^{- \beta H} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} \right]} \,. $$ Imposing this constraint can therefore be seen to be equivalent to modifying the original path integral and including an extra term in the Lagrangian: $$ L \rightarrow L - \lambda \left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right) \,. $$ In fact, this is actually the Read-Newns constraint that is imposed on the occupation of the fermions $ f^{}_{\sigma} $ (with $ \sigma \in \{ \uparrow , \downarrow \}$) representing the localised spin of the magnetic impurity.
+The way that constraints can be implemented into the Lagrangian is illustrated in the following example. Suppose that we wanted to implement the constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 $, say, which would be equivalent to having a partition function $$ Z = \Tr{\left[ e^{- \beta H}~\delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} \right]} . $$ We could then express the constraint as $$ \delta{\left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right)} = \int_{0}^{2 \pi} \frac{\,d\alpha}{2 \pi}~e^{- i \alpha (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} = \int_{0}^{2 \pi i k_B T} \frac{\,d \lambda}{2 \pi i k_B T} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)}, $$ where we have written $ \lambda = i \alpha k_B T $. Absorbing various factors into the measure of integration, we may now write: $$ Z = \int \, \mathcal{D} [\lambda]~\Tr{\left[ e^{- \beta H} e^{- \beta \lambda (\sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1)} \right]} \,. $$ Imposing this constraint can therefore be seen to be equivalent to modifying the original path integral and including an extra term in the Lagrangian: $$ L \rightarrow L + \lambda \left( \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} - 1 \right) \,. $$ In fact, this is actually the Read-Newns constraint that is imposed on the occupation of the fermions $ f^{}_{\sigma} $ (with $ \sigma \in \{ \uparrow , \downarrow \}$) representing the localised spin of the magnetic impurity.
 
 \section{Divergent Mean-Field Parameter}
 \label{sec:Divergence}
@@ -48,4 +48,14 @@ where $ \cdots $ now includes the conduction electron contribution and all the o
 % Go through the derivation of the Helmholtz free energy for the question, which should be pretty similar to Piers Coleman's result
 % Probably leave this until last because it isn't essential
 
-\section{Manipulating the Mean-Field Equations}
+\section{Further Details of the Mean-Field Equations}
+\label{sec:MF_eq_details}
+
+The derivatives of $ z^2_{\sigma} $ may be calculated quite easily as:
+\begin{equation}
+\frac{\partial z^2_{\sigma}}{\partial d} = \left( \frac{d}{1 - d^2 - p^2_{\sigma}} + \frac{p_{-\sigma}}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial e} = \left( \frac{e}{1 - e^2 - p^2_{-\sigma}} + \frac{p_{\sigma}}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~,
+\end{equation}
+
+\begin{equation}
+\frac{\partial z^2_{\sigma}}{\partial p_{\sigma}} = \left( \frac{p_{\sigma}}{1 - d^2 - p^2_{\sigma}} + \frac{e}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial p_{-\sigma}} = \left( \frac{p_{\sigma}}{1 - e^2 - p^2_{\sigma}} + \frac{d}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~.
+\end{equation}
