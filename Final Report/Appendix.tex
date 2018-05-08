@@ -2,6 +2,18 @@
 
 \appendix
 
+%Defining format of imported python code
+\newmintedfile[pythoncode]{python}{
+linenos=true,
+breaklines=true,
+fontsize=\footnotesize,
+tabsize=4,
+baselinestretch=0.7,
+}
+
+% How to import code:
+%\pythoncode{../Code/ising_grid_test.py}
+
 \section{Constraints in the Lagrangian}
 \label{sec:Constraints}
 
@@ -59,3 +71,33 @@ The derivatives of $ z^2_{\sigma} $ may be calculated quite easily as:
 \begin{equation}
 \frac{\partial z^2_{\sigma}}{\partial p_{\sigma}} = \left( \frac{p_{\sigma}}{1 - d^2 - p^2_{\sigma}} + \frac{e}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial p_{-\sigma}} = \left( \frac{p_{\sigma}}{1 - e^2 - p^2_{\sigma}} + \frac{d}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~.
 \end{equation}
+
+\section{Impossibility of Asymptotically Approaching $ \Delta = 0 $}
+
+The mean-field condition
+\begin{equation}
+\Re{\left[ \psi \left( \frac{1}{2} + \frac{i z^2 \Delta + D}{2 \pi i T} \right) - \psi \left( \frac{1}{2} + \frac{i z^2 \Delta}{2 \pi i T} \right) \right] = \frac{1}{J \rho ~ z^2}} ~ ,
+\end{equation}
+is incompatible with a limit in which $ \Delta \rightarrow 0 $ as $ T \rightarrow \infty $ \footnote{Not that the Kondo model would be valid at such a temperature, in any case.}, unless one could also have $ z^2 = 4 \kappa (1 - \kappa) $ also diverging which, by the restriction on the magnitude of $ \kappa $ for validity of the soft-constraint approach, is forbidden.
+
+% Probably remove this bad appendix
+
+\section{Relating $ \frac{d^2 F}{d T^2} $ to $ \frac{d \Delta}{d T} $}
+
+% Show the derivative of F^{\star} and why 
+
+\section{Code Excerpts}
+\label{sec:code}
+
+This section contains code used to plot figures in this report. Code for the entire project, along with version history, may be found in the following \textit{GitHub} repository:
+
+%\center{\url{https://github.com/ElisR/Kondo-Soft-Constraint}}
+\begin{center}
+\texttt{https://github.com/ElisR/Kondo-Soft-Constraint}
+\end{center}
+
+\subsection{Solving the Equations in Parametric Form}
+\pythoncode{../Code/New_Term_Parametric.py}
+
+\subsection{Plotting $ \Delta $ Parametrically}
+\pythoncode{../Code/Plot_Parametric.py}

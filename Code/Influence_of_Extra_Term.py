@@ -37,13 +37,14 @@ def MF_delta(T, k_T):
 
     z2 = 4 * k_T * (1 - k_T)
 
-    psi_tilde = - np.log(2 * np.pi) - np.log(T)
-    - 0.5 * np.log(rho * J) + (1 - 1 / z2) / (rho * J)
+    # This line previously had a huge error in it
+    psi_tilde = - np.log(2 * np.pi) - np.log(T) - 0.5 * np.log(rho * J) + (1 - 1 / z2) / (rho * J)
 
     argument_tilde = digamma_inv(psi_tilde)
     delta = (argument_tilde - 0.5) * (2 * T * np.pi / z2)
 
-    return (delta >= 0) * delta
+    #return (delta >= 0) * delta
+    return delta
 
 
 def MF_lambda_SC(Temp):
@@ -121,38 +122,22 @@ def K(T):
     return K_0
 
 
-def K_exp(T):
-    """
-    Returns an SC parameter decaying exponentially
-    """
-
-    Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
-    K_0 = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
-
-    K_T = K_0 * np.exp(- T / Tc)
-
-    return K_T
-
-
-def K_grow(T):
-    """
-    Returns an SC
-    """
-
-    Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
-    alpha = 2 * Tc / np.log(-0.5 * rho * J * np.log(rho * J))
-
-    K_T = 0.5 * (1 - np.exp((Tc - T) / alpha))
-
-    return K_T
-
-
 def k(lambda_SC, T, K_T):
     """
     Returns the value of the temperature dependent κ
     """
 
     return K_T / (1 + np.exp(- K_T * lambda_SC / T))
+
+def k_smooth(T):
+    """
+    Returns a value of (constant) kappa that seems to remove a phase transition
+    """
+
+    change = 0.018
+    gradient = 4.25
+
+    return (change / np.cosh(5 * T)) + K(T) + change * np.tanh(gradient * (T - np.exp(- special.digamma(0.5)) / (2 * np.pi)))
 
 
 def plot_lambda_vs_T():
@@ -197,7 +182,7 @@ def plot_delta_vs_T():
     """
 
     # Measure T in units of T_K
-    Ts = np.linspace(0.01, 1.2, 250)
+    Ts = np.linspace(0.01, 1.5, 250)
 
     lambdas = np.zeros(np.size(Ts))
     ks = np.zeros(np.size(Ts))
@@ -206,40 +191,54 @@ def plot_delta_vs_T():
     deltas_up = np.zeros(np.size(Ts))
     deltas_down = np.zeros(np.size(Ts))
 
+    deltas_interp = np.zeros(np.size(Ts))
+
+    print("K = " + str(K(0.6)))
     for i in range(np.size(Ts)):
 
         T = Ts[i]
 
-        lambda_SC = MF_lambda_SC(T, K(T))
-        deltas[i] = MF_delta(T, k(lambda_SC, T, K(T)))
+        #lambda_SC = MF_lambda_SC(T, K(T))
+        deltas[i] = MF_delta(T, K(T))
 
-        lambda_SC_up = MF_lambda_SC(T, K_exp(T))
-        deltas_up[i] = MF_delta(T, k(lambda_SC_up, T, K_exp(T)))
+        #lambda_SC_up = MF_lambda_SC(T, K_exp(T))
+        deltas_up[i] = MF_delta(T, K(T) + 0.018)
 
-        lambda_SC_down = MF_lambda_SC(T, 0.5)
-        deltas_down[i] = MF_delta(T, k(lambda_SC_up, T, 0.5))
+        #lambda_SC_down = MF_lambda_SC(T, 0.5)
+        deltas_down[i] = MF_delta(T, K(T) - 0.018)
 
-        lambdas[i] = lambda_SC
-        ks[i] = k(lambda_SC, T, K(T))
+        # WORKS!?
+        deltas_interp[i] = MF_delta(T, (0.0095 / np.cosh(5 * T)) + K(T) + 0.0095 * np.tanh(8 * (T - np.exp(- special.digamma(0.5)) / (2 * np.pi))))
 
-    z2s = 4 * np.multiply(ks, (1 - ks))
+        deltas_interp[i] = MF_delta(T, k_smooth(T))
+
+
+        #lambdas[i] = lambda_SC
+        #ks[i] = k(lambda_SC, T, K(T))
+
+    #z2s = 4 * np.multiply(ks, (1 - ks))
 
     fig = plt.figure(figsize=(8.4, 8.4))
 
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    plt.fill_between(np.linspace(0, np.max(Ts), 10),
+    plt.fill_between(np.linspace(-0.2, np.max(Ts)+0.2, 10),
                      0, -0.5, color='#dddddd')
 
     plt.fill_between(Ts, deltas_up, deltas_down,
-                     facecolor='red', alpha=0.5)
+                     facecolor='blue', alpha=0.5)
 
-    plt.plot(Ts, deltas, "k-")
+    plt.plot(Ts, deltas, "k-", label=r'$ \kappa_0 $')
+    plt.plot(Ts, deltas_interp, "r-", label=r'$ \kappa (T) $')
+
+    plt.plot(Ts, deltas_down, "b:", label=r'$ \kappa_0 - \delta $')
+    plt.plot(Ts, deltas_up, "b--", label=r'$ \kappa_0 + \delta $')
 
 
     plt.xlabel(r'$ T / T_K $', fontsize=26)
     plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
+    plt.legend(fontsize=22, frameon=False)
 
     ax = plt.gca()
     ax.set_xlim([0, np.max(Ts)])
@@ -248,8 +247,8 @@ def plot_delta_vs_T():
 
     plt.axhline(y=0, linestyle='--', color='k')
 
-    plt.savefig("new_delta_vs_T.pdf", dpi=300,
-                format='pdf', bbox_inches='tight')
+    plt.savefig("range_delta_vs_T.pdf", dpi=300,
+                format='pdf', bbox_inches='tight', transparent=True)
     plt.clf()
 
 
@@ -352,9 +351,9 @@ def main():
     J = 0.4
 
     #plot_graphical_solution()
-    #plot_delta_vs_T()
+    plot_delta_vs_T()
     #plot_F_vs_T()
-    plot_lambda_vs_T()
+    #plot_lambda_vs_T()
 
 if __name__ == '__main__':
     main()
