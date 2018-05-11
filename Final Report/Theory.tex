@@ -3,13 +3,19 @@
 \section{Theoretical Background} % Remember to fix the sigma subscripts
 \label{sec:theory}
 
+% Maybe start off with local moments
+
 \subsection{Kondo Model}
 
 The Kondo model made its first appearance in 1964 when theorists were attempting to explain puzzling experimental observations made 30 years earlier that certain metals containing magnetic impurities showed minima in their resistivity as a function of temperature. Jun Kondo proposed the Kondo model to describe a new scattering mechanism introduced by magnetic impurities which accounted for the functional form of the resistivity.
 
-In its simplest single impurity flavour, the Kondo model has the following Hamiltonian: \begin{equation} H_{\text{Kondo}}=\sum_{\boldsymbol{k},\sigma}\epsilon_{\boldsymbol{k}} c_{\boldsymbol{k},\sigma}^{\dagger}c^{}_{\boldsymbol{k},\sigma}+J\vec{S}\cdot\vec{s}(0) , \label{eq:KondoHamiltonian}\end{equation} in which there is a kinetic energy contribution from the conduction electrons $ c^{}_{\boldsymbol{k}, \sigma}$ as well as a term describing an antiferromagnetic coupling between a spin localised at the origin and the spin density of conduction electrons at that point.\footnote{The spin density of conduction electrons is given by $$ \vec{s}(0) = \frac{1}{2} \sum_{\boldsymbol{k}, \boldsymbol{k'}} \sum_{\sigma, \sigma'} c^{\dagger}_{\boldsymbol{k}, \sigma} \vec{\tau}_{\sigma, \sigma'} c^{}_{\boldsymbol{k'}, \sigma'} ~, $$ where $ \vec{\tau}_{\sigma, \sigma'} $ is a vector of Pauli matrices.}
+In its simplest single impurity flavour, the Kondo model has the following Hamiltonian: \begin{equation} H_{\text{Kondo}}=\sum_{\boldsymbol{k},\sigma}\epsilon_{\boldsymbol{k}} c_{\boldsymbol{k},\sigma}^{\dagger}c^{}_{\boldsymbol{k},\sigma} + J\vec{S}\cdot\vec{s}(0) , \label{eq:KondoHamiltonian}\end{equation} in which there is a kinetic energy contribution from the conduction electrons $ c^{}_{\boldsymbol{k}, \sigma}$ (with $ \sigma \in \{ \uparrow , \downarrow \}$) as well as a term describing an antiferromagnetic coupling between a spin localised at the origin and the spin density of conduction electrons at that point.\footnote{$ \vec{s}(0) = \frac{1}{2} \sum_{\boldsymbol{k}, \boldsymbol{k'}} \sum_{\sigma, \sigma'} c^{\dagger}_{\boldsymbol{k}, \sigma} \vec{\tau}_{\sigma, \sigma'} c^{}_{\boldsymbol{k'}, \sigma'} ~, $ where $ \vec{\tau}_{\sigma, \sigma'} $ is a vector of Pauli matrices.}
 % Check the factor of 1/2 here
 
+% NEED A DESCRIPTION OF THE DIFFERENT PHASES AND THE TWO LIMITS ETC.
+% NEED TO RELATE IT TO THE RENORMALISATION GROUP CONCEPT
+
+% NEED TO MENTION THE KONDO TEMPERATURE
 
 % Should probably include a discussion of the Kondo model and things we know about its behaviour
 % Talk about Kondo resonance and the Kondo temperature
@@ -20,43 +26,118 @@ In its simplest single impurity flavour, the Kondo model has the following Hamil
 % Strongly correlated: can't think of things in terms of one-particle excitations
 % Great intellectual challenge and so new methods to be able to go some way in predicting new materials
 
+\subsection{The Path Integral}
+
+The theoretical calculations of this project are framed in terms of the path integral, which is an approach to statistical mechanics reminiscent of Feynman's path integral formulation of quantum mechanics. The partition function can be written as the functional integral over fermionic paths: $$ Z = \Tr{e^{- \beta H}} = \int \mathcal{D} [c^\dagger, c]~e^{-\int_{0}^{\beta} \,d\tau~L}\,, $$ from which many properties of the system may then be derived. Here, the equivalent \emph{action} involves integration of the Lagrangian $ L $ over an imaginary time $ \tau = i t / \hbar $ with an upper limit of $ \beta = \frac{1}{k_{\text{B}} T} $.\footnote{We shall set $ k_{\text{B}} = 1 $ for the remainder of this project.} Functional integration takes place over \emph{coherent states} of the fields, such that all creation and annihilation operators within the integrand may be replaced by complex or \emph{Grassman}\footnote{These have the property of anti-commutation (among others), as described in \cite{ManyBodyPhysics}.} numbers for bosons or fermions, respectively.
+
+Such a compact expression for the path integral hides a lot of complexity, however, since interacting Hamiltonians will generally involve non-quadratic terms that make this functional integral intractable. As it turns out, exact diagonalisation of the single-impurity Kondo model is actually possible, but relies on intensive \emph{Bethe ansatz} techniques \cite{BetheAnsatz}.
+% Maybe put this somewhere in the Kondo model section
+
 \subsection{Mean-Field Theory}
 
-The theoretical calculations of this project are framed in terms of the path integral, which is an approach to statistical mechanics reminiscent of Feynman's path integral formulation of quantum mechanics. The partition function can be written as the functional integral over fermionic paths: $$ Z = \Tr{e^{- \beta H}} = \int \mathcal{D} [c^\dagger, c]~e^{-\int_{0}^{\beta} \,d\tau~L}\,, $$ from which many properties of the system may then be derived.\footnote{One also replaces fermion operators with \emph{Grassman numbers} within the integral, which have the property of anti-commutation (among others).} Here, the equivalent \emph{action} involves integration of the Lagrangian $ L $ over an imaginary time $ \tau = i t / \hbar $ with an upper limit of $ \beta = \frac{1}{k_B T} $.
+The essence of mean-field theory is that we avoid performing the actual functional integration by approximating the integral by its saddle point, a step also known as the stationary phase approximation. In making this approximation, we are essentially imposing self-consistency conditions on whatever fields now appear in $ L $, making them take on their mean values. Thankfully, these mean-field self-consistency equations are exactly what result from directly minimising the effective action. This step greatly reduces the complexity of the problem and so one can easily construct mean-field theories for magnetism or other well-known models such as BCS theory \cite{ManyBodyPhysics}, for example. Mean-field theory also provides the minimal field configuration on top of which one could perturbatively include fluctuations to further understand the dynamics of a system.
 
-% Put the k_B footnote here
-
-% Don't be as informal with the word 'tricks'
-One then begins to employ many `tricks' to make the problem more tractable. One such trick that proves to be useful is the introduction of new boson operators, which sometimes (as we shall see) necessitates that hard constraints be applied in the form of Lagrange multipliers. The way that constraints are implemented into the Lagrangian is shown in Appendix~\ref{sec:Constraints}.
-
-The essence of mean-field theory is that we avoid performing the actual functional integration by approximating the integral by its saddle point, a step also known as the stationary phase approximation. In making this approximation, we are essentially imposing self-consistency conditions on whatever fields now appear in $ L $, making them take on their mean values. Thankfully, these mean-field self-consistency equations are exactly what result from directly minimising the effective action with respect to the auxiliary fields, which is what this project will involve.
+To get to a mean-field theory description of the Kondo model, however, it is beneficial to first transform the non-quadratic Lagrangian into a more manageable form. The general strategy will be to add further auxiliary-fields to the path integral such that the partition function remains unchanged, with the foresight that this added complexity will not be too burdensome at mean-field level because it will only require more field minimisation. Such transformations often necessitate that hard constraints be applied in the form of Lagrange multipliers, which is what this new approach will seek to do differently.\footnote{The way that constraints are usually implemented is shown in Appendix~\ref{sec:Constraints}.}
 
 % Maybe talk about how mean-field theory can be used to study BCS theory etc
 % Maybe mention extensions like Dynamical Mean-Field theory
 
-\subsubsection{Kotliar-Ruckenstein Bosons}
+\subsection{Read-Newns Approach to the Kondo Model}
+
+We now turn to mean-field theory in the context of the single-impurity Kondo model, starting with the established approach of Read and Newns \cite{ReadNewns}.
+
+\subsubsection{Pseudo-Fermion Representation of Spin}
+\label{subsubsec:pseudo-fermion}
+
+Firstly, one requires a way to represent the localised spin degree of freedom within the path integral. A common way to do this is through an Abrikosov pseudo-fermion representation which, for a spin-$\frac{1}{2}$ magnetic impurity, is the mapping:
+\begin{equation}
+\hat{s}_{z} = \frac{1}{2} \left( f^{\dagger}_{\uparrow} f^{}_{\downarrow} - f^{\dagger}_{\downarrow} f^{}_{\downarrow} \right)~, \quad \hat{s}_{+} = f^{\dagger}_{\uparrow} f^{}_{\downarrow}~, \quad \hat{s}_{-} = f^{\dagger}_{\downarrow} f^{}_{\uparrow}~.
+\end{equation}
+This representation is faithful provided a constraint is enforced that only one pseudo-fermion state may be occupied at a time,
+\begin{equation}
+f^{\dagger}_{\uparrow} f^{}_{\downarrow} + f^{\dagger}_{\downarrow} f^{}_{\downarrow} = 1,
+\end{equation}
+projecting out only the physical subspace of an otherwise enlarged Hilbert space.
+
+Proceeding in this way leads to the antiferromagnetic interaction term becoming an interaction between conduction electrons and pseudo-fermions (with some shift in the chemical potential)
+\begin{equation}
+J\vec{S}\cdot\vec{s}(0) = - \frac{J}{2} \sum_{\sigma, \sigma'} \sum_{\boldsymbol{k}, \boldsymbol{k'}} : \left( c^{\dagger}_{\boldsymbol{k}, \sigma} f^{}_{\sigma} \right) \left( f^{\dagger}_{\sigma'} c^{}_{\boldsymbol{k'}, \sigma'} \right): ~,
+\label{eq:interaction}
+\end{equation}
+which is now compatible with the path integral formalism.
+% Put in a citation?
+
+\subsubsection{Hybridisation Field}
+
+Not being of bi-linear form, the interaction of Eq~\eqref{eq:interaction} still leaves us unable to perform a simple Gaussian integral over the fermionic fields. As such, the next step of the Read-Newns approach is to use a Hubbard-Stratonovich \cite{ManyBodyPhysics} transformation to decouple this term, framing the interaction in terms of a new bosonic field $ V $ instead. This has the effect of changing the interaction term in the Lagrangian to
+\begin{equation}
+J\vec{S}\cdot\vec{s}(0) \quad \rightarrow \quad \sum_{\boldsymbol{k}, \sigma} \left[ V^{\ast} c^{\dagger}_{\boldsymbol{k}, \sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} c^{}_{\boldsymbol{k}, \sigma} \right] + 2 \frac{V^{\ast} V}{J} ~,
+\label{eq:V_field}
+\end{equation}
+where the path integral will now also involve an additional integral over this new hybridisation field $ V $. (For our mean-field purposes we shall choose a gauge in which $ V $ is real.)
+
+\subsubsection{Order Parameter}
+
+This hybridisation leads on to the notion of an \emph{order parameter} for the system, which will characterise the strongly- and weakly-coupled regimes. The form of Eq~\eqref{eq:V_field} is similar to a resonant-level model in which $ f_{\sigma} $ electrons hybridize with conduction electrons $ c^{}_{\boldsymbol{k}, \sigma} $ in the Fermi sea. If we were to define a quantity $ \Delta \propto | V |^2 $, say, then this quantity would express the degree of hybridisation, since $ \Delta \rightarrow 0 $ would correspond to negligible tunnelling between the two states. In fact, within the resonant-level model, such a quantity $ \Delta = \pi \rho |V|^2 $ arises naturally as the width of resulting resonance in the density of states, if $ \rho $ is the density of states of conduction electrons otherwise.
+
+We shall therefore use $ \Delta $ as the order parameter, where a symmetry broken $ \Delta \neq 0 $ will indicate that the system is in a Kondo phase.
 
 \subsection{The Soft-Constraint Approach}
 
-% Make the k into a vector?
+We now briefly outline the principles behind this new approach to mean-field theory as originally proposed in \cite{Draft}.
 
-One existing mean-field approach is that of Read and Newns \cite{ReadNewns}, which represents the $ \vec{S}_0 $ term of the Hamiltonian in Eq~\eqref{eq:KondoHamiltonian} in terms of slave fermions $ f^{}_{\sigma} $, with occupation numbers obeying the hard constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 \,. $ The new mean-field approach that is being proposed reformulates this constraint as: \begin{equation} (1 - n_{\uparrow} - n_{\downarrow})^2 = n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) = 0 . \label{eq:HardConstraint}\end{equation} Implementing this into the Lagrangian is formally equivalent, but problematic within mean-field theory because one later imposes: \[ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle = 0\,, \] which, for such a positive semi-definite operator, enforces the exact constraint and leads to a diverging mean-field parameter. (Appendix~\ref{sec:Divergence} gives some feeling for why this is the case.)
+Recall the hard constraint $ \sum_{\sigma} f^{\dagger}_{\sigma} f^{}_{\sigma} = 1 $, required when transforming to a pseudo-fermion representation of the impurity spin, but consider reformulating this constraint as: \begin{equation} (1 - n_{\uparrow} - n_{\downarrow})^2 = n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) = 0 . \label{eq:HardConstraint}\end{equation} Implementing this into the Lagrangian is formally equivalent, but problematic within mean-field theory because one later imposes: \[ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle = 0\,, \] which, for such a positive semi-definite operator, enforces the exact constraint and leads to a diverging mean-field parameter.\footnote{Appendix~\ref{sec:Divergence} gives some feeling for why this is the case.}
 
-A resolution to this issue is to begin by introducing an auxiliary non-interacting fermion $ h $ that is constrained to be trivially empty through imposing $ h^{\dagger} h = 0 $. One then combines this constraint with that of Eq~\eqref{eq:HardConstraint} by imposing instead: \begin{equation} n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) - K h^{\dagger} h = 0\,, \end{equation} such that $ K > 0, K \neq 1 $ now encapsulates both constraints. Notice that this has introduced an arbitrary parameter $ K $ into the problem and thus a new degree of freedom, but has allowed us to circumvent the issues related to the previous hard constraint within mean-field theory. For this reason, this approach to mean-field theory has been internally referred to as the \emph{soft constraint approach}.
+A resolution to this issue is found by first introducing an auxiliary non-interacting fermion $ h $ that is constrained to be trivially empty through imposing $ h^{\dagger} h = 0 $ (such as to have no physical effect). One then combines this constraint with that of Eq~\eqref{eq:HardConstraint} by imposing instead:
+\begin{equation} n_{\uparrow} n_{\downarrow} + (1 - n_{\uparrow})(1 - n_{\downarrow}) - K h^{\dagger} h = 0~,
+\label{eq:soft_constraint}
+\end{equation}
+where $ K > 0, K \neq 1 $, which now encapsulates both constraints. Note that this has introduced an arbitrary parameter $ K $ into the problem and thus a new degree of freedom, but has allowed us to circumvent the issues related to the previous hard constraint within mean-field theory. For this reason, this approach to mean-field theory has been internally referred to as the \emph{soft constraint approach}.
 
-Proceeding in a similar fashion to the Read-Newns approach and incorporating four Kotliar-Ruckenstein (KR) \cite{KotliarRuckenstein} slave bosons, one obtains the following Lagrangian:
+\subsection{Applying the Soft Constraint to the Kondo Model}
+
+Though principles of the soft-constraint approach may find use in many problems in strongly correlated systems, this project is only concerned with its use in the context of the Kondo model, which will require the introduction of one more concept.
+
+\subsubsection{Kotliar-Ruckenstein Slave Bosons}
+
+One side effect of introducing the soft constraint as we do in Eq~\eqref{eq:soft_constraint} is that we have reintroduced non-quadratic terms such as $ n_{\uparrow} n_{\downarrow} = f^{\dagger}_{\uparrow} f^{}_{\uparrow} f^{\dagger}_{\downarrow} f^{}_{\downarrow} $ which prevent us from integrating out the fermions. This can be resolved through the introduction of what are known as \emph{slave bosons} \cite{SlaveBosons} to represent each Fock state of the impurity fermions.
+
+In particular, we shall use the representation of Kotliar and Ruckenstein (KR) \cite{KotliarRuckenstein} which utilises four bosons: $ e $, $ p_{\uparrow} $, $ p_{\downarrow} $ and $ d $ to represent empty, singly- and doubly-occupied states, respectively. Again, for this representation to be faithful, one requires the following constraints to be satisfied:
+\begin{equation}
+e^{\dagger} e + \sum_{\sigma} p^{\dagger}_{\sigma} p^{}_{\sigma} + d^{\dagger} d = 1 \quad \text{and} \quad f^{\dagger}_{\sigma} f^{}_{\sigma} = p^{\dagger}_{\sigma} p^{}_{\sigma} + d^{\dagger} d ~.
+\end{equation}
+Additionally, the fermion operator must be suitably transformed so that bosonic  occupations correctly correlate to the underlying fermionic states, achieved through:
+\begin{equation}
+f^{}_{\sigma} \rightarrow \widetilde{z}^{}_{\sigma} f^{}_{\sigma}\,, \qquad \widetilde{z}_{\sigma} = e^{\dagger} p^{}_{\sigma} + p^{\dagger}_{-\sigma} d \,.
+\end{equation}
+This choice of $ \widetilde{z}^{}_{\sigma} $ within the path integral is not unique, yet does affect mean-field behaviour and so it is conventional to make the transformation
+\begin{equation}
+\widetilde{z}^{}_{\sigma} \rightarrow z^{}_{\sigma} = (1 - d^{\dagger} d - p^{\dagger}_{\sigma} p^{}_{\sigma})^{- 1 / 2} ~ \widetilde{z}^{}_{\sigma} ~ (1 - e^{\dagger} e - p^{\dagger}_{- \sigma} p^{}_{- \sigma})^{- 1 / 2} ~,
+\end{equation}
+which recovers the exact behaviour in certain limits \cite{SlaveBosons}. New dynamical terms for these bosons which will also appear in the Lagrangian shall become irrelevant when we look for the saddle point of the action.
+
+\subsubsection{The Soft-Constraint Lagrangian}
+
+Implementing the soft-constraint and KR bosons into the Read-Newns formulation, the final Lagrangian appearing in the path integral for this new approach becomes:
 \begin{align}
 \begin{split}
-L \quad = \quad &\sum_{\boldsymbol{k},\sigma} c^{\dagger}_{\boldsymbol{k},\sigma} \left( \frac{d}{\,d\tau} + \epsilon^{}_{\boldsymbol{k}} - \mu \right) c^{}_{\boldsymbol{k},\sigma} + \sum_{\sigma} f^{\dagger}_{\sigma} \frac{d}{\,d\tau} f^{}_{\sigma} + h^{\dagger} \frac{d}{\,d\tau}h \\
+L_{\text{SC}} \quad = \quad &\sum_{\boldsymbol{k},\sigma} c^{\dagger}_{\boldsymbol{k},\sigma} \left( \frac{d}{\,d\tau} + \epsilon^{}_{\boldsymbol{k}} - \mu \right) c^{}_{\boldsymbol{k},\sigma} + \sum_{\sigma} f^{\dagger}_{\sigma} \frac{d}{\,d\tau} f^{}_{\sigma} + h^{\dagger} \frac{d}{\,d\tau}h \\
 &+ e^{\dagger} \frac{d}{\,d\tau} e  + \sum_{\sigma} p^{\dagger}_{\sigma} \frac{d}{\,d\tau} p^{}_{\sigma} + d^{\dagger} \frac{d}{\,d\tau} d\\
 &+ \sum_{\sigma} \lambda^{}_{\sigma} (f^{\dagger}_{\sigma} f^{}_{\sigma} - p^{\dagger}_{\sigma} p^{}_{\sigma} - d^{\dagger} d^{} ) + \lambda_{\text{KR}} ( e^{\dagger} e + \sum_{\sigma} p^{\dagger}_{\sigma} p^{}_{\sigma} + d^{\dagger} d - 1)\\
 &+\lambda_{\text{SC}} ( e^{\dagger} e + d^{\dagger} d - K h^{\dagger} h)\\
-&+ 2 \frac{V V^{\ast}}{J} + \sum_{\boldsymbol{k},\sigma} \left( V^{\ast} c^{\dagger}_{\boldsymbol{k},\sigma} z^{}_{\sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} z^{\dagger}_{\sigma} c^{}_{\boldsymbol{k},\sigma} \right) \,.\label{eq:Lagrangian}
+&+ 2 \frac{V V^{\ast}}{J} + \sum_{\boldsymbol{k},\sigma} \left( V^{\ast} c^{\dagger}_{\boldsymbol{k},\sigma} z^{}_{\sigma} f^{}_{\sigma} + V f^{\dagger}_{\sigma} z^{\dagger}_{\sigma} c^{}_{\boldsymbol{k},\sigma} \right) \,.
+\label{eq:Lagrangian}
 \end{split}
 \end{align}
-The slave bosons $ e $, $ p_{\uparrow} $, $ p_{\downarrow} $ and $ d $ represent empty, singly occupied and doubly occupied states, respectively, as long as the fermion operator is suitably transformed to `update the books', so to speak:\footnote{The conventional transformation $ z^{}_{\sigma} \rightarrow (1 - d^{\dagger} d - p^{\dagger}_{\sigma} p^{}_{\sigma})^{- 1 / 2} z^{}_{\sigma} (1 - e^{\dagger} e - p^{\dagger}_{- \sigma} p^{}_{- \sigma})^{- 1 / 2} $ is also applied, but is not relevant to this discussion.} \begin{equation} f^{}_{\sigma} \rightarrow z^{}_{\sigma} f^{}_{\sigma}\,, \qquad z_{\sigma} = e^{\dagger} p^{}_{\sigma} + p^{\dagger}_{-\sigma} d \,. \end{equation} A Hubbard-Stratonovich transformation has also been applied to remove certain unpleasant terms in the Lagrangian, framing the interaction in terms of a new bosonic field $ V $.
+This contains every component needed to begin a mean-field theory analysis of the problem, since it is bilinear in fermionic fields.
 
-% Don't say that the conventional transformation is not relevant, mention the slave boson review i.e. that including this means that the U=0 Anderson model can be recovered
+\subsubsection{Current Progress with the Soft-Constraint Approach}
+
+Thus far, investigation of the soft-constraint applied to the Kondo model has been restricted to zero temperature \cite{Draft}. This has allowed for calculation of the zero temperature heat capacity and magnetic susceptibility and a corresponding ratio between the two known as the \emph{Wilson ratio}.
+
+One important feature of the soft-constraint approach is that it introduces an arbitrary free parameter into the problem, leaving the question of how it should be chosen. The freedom in $ K $ parametrises a whole family of mean-field solutions, and so it has been proposed that $ K $ could be tuned to match an established property of the system. One such property is the Kondo temperature $ T_K $, which is known to be $ T_K \approx D \sqrt{\rho J} e^{- 1 / (\rho J)} $ from a (two-loop) RG calculation, yet is overestimated by the Read-Newns approach which omits the $ \sqrt{\rho J} $ factor. \footnote{$ D $ is half the bandwidth of the conduction electrons, assumed to be large.} Choosing $ K $ in this way also gives an improved estimate of the Wilson ratio. This project shall therefore inherit this choice of $ K $ where possible.
+% Maybe include a citation for the Kondo temperature
+
 % In this representation we have chosen to quantize along the z-axis, though it is possible to use Kotliar-Ruckenstein slave bosons in a rotationally invariant way
 
 % From here, one may then derive the Helmholtz free energy and other quantities of interest within mean-field theory. The freedom in the parameter $ K $ allows for a whole family of mean-field solutions, from which one may obtain a single solution by tuning $ K $ to fit a known property of the Kondo model, for instance the Kondo temperature $ T_K $. Having tuned this parameter, other predictions about the system are made possible.
