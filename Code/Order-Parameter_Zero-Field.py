@@ -91,7 +91,7 @@ def plot_Δ_vs_T():
 
     plt.axhline(y=0, linestyle='--', color='k')
 
-    plt.savefig("delta_vs_T.pdf", dpi=300, format='pdf', bbox_inches='tight')
+    plt.savefig("delta_vs_T.pdf", dpi=300, format='pdf', bbox_inches='tight', transparent=True)
     plt.clf()
 
 

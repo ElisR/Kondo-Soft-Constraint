@@ -1,74 +1,74 @@
+# Trying to investigate the phase boundary with non-zero magnetic field
+
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.special as special
 
 
-def Tc(b):
+global rho, J
+rho = 0.4
+J = 0.4
+
+
+def Tc_stochastic(b):
     """
     Defining the parametric T in terms of difficult expressions
+    Calculated using a stochastic magnetic field
     """
 
-    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
+    z_squared = z2_stochastic(b)
 
-    z2 = K * (2 - K)
+    t = (1 / (2 * np.pi * np.sqrt(rho * J))) *\
+        np.exp((1 - 1 / z_squared) / (rho * J)) *\
+        np.exp(np.real(- 4j * np.pi * special.loggamma(0.5 + b / (4j * np.pi)) / b))
 
-    t = (1 / (2 * np.pi)) * (1 / np.sqrt(rho * J)) *\
-        np.exp((1 - 1 / z2) / (rho * J)) *\
-        np.abs(np.exp(- 4j * np.pi * special.loggamma(0.5 + b / (4j * np.pi)) / b))
+    return t
+
+def Tc(b):
+    """
+    Defining the parametric T in terms of b and other quantities
+    Not using a stochastic magnetic field
+    """
+
+    t = (1 / (2 * np.pi * np.sqrt(rho * J))) *\
+        np.exp((1 - 1 / z2_saturated(b)) / (rho * J)) *\
+        np.abs(np.exp(- special.digamma(0.5 + b / (2j * np.pi))))
 
     return t
 
 
-def plot_new_phase_boundary():
+def z2_stochastic(b):
+    """
+    Defining the KR operator for the case of a stochastic B field
+    This essentially makes the function constant
+    """
 
-    # Prepare the array for parametric plot
-    b = np.linspace(0.01, 200, 1000)
+    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
+    K = 2 * K
 
-    x = b * Tc(b)
-    y = Tc(b)
-
-    #right = np.linspace(max(x), 5.8, 10)
-
-    fig = plt.figure(figsize=(8.4, 8.4))
-
-    plt.rc('text', usetex=True)
-    plt.rc('font', family='serif')
-
-    # Plot the figure
-    plt.plot(x, y, "k-")
-
-    # Add phase regions
-    #plt.fill_between(x, y, color='#d9ffb3')
-    #maxy = plt.ylim()[1]
-    #plt.fill_between(x, y, 1.2, color='#8cccff')
-    #plt.fill_between(right, 1.2, color='#8cccff')
-
-    # Label the phases
-    #plt.text(2.2, 0.55, r'$ | \Delta | > 0 $', fontsize=26)
-    #plt.text(4.1, 0.97, r'$ \Delta = 0 $', fontsize=26)
-
-    # Make improvements to the figure
-    plt.ylabel(r'$ \frac{T}{T_K} $', fontsize=26)
-    plt.xlabel(r'$ \frac{g \mu_B B}{T_K} $', fontsize=26)
-
-    ax = plt.gca()
-    #ax.set_xlim([0, 5.8])
-    #ax.set_ylim([0, 1.2])
-    ax.tick_params(axis='both', labelsize=20)
-
-    plt.savefig("new_phase_diagram.pdf", dpi=300,
-                format='pdf', bbox_inches='tight')
-    plt.clf()
-
-def main():
-
-    # Defining the parameters of the system
-    global rho, J
-    rho = 0.4
-    J = 0.4
-
-    plot_new_phase_boundary()
+    return K * (2 - K) + 0 * b
 
 
-if __name__ == "__main__":
-    main()
+def z2_sat(b):
+    """
+    Defining the KR operator in terms of a B-field parameter, but treating the high-B case more carefully
+    """
+
+    K = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
+    K = 2 * K
+
+    im_psi = np.imag(special.digamma(0.5 + b / (2j * np.pi)))
+    diff_squared = np.square(0.5 - K / 4) - np.square(im_psi / np.pi)
+
+    p2_up = (1 / 2 - K / 4) + im_psi / np.pi
+    p2_down = (1 / 2 - K / 4) - im_psi / np.pi
+
+    z_squared = 0
+    if (p2_up <= 0 or p2_down <= 0):
+        z_squared = (1 - K / 2) / (1 - K / 4)
+    else:
+        z_squared = (K / 4) * np.square(np.sqrt(p2_up) + np.sqrt(p2_down)) / ((K / 4 + p2_up) * (K / 4 + p2_down))
+
+    return z_squared
+
+
+z2_saturated = np.vectorize(z2_sat)

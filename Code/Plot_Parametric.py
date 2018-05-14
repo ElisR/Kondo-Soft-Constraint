@@ -9,7 +9,7 @@ def plot_delta_vs_T():
     Plotting delta vs T using a robust parametric plot, with extra term
     """
 
-    ss = np.linspace(0, 145, 1000)
+    ss = np.linspace(0, 250, 1500)
 
     ts = parametric_SC.t(ss)
     deltas = parametric_SC.delta(ss)
@@ -19,7 +19,7 @@ def plot_delta_vs_T():
     plt.rc('text', usetex=True)
     plt.rc('font', family='serif')
 
-    plt.fill_between(np.linspace(0, np.max(ts), 10),
+    plt.fill_between(np.linspace(-0.2, np.max(ts) + 0.2, 10),
                      0, -0.5, color='#dddddd')
 
     # Plot the figure
@@ -29,7 +29,7 @@ def plot_delta_vs_T():
     plt.ylabel(r'$ \Delta / T_K $', fontsize=26)
 
     ax = plt.gca()
-    ax.set_xlim([0, np.max(ts)])
+    ax.set_xlim([0, np.max(ts) + 0.05])
     ax.set_ylim([-0.18, 1.25])
     ax.tick_params(axis='both', labelsize=20)
 
@@ -71,7 +71,7 @@ def plot_F_vs_T():
 
 def plot_lambda_vs_T():
     """
-    Trying to nail down the form of lambda_SC against temperature
+    Trying to ascertain form of lambda_SC against temperature
     """
 
     Ts = np.linspace(0.2, 1.2, 250)
@@ -86,7 +86,6 @@ def plot_lambda_vs_T():
         T = Ts[i]
 
         lambdas[i] = parametric_SC.MF_lambda_SC(T)
-        lambdas[i] = (lambdas[i] >= 0) * lambdas[i]
 
     fig = plt.figure(figsize=(8.4, 8.4))
 

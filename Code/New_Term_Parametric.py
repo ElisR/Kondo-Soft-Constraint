@@ -1,20 +1,19 @@
-# Trying to recreate previous plots without resorting to iterative solutions
+# Trying to recreate previous plots without resorting to the Newton-Raphsen method
 
 import numpy as np
-import matplotlib.pyplot as plt
 import scipy.special as special
 import scipy.optimize as optimize
 
-import matplotlib.colors as colors
-import matplotlib.cm as cmx
 
 global rho, J
 rho = 0.4
 J = 0.4
 
 
-# TODO: Fix the vectorised form of this equation
 def MF_lambda_SC(Temp):
+    """
+    Solving for the Lagrange multiplier through brute force
+    """
 
     K_T = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
@@ -31,9 +30,6 @@ def MF_lambda_SC(Temp):
         return eq
 
     return optimize.fsolve(MF_equation_lambda, 0, args=(Temp))
-
-
-
 
 
 def F(s):
@@ -66,9 +62,7 @@ def K(s):
 
     K_0 = 0.5 - 0.5 * np.sqrt(1 - 1 / (1 - 0.5 * rho * J * np.log(rho * J)))
 
-    return K_0 * (1 + np.exp(- K_0 * s * (1 + np.exp(- K_0 * s * (1 + np.exp(- K_0 * s))))))
-    #return K_0 * (1 + 0.5 * np.exp(- 1 * s))
-    #return K_0
+    return K_0
 
 
 def k(s):

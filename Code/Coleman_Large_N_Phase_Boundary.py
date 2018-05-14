@@ -57,7 +57,8 @@ def plot_phase_boundary():
     ax.tick_params(axis='both', labelsize=20)
 
     plt.savefig("phase_diagram.pdf", dpi=300,
-                format='pdf', bbox_inches='tight')
+                format='pdf', bbox_inches='tight',
+                transparent=True)
     plt.clf()
 
 

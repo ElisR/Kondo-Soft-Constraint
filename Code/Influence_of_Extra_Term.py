@@ -1,12 +1,5 @@
 # Exploring the effect of the new terms in the mean-field equations
 
-# This is making things analytically much more difficult
-# Maybe the effect is negligible, however
-
-# TODO: Write a function which solves for lambda given delta
-# then looks at the change on delta and then solves for lambda
-# Hopefully this effect will be monotonic and convergent but we'll see
-
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.special as special
@@ -131,7 +124,7 @@ def k(lambda_SC, T, K_T):
 
 def k_smooth(T):
     """
-    Returns a value of (constant) kappa that seems to remove a phase transition
+    Returns a value of (constant) kappa that smoothes phase transition
     """
 
     change = 0.018
@@ -198,25 +191,10 @@ def plot_delta_vs_T():
 
         T = Ts[i]
 
-        #lambda_SC = MF_lambda_SC(T, K(T))
         deltas[i] = MF_delta(T, K(T))
-
-        #lambda_SC_up = MF_lambda_SC(T, K_exp(T))
         deltas_up[i] = MF_delta(T, K(T) + 0.018)
-
-        #lambda_SC_down = MF_lambda_SC(T, 0.5)
         deltas_down[i] = MF_delta(T, K(T) - 0.018)
-
-        # WORKS!?
-        deltas_interp[i] = MF_delta(T, (0.0095 / np.cosh(5 * T)) + K(T) + 0.0095 * np.tanh(8 * (T - np.exp(- special.digamma(0.5)) / (2 * np.pi))))
-
         deltas_interp[i] = MF_delta(T, k_smooth(T))
-
-
-        #lambdas[i] = lambda_SC
-        #ks[i] = k(lambda_SC, T, K(T))
-
-    #z2s = 4 * np.multiply(ks, (1 - ks))
 
     fig = plt.figure(figsize=(8.4, 8.4))
 
@@ -227,13 +205,13 @@ def plot_delta_vs_T():
                      0, -0.5, color='#dddddd')
 
     plt.fill_between(Ts, deltas_up, deltas_down,
-                     facecolor='blue', alpha=0.5)
+                     color='#8cccff', alpha=0.5)
 
     plt.plot(Ts, deltas, "k-", label=r'$ \kappa_0 $')
     plt.plot(Ts, deltas_interp, "r-", label=r'$ \kappa (T) $')
 
-    plt.plot(Ts, deltas_down, "b:", label=r'$ \kappa_0 - \delta $')
-    plt.plot(Ts, deltas_up, "b--", label=r'$ \kappa_0 + \delta $')
+    plt.plot(Ts, deltas_down, ":", label=r'$ \kappa_0 - \delta $', color='#8cccff')
+    plt.plot(Ts, deltas_up, "--", label=r'$ \kappa_0 + \delta $', color='#8cccff')
 
 
     plt.xlabel(r'$ T / T_K $', fontsize=26)
@@ -273,7 +251,6 @@ def plot_graphical_solution():
         fermi_part[i, :] = (1 - 2 * k_T) / (k_T * (1 - k_T))
 
     # Plot the graphical solution, using colours
-
     cm = plt.get_cmap('inferno')
     cNorm = colors.Normalize(vmin=np.min(Ts), vmax=np.max(Ts))
     scalarMap = cmx.ScalarMappable(norm=cNorm, cmap=cm)
@@ -310,7 +287,8 @@ def plot_graphical_solution():
 
 def plot_F_vs_T():
     """
-    Plotting the second derivative of free energy wrt temperature
+    Plotting the free energy wrt temperature
+    Can look at second derivative numerically
     """
 
     Tc = np.exp(- special.digamma(0.5)) / (2 * np.pi)
@@ -321,8 +299,6 @@ def plot_F_vs_T():
     for i in range(np.size(Ts)):
         T = Ts[i]
         MF_Fs[i] = MF_F(T)
-
-    # MF_d2Fs = derivative(MF_F, Ts, n=2, dx=0.001, order=3)
 
     fig = plt.figure(figsize=(8.4, 8.4))
 
