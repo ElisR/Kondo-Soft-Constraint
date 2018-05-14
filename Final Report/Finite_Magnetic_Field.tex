@@ -3,7 +3,7 @@
 \section{Finite Magnetic Field}
 \label{sec:finite_field}
 
-Having explored the finite-temperature predictions for the soft-constraint in the absence of a magnetic field, we now introduce a finite magnetic field $ B $ which breaks the previous isotropy of the problem. One can include the effects of the magnetic field by introducing a Zeeman term for the magnetic impurity: $$ F_{B} = - g \mu_{B} B \left( f^{\dagger}_{\uparrow} f^{}_{\uparrow} - f^{\dagger}_{\downarrow} f^{}_{\downarrow} \right) \cong - g \mu_{B} B \sum_{\sigma} \sigma p^2_{\sigma} ~ , $$ where $ g $ is the \textit{Land\'{e} g-factor} and the effect on the conduction electrons has been ignored.
+Having explored the finite-temperature predictions for the soft-constraint in the absence of a magnetic field, we now introduce a finite magnetic field $ B $ which breaks the previous isotropy of the problem. One can include the effects of the magnetic field by introducing a Zeeman term for the magnetic impurity \cite{LargeN}: $$ F_{B} = - g \mu_{B} B \left( f^{\dagger}_{\uparrow} f^{}_{\uparrow} - f^{\dagger}_{\downarrow} f^{}_{\downarrow} \right) \cong - g \mu_{B} B \sum_{\sigma} \sigma p^2_{\sigma} ~ , $$ where $ g $ is the \textit{g-factor} and the effect on the conduction electrons is irrelevant at this scale.
 
 \subsection{Effect on the Mean-Field Equations}
 
@@ -11,7 +11,7 @@ The inclusion of a magnetic field leaves the previous mean-field equations of Se
 \begin{equation}
 \frac{\partial F}{\partial p_{\sigma}} = 0 \implies \sum_{s} \left[ \frac{\partial F_{0}}{\partial \xi_{s}} - \frac{\partial F_{0}}{\partial \overline{\xi_{s}}} \right] \frac{\partial z^2_{s}}{\partial p_{\sigma}} ~ i \Delta = - p_{\sigma} ~ (\lambda_{\text{KR}} - \lambda_{\sigma} - \sigma g \mu_{B} B) ~ .
 \end{equation}
-Without isotropy, however, solving the mean-field equations becomes appreciably more difficult, and so we shall start with the slightly simpler task of searching for the location of the phase boundary $ \Delta = 0 $ in the $ B-T $ plane because it allows particle-hole symmetry to be justifiably used again.
+Without isotropy, however, solving the mean-field equations becomes appreciably more difficult, and so we will restrict ourselves to the slightly simpler task of searching for the location of the phase boundary $ \Delta = 0 $ in the $ B-T $ plane because it allows particle-hole symmetry to be justifiably used again.
 % Maybe add an appendix in which you show that particle-hole symmetry works at \Delta = 0
 
 \subsection{Plotting the Phase Boundary}
@@ -25,7 +25,7 @@ Proceeding with this fixed $ B $-field, we obtain the condition that the occupan
 \begin{equation}
 p^2_{\sigma} = \frac{1}{2} ( 1 - \kappa ) + \sigma \frac{1}{\pi} \Im{\left[ \psi\left( \frac{1}{2} + \frac{g \mu_B B}{2 \pi i T} \right) \right]} ~,
 \end{equation}
-which is problematic because $ \Im{\left[ \psi\left( \frac{1}{2} + \frac{g \mu_B B}{2 \pi i T} \right) \right]} \rightarrow - \frac{\pi}{2} $ in the large $ B $ limit, such that $ p^2_{\downarrow} $ becomes negative. Physically, this corresponds to one spin-state of the impurity being heavily favoured compared to the other, but this mean-field solution requires intervention with a piecewise definition to ensure that both $ p^2_{\sigma} $ saturate sensibly.
+which in the large $ B $ limit will have $ \Im{\left[ \psi\left( \frac{1}{2} + \frac{g \mu_B B}{2 \pi i T} \right) \right]} \rightarrow - \frac{\pi}{2} $ such that $ p^2_{\downarrow} $ becomes negative. Physically, this corresponds to one spin-state of the impurity being heavily favoured compared to the other, but this mean-field solution requires intervention with a piecewise definition to ensure that both $ p^2_{\sigma} $ saturate sensibly.
 % Stop using the word problematic so much
 
 Making a parametric plot of the phase boundary in terms of $ b = \frac{g \mu_B B}{T} $ according to
@@ -38,7 +38,7 @@ reveals a more worrisome problem with this approach, namely that the behaviour i
 \begin{figure}
 \centering
 \includegraphics[width=0.7\textwidth]{Figures/new_phase_diagram.pdf}
-\caption{The new phase diagram for the soft-constraint approach when $ \kappa $ held constant, generated parametrically using Eq~\eqref{eq:phase_parametric}. The shape of the boundary is highly sensitive to $ z^2(\frac{B}{T}) $, which is itself made to saturate by-hand beyond a certain value of $ \frac{B}{T}$. It is this manual intervention that leads to the sharp kink in the boundary at low temperatures. The dotted line shows the original large-$N$ boundary of Figure~\ref{fig:phase_diagram}.}
+\caption{A phase diagram for the soft-constraint approach when $ \kappa $ held constant, generated parametrically using Eq~\eqref{eq:phase_parametric}. The shape of the boundary is highly sensitive to $ z^2(\frac{B}{T}) $, which is itself made to saturate by-hand beyond a certain value of $ \frac{B}{T}$ and is plotted as a dashed line thereafter to indicate that it is no longer the true mean-field boundary. The dotted line shows the original large-$N$ boundary of Figure~\ref{fig:phase_diagram}.}
 \label{fig:new_phase_boundary}
 \end{figure}
 % Need to have the form of z^2 in the appendix

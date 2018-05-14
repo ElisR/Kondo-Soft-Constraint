@@ -23,3 +23,7 @@ Redundant/
 *.out
 
 *.nav
+
+*.xml
+
+*.bcf

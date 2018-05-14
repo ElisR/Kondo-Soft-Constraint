@@ -17,10 +17,11 @@
 
 \DeclareMathOperator{\Tr}{Tr}
 \DeclareMathOperator{\sech}{sech}
+\DeclareMathOperator{\sgn}{sgn}
 
 \begin{document}
 
-\input{titlepage}
+%\input{titlepage}
 
 \title{
   Mean-Field Study of Kondo Phase Diagram \\
@@ -29,15 +30,13 @@
 \author{\textit{Supervisors:} Claudio Castelnovo \& Garry Goldstein}
 \date{\today}
 
-% Start making a plan of what kind of things you need to talk about
-
 \maketitle
 
 \begin{abstract}
-Phase diagram predictions for the Kondo model from mean-field theory are known to disagree with exact results described by a \emph{Bethe ansatz} solution. In this project we apply a new variation of mean-field theory to this problem, which differs in the novel way that it implements positive constraints into the Lagrangian through the introduction of an auxiliary system. This implementation introduces a new free parameter, which has previously been shown to enable a better a prediction of the characteristic energy scale, the Kondo temperature, and other derived properties of the system at zero temperature. Here we show that this free parameter must necessarily be made temperature dependent if it is to reproduce basic features of the finite temperature behaviour, but that after making this allowance it is possible to increase the order of the otherwise second-order phase transition. Nevertheless, it is shown that this added freedom is still not enough to avoid a phase transition entirely, as is typical of other mean-field theories in general.
+Phase diagram predictions for the Kondo model from mean-field theory are known to disagree with the exact \textit{Bethe ansatz} result by failing to describe the \emph{crossover} into the Kondo phase. In this project we apply a new variation of mean-field theory to this problem, which differs in the novel way that it implements constraints into the Lagrangian through the introduction of an auxiliary system. This implementation introduces a new free parameter which has previously been shown to enable a better a prediction of the characteristic energy scale (the Kondo temperature) and other derived properties of the system at zero temperature. Here we show that this free parameter must necessarily be made temperature dependent if it is to reproduce basic features of the finite temperature behaviour, but that after making this allowance it is possible to increase the order of the otherwise second-order phase transition. Nevertheless, it is shown that this added freedom is still not enough to avoid a phase transition entirely, as is typical of other mean-field theories.
 \end{abstract}
-% Talk about the goals of the project
-% Summarise a few finite temperature results
+% Need to mention the crossover otherwise
+% This implementation sentence is hard to follow
 
 \section{Introduction}
 
@@ -47,7 +46,7 @@ The enormous theoretical challenge of studying strongly correlated systems, with
 
 The many rich features of the general Kondo problem have been widely studied, with some simpler formulations being amenable to an exact solution via Bethe ansatz techniques. Often times, however, it is necessary to employ approximate methods to obtain results in more general cases, one such method being mean-field theory.
 
-Use of mean-field theory is far from ideal, however, since current formulations applied to the Kondo impurity model are known to give results in disagreement with the Bethe ansatz solution for a characteristic energy of the problem known as the Kondo temperature $ T_{K} $ and (by extension) the magnetic susceptibility at zero temperature. The heat capacity is also greatly underestimated by existing mean-field methods. Recently, a new mean-field approach has been proposed by Garry Goldstein, Claudio Castelnovo (supervising the project) and Claudio Chamon which has given improved estimates of these quantities, which may be a sign that this new variation is indeed an improvement over existing formulations.
+Use of mean-field theory is far from ideal, however, since current formulations applied to the Kondo impurity model are known to give results in disagreement with the Bethe ansatz solution for a characteristic energy of the problem known as the Kondo temperature $ T_{K} $ and (by extension) the magnetic susceptibility at zero temperature. The heat capacity is also greatly underestimated by existing mean-field methods. Recently, a new mean-field approach \cite{Draft} has been proposed by Garry Goldstein, Claudio Castelnovo (supervising the project) and Claudio Chamon which has given improved estimates of these quantities, which may be a sign that this new variation is indeed an improvement over existing formulations. We are therefore interested in the Kondo problem to the extent that it provides a well-known platform for testing and assessing the potential efficacy of this new mean-field method.
 
 One significant aspect of the Kondo model that existing mean-field formulations have thus far failed to capture properly is the crossover from a Kondo to a paramagnetic phase in the temperature-field phase diagram, instead predicting a phase transition as in Figure~\ref{fig:phase_diagram}. The primary aim of this project is therefore to extend this new formulation to finite temperature, specifically to the temperature-field phase diagram and see whether a phase transition or a crossover is predicted. If the predicted behaviour is found to align with that of the exact Bethe ansatz solution, then the case for this new mean-field approach as an alternative to existing formulations would be greatly strengthened.
 
@@ -62,8 +61,6 @@ The report is structured as follows: Section~\ref{sec:theory} introduces the the
 
 % Citation needed
 
-% Say what each section is going to contain
-
 \input{Theory}
 
 \input{Finite_Temperature}
@@ -75,7 +72,7 @@ The report is structured as follows: Section~\ref{sec:theory} introduces the the
 
 This project aimed to explore the finite temperature and field behaviour of the Kondo model as predicted by a promising new variation of mean-field theory: the soft-constraint approach. Failure of conventional mean-field theories to accurately describe the phase diagram of this model makes it an ideal platform to test whether this new method is indeed a significant improvement that could find further use in describing strongly correlated systems.
 
-The vast majority of effort was spent on the extension of this approach to finite-temperature, which was enough to draw some conclusions about the behaviour of the soft-constraint away from the $ (T = 0,~B = 0) $ point in the phase diagram. Crucially, it was found that the associated soft-constraint parameter  has to be allowed to vary with temperature if it is to lead to a solvable set of mean-field equations. This is because the thermal occupancy of the auxiliary fermions introduced is enough to have a significant effect on the \emph{effective} soft-constraint parameter.
+The vast majority of effort was spent on the extension of this approach to finite-temperature, which was enough to draw some conclusions about the behaviour of the soft-constraint away from the $ (T = 0,~B = 0) $ point in the phase diagram. Crucially, it was found that the associated soft-constraint parameter  has to be allowed to vary with temperature if it is to lead to a solvable set of mean-field equations. This is because the thermal occupancy of the auxiliary fermions introduced is enough to have a significant effect on the \emph{effective} soft-constraint parameter in the mean-field equations.
 
 Even when allowing the soft-constraint parameter to vary with temperature, a phase transition is found to be inevitable, in disagreement with the crossover obtained from other, more intensive methods. Nevertheless, it was demonstrated that artificially choosing the form of a temperature-dependent soft-constraint parameter can increase the order of the phase transition, though at the cost of zero-temperature accuracy.
 
@@ -86,7 +83,6 @@ The increased difficulty of the mean-field equations in the presence of a magnet
 \input{Appendix}
 
 \begin{thebibliography}{1}
-% Maybe look at doing the bibliography with a separate .bib file
 
 \bibitem{ManyBodyPhysics}
 P. Coleman
@@ -98,29 +94,39 @@ G. Goldstein, C. Castelnovo and C. Chamon
 \emph{Mean-Field Method for Handling Null Constraints on Positive-Semidefinite Operators}
 Draft (2017)
 
-\bibitem{KotliarRuckenstein}
-G. Kotliar and A. E. Ruckenstein
-\emph{New Functional Integral Approach to Strongly Correlated Fermi Systems: The Gutzwiller Approximation as a Saddle Point}
-Phys. Rev. Lett. \textbf{57}, 1362 (1986)
-
-\bibitem{ReadNewns}
-N. Read, and D. M. Newns
-\emph{A New Functional Integral Formalism for the Degenerate Anderson Model} Journal of Physics C: Solid State Physics 16.29 (1983)
-
-\bibitem{MathematicalFunctions}
-M. Abramowitz
-\emph{Handbook of Mathematical Functions, With Formulas, Graphs, and Mathematical Tables}
-Dover Publications, Inc. (1974)
+\bibitem{Kondo}
+J. Kondo
+\emph{Resistance Minimum in Dilute Magnetic Alloys}
+Progress of Theoretical Physics, Volume 32, Issue 1, p.37–49 (1964)
 
 \bibitem{BetheAnsatz}
 N. Andrei, K. Furuya, and J. H. Lowenstein
 \emph{Solution of the Kondo Problem}
 Reviews of Modern Physics 55.2 (1983): 331-402
 
+\bibitem{ReadNewns}
+N. Read, and D. M. Newns
+\emph{A New Functional Integral Formalism for the Degenerate Anderson Model} Journal of Physics C: Solid State Physics 16.29 (1983)
+
 \bibitem{SlaveBosons}
-Frésard R., Kroha J. and Wölfle P. (2012)
+Frésard R., Kroha J. and Wölfle P.
 \emph{The Pseudoparticle Approach to Strongly Correlated Electron Systems}
-Strongly Correlated Systems. Springer Series in Solid-State Sciences, vol 171.
+Strongly Correlated Systems. Springer Series in Solid-State Sciences, vol 171. (2012)
+
+\bibitem{KotliarRuckenstein}
+G. Kotliar and A. E. Ruckenstein
+\emph{New Functional Integral Approach to Strongly Correlated Fermi Systems: The Gutzwiller Approximation as a Saddle Point}
+Phys. Rev. Lett. \textbf{57}, 1362 (1986)
+
+\bibitem{MathematicalFunctions}
+M. Abramowitz
+\emph{Handbook of Mathematical Functions, With Formulas, Graphs, and Mathematical Tables}
+Dover Publications, Inc. (1974)
+
+\bibitem{LargeN}
+P. Coleman
+\emph{Large-N as a Classical Limit ($ 1 / N \approx \hbar $) of Mixed Valence}
+J. Magn. Matter, vol. 47-48, p.323 (1985)
 
 % https://dl.acm.org/citation.cfm?id=1830479
 

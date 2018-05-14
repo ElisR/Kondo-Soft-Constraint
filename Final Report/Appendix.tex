@@ -27,38 +27,43 @@ To see why imposing $ \langle (1 - n_{\uparrow} - n_{\downarrow})^2 \rangle = 0 
 \section{Deriving the Helmholtz Free Energy}
 \label{sec:Free_Energy}
 
-The Lagrangian of Eq~\eqref{eq:Lagrangian} now has all fermionic fields in quadratic form, since this was the purpose of the auxiliary bosons in the first place. One may therefore perform standard Gaussian integration over the Grassman variables to get an expression involving the determinant of the action,
+The Lagrangian of Eq~\eqref{eq:Lagrangian} now has all fermionic fields in quadratic form, by virtue of the new auxiliary bosons. One may therefore perform standard Gaussian integration over the Grassman variables to get an expression involving the determinant of the action, following p.679 of \cite{ManyBodyPhysics}. Therefore, we get a block-diagonal form for the Lagrangian
 
 % TODO: Make this equation less of an eyesore
 
 \[
-L \quad = \quad \sum_{\sigma}
-\begin{pmatrix} \cdots & c^{\dagger}_{k,\sigma} & \cdots & f^{\dagger}_{\sigma} \end{pmatrix}
-\begin{pmatrix} & & & \\ &(\epsilon_{k} + \partial_{\tau}) \delta_{k, k'} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} + \partial_{\tau}) \end{pmatrix}
-\begin{pmatrix} \vdots \\ c^{\dagger}_{k',\sigma} \\ \vdots \\ f^{\dagger}_{\sigma} \end{pmatrix}
+L_{\text{SC}} \quad = \quad \sum_{\sigma}
+\begin{pmatrix} \cdots & c^{\dagger}_{\boldsymbol{k},\sigma} & \cdots & f^{\dagger}_{\sigma} \end{pmatrix}
+\begin{pmatrix} & & & \\ &(\epsilon_{\boldsymbol{k}} + \partial_{\tau}) \delta_{\boldsymbol{k}, \boldsymbol{k'}} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} + \partial_{\tau}) \end{pmatrix}
+\begin{pmatrix} \vdots \\ c^{\dagger}_{\boldsymbol{k'},\sigma} \\ \vdots \\ f^{\dagger}_{\sigma} \end{pmatrix}
 \quad + \quad \hdots
 \]
 
 \[
-\rightarrow \qquad \sum_{\sigma, n} \quad \ln \det
-\begin{pmatrix} & & & \\ &(\epsilon_{k} - i \omega_{n}) \delta_{k, k'} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} - i \omega_{n}) \end{pmatrix}
+\implies F_{\text{SC}} = - T \sum_{\sigma, n} \ln \det
+\begin{pmatrix} & & & \\ &(\epsilon_{\boldsymbol{k}} - i \omega_{n}) \delta_{\boldsymbol{k}, \boldsymbol{k'}} & & V^{\ast} z^{}_{\sigma} \\ & & & \\ & V z^{\dagger}_{\sigma} & & (\lambda_{\sigma} - i \omega_{n}) \end{pmatrix}
 \quad + \quad \hdots \quad ,
 \]
 
-which involves a summation over Matsubara frequencies $ \omega_{n} $. The mean-field impurity electron contribution to the Helmholtz free energy is therefore
+which involves a summation over Matsubara frequencies $ \omega_{n} $. Note that this is almost identical to the standard Read-Newns expression but with $ V \rightarrow V z^{\dagger}_{\sigma} $. The mean-field impurity electron contribution to the Helmholtz free energy is therefore
 
 \[
-F = - T \sum_{\sigma, n} \ln{\left(- i \omega_{n} + \lambda_{\sigma} + \sum_{k} \frac{z_{\sigma}^{2} |V|^{2}}{i \omega_{n} - \epsilon_{k}}\right)} \quad + \quad \cdots \quad ,
+F = - T \sum_{\sigma, n} \ln{\left(- i \omega_{n} + \lambda_{\sigma} + \sum_{\boldsymbol{k}} \frac{|z_{\sigma}|^{2} |V|^{2}}{i \omega_{n} - \epsilon_{\boldsymbol{k}}}\right)} \quad + \quad \cdots \quad ,
 \]
 
-where $ \cdots $ now includes the conduction electron contribution and all the other constraint terms previously present in the Lagrangian.
+where $ \cdots $ now includes the conduction electron contribution and all the other constraint terms previously present in the Lagrangian. Contour methods give $ \sum_{\boldsymbol{k}} \frac{|z_{\sigma}|^{2} |V|^{2}}{i \omega_{n} - \epsilon_{\boldsymbol{k}}} = - i |z_{\sigma}|^2 \Delta \sgn{\omega_n} $, and so one may reuse the results of p.731 of \cite{ManyBodyPhysics} to rewrite this summation in terms of the gamma function after regulating the summation with the bandwidth $ D $, leading to the free energy of Eq~\eqref{eq:Free_Energy}.
+
+The auxiliary fermion contribution is already bilinear, and so may be integrated out using a standard Matsubara frequency summation:
+
+\[
+L_{\text{h}} = h^{\dagger} \left( \partial_{\tau} - K \lambda_{\text{SC}} \right) h \implies F_{\text{h}} = - T \sum_{n} \ln{\left( - K \lambda_{\text{SC}}  - i \omega_n \right)} = - T \ln{\left( 1 + e^{\beta K \lambda_{\text{SC}}} \right)} ~.
+\]
 
 % Pages 675, 679 & 730 (+ 593 for the sgn(omega) part)
 % All it does is put in V*z instead of V
 
 % Will have to involve some Matsubara frequency stuff
 % Go through the derivation of the Helmholtz free energy for the question, which should be pretty similar to Piers Coleman's result
-% Probably leave this until last because it isn't essential
 
 \section{Further Details of the Mean-Field Equations}
 \label{sec:MF_eq_details}
@@ -72,6 +77,36 @@ The derivatives of $ z^2_{\sigma} $ may be calculated quite easily as:
 \frac{\partial z^2_{\sigma}}{\partial p_{\sigma}} = \left( \frac{p_{\sigma}}{1 - d^2 - p^2_{\sigma}} + \frac{e}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~, \quad \frac{\partial z^2_{\sigma}}{\partial p_{-\sigma}} = \left( \frac{p_{\sigma}}{1 - e^2 - p^2_{\sigma}} + \frac{d}{e p_{\sigma} + p_{- \sigma} d} \right) z^2_{\sigma} ~.
 \end{equation}
 
+The conjugate derivatives are also similar, but assuming the slave bosons to be purely radial as we do in this mean-field theory means that real expressions suffice.
+
+\section{Deriving the Zero-Temperature Heat Capacity}
+\label{sec:heat_capacity}
+
+The remaining derivative may be performed by using the same asymptotic expansion of the first line of
+\begin{align*}
+- \frac{1}{4} \frac{d F_{0}^{\star}}{dT} =& ~ \Re \ln{\widetilde{\Gamma}(i z^2 \Delta + D)} - \Re \ln{\widetilde{\Gamma}(i z^2 \Delta)} - \Re{\left[ \frac{D}{2 \pi i T} ~ \widetilde{\psi}(i z^2 \Delta + D) \right]} \\
+& + \frac{z^2}{2 \pi} \left( \frac{d \Delta}{d T} - \frac{\Delta}{T} \right) \Re{\left[ \widetilde{\psi}(i z^2 \Delta + D) - \widetilde{\psi}(i z^2 \Delta) \right]}~,
+\end{align*}
+where the second line has an exact expression from the mean-field equations Eq~\eqref{eq:MF_delta} and Eq~\eqref{eq:real_derivative}. These come out to be:
+\begin{align*}
+\ln{\widetilde{\Gamma}(i z^2 \Delta + D)} \quad \approx& \quad \frac{1}{2} \ln{2 \pi} - \frac{1}{2} + \left(\frac{z^2 \Delta}{2 \pi T} + \frac{D}{2 \pi i T}\right) \left[ \ln{\frac{D}{2 \pi i T}} + \ln{\left( 1 + \frac{\pi i T}{D} + \frac{i z^2}{D} \right)} - 1 \right]\\
+& \quad + \frac{\pi i T}{6 D} \left[ 1 + \frac{\pi i T}{D} + \frac{i z^2 \Delta}{D} \right]^{-1} + \ldots ~,
+\end{align*}
+\begin{equation*}
+\ln{\widetilde{\Gamma}(i z^2 \Delta)} \approx \frac{1}{2} \ln{2 \pi} - \frac{1}{2} + \left(\frac{z^2 \Delta}{2 \pi T}\right) \left[ \ln{\frac{z^2 \Delta}{2 \pi T}} + \ln{\left( 1 + \frac{\pi T}{z^2 \Delta} \right)} - 1 \right]+ \frac{\pi T}{6 z^2 \Delta} \left[ 1 + \frac{\pi T}{z^2 \Delta} \right]^{-1} + \ldots ~,
+\end{equation*}
+\begin{align*}
+\frac{D}{2 \pi i T} \widetilde{\psi}(i z^2 \Delta + D) \quad \approx& \quad \frac{D}{2 \pi i T} \ln{\frac{D}{2 \pi i T}} + \frac{D}{2 \pi i T}
+ \ln{\left( 1 + \frac{\pi i T}{D} + \frac{i z^2 \Delta}{D} \right)} \\
+ & \quad - \frac{1}{2} \left( 1 + \frac{\pi i T}{D} + \frac{i z^2 \Delta}{D} \right)^{-1} - \frac{\pi i T}{6 D} \left( 1 + \frac{\pi i T}{D} + \frac{i z^2 \Delta}{D} \right)^{-2} + \ldots ~.
+ \end{align*}
+
+Taking real parts and ignoring terms that are $ \mathcal{O} (T^2) $ and $ \mathcal{O} \left( \frac{1}{D^2} \right) $, this leads to
+\begin{equation}
+- \frac{1}{4} \frac{d F_{0}^{\star}}{dT} = - \frac{\pi}{6} \frac{T}{z^2 \Delta} + \frac{1}{2 \pi J \rho} \frac{d \Delta}{d T} + \ldots ~,
+\end{equation}
+which, incidentally, shows that we did not originally need to calculate the zero temperature limit of $ \frac{d \Delta}{d T} $ because it cancels with this contribution. 
+
 \section{Impossibility of Asymptotically Approaching $ \Delta = 0 $}
 
 Even without making the large bandwidth approximation (which itself is a very good approximation for $ \rho J \approx 0.2 $), the mean-field condition
@@ -83,10 +118,34 @@ is incompatible with a limit in which $ \Delta \rightarrow 0 $ as $ T \rightarro
 % Probably remove this bad appendix
 
 \section{Obtaining $ K(T) $ from $ \kappa(T) $}
+\label{sec:kappa_K_relation}
+
+We would like to know how to choose a $ K(T) $, given that we have a functional form of $ \kappa(T) $ in mind which also determines $ \lambda_{\text{SC}} = \lambda_{\text{SC}}\left( \kappa(T),~ T\right)$.
+
+By Eq~\eqref{eq:kappa_temp}, obtaining a closed form solution for $ K(T) $ (through rearranging) is not in general possible, but a solution can be approached through the following infinite expression:
+\begin{equation}
+K = \kappa  \left( 1 + \exp{\left( - \beta \lambda_{\text{SC}} \kappa \left( 1 + \exp{\left( - \beta \lambda_{\text{SC}} \kappa \left( 1 + \ldots \right) \right)} \right) \right)} \right).
+\end{equation}
 
 \section{Relating $ \frac{d^2 F}{d T^2} $ to $ \frac{d \Delta}{d T} $}
+\label{sec:discontinuity}
 
-% Show the derivative of F^{\star} and why 
+The presence of the gamma function in the free energy means that an expression for the heat capacity $ C = - T \frac{d^2 F}{d T^2} $ will involve the derivative of the inverse digamma function and other such terms which are not expressible as elementary functions. (Not that these are numerically very challenging.) In this section, we seek to demonstrate that the assertion $ \frac{d \Delta}{d T} = 0 \implies \frac{d^2 F}{d T^2} = 0 $ indeed holds as $ \Delta \rightarrow 0 $.
+
+Taking a further derivative of $ F^{\star}_0 $, and allowing for the temperature dependence of $ z^2(T) $, one obtains:
+\begin{align*}
+\frac{d^2 F^{\star}_0}{d T^2} + \frac{2}{\pi J \rho}\frac{d^2 \Delta}{dT^2} =& - \frac{2}{\pi \rho J z^2} \left[ \Delta \frac{d^2 z^2}{dT^2} + \frac{d \Delta}{dT} \frac{z^2}{d T} \right] + \frac{2z^2}{\pi T} \frac{d\Delta}{dT} + \frac{2 \Delta}{\pi T} \frac{dz^2}{dT}\\
+& + \frac{2 \Delta}{\pi \rho J z^4} \left( \frac{dz^2}{dT} \right)^2 - \frac{2 \Delta}{\pi T \rho J z^2} \frac{dz^2}{dT} ~.
+\end{align*}
+From this expression it is clear that the right hand side will vanish if we make $ \frac{d \Delta}{dT} = 0 $ as $ \Delta = 0 $, thus this contribution to the free energy will be continuous in its second-derivative.
+
+It now remains to check that this conclusion will also hold for the auxiliary system's contribution to the free energy $ F^{\star}_{\text{h}} $. This will require the observation that $ \frac{d \Delta}{dT} = 0 $ and $ \Delta = 0 $ together necessarily imply that $ \frac{d \lambda_{\text{SC}}}{dT} = 0 $ and $ \lambda_{\text{SC}} = 0 $, which follows from Eq~\eqref{eq:soln_lambda_SC}. Taking the first derivative of gives:
+\begin{equation}
+\frac{dF^{\star}_{\text{h}}}{dT} = \frac{d \kappa}{dT} \lambda_{\text{SC}} - \ln{\left( 1 + e^{\beta K \lambda_{\text{SC}}} \right)} - \frac{T \lambda_{\text{SC}}}{1 + e^{- \beta K \lambda_{\text{SC}}}} \frac{d \left[\beta K\right]}{dT} ~ .
+\end{equation}
+Without explicitly taking a further derivative, it can be seen through the product rule that each term in $ \frac{d^2 F^{\star}_{\text{h}}}{dT^2} $ will have either $ \lambda_{\text{SC}} $ or $ \frac{d \lambda_{\text{SC}}}{d T} $ as a factor, both of which we have said vanish at the transition. 
+
+We have therefore shown that $ \frac{d \Delta}{dT}\bigr|_{T=T_c} = 0 $ is a sufficient condition for $ \frac{d^2 F^{\star}}{d T^2} $ to be continuous at the transition. (This may seem like a trivial statement, but relied on some non-obvious cancellation of certain terms.)
 
 \section{Code Excerpts}
 \label{sec:code}
@@ -98,8 +157,13 @@ This section contains code used to plot figures in this report. Code for the ent
 \texttt{https://github.com/ElisR/Kondo-Soft-Constraint}
 \end{center}
 
-\subsection{Solving the Equations in Parametric Form}
+\subsection{Solving and Plotting the Equations in Parametric Form}
 \pythoncode{../Code/New_Term_Parametric.py}
-
-\subsection{Plotting $ \Delta $ Parametrically}
 \pythoncode{../Code/Plot_Parametric.py}
+
+\subsection{Plotting the Smoothed $ \Delta(T) $}
+\pythoncode{../Code/Influence_of_Extra_Term.py}
+
+\subsection{Generating the New Phase Boundary}
+\pythoncode{../Code/New_Phase_Boundary.py}
+\pythoncode{../Code/Plot_Phase_Boundary.py}
