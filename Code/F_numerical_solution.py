@@ -9,6 +9,7 @@ import scipy.special as special
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.cm as cmx
+from matplotlib.widgets import Slider
 
 # Going to be varying Delta and lambda_SC at a fixed temperature
 
@@ -52,35 +53,74 @@ def plot_F_vs_Delta_and_lambda():
     """
 
     fig = plt.figure()
-    #ax = fig.gca(projection='3d')
-    ax = fig.gca()
+    fig.canvas.set_window_title('F vs Delta and Lambda')
+    ax = fig.gca(projection='3d')
 
-    plt.rc('text', usetex=True)
-
-    T = 0.37
+    T = 0.6
 
     Deltas = np.linspace(0.001, 2, 40)
-    lambdas = np.linspace(0.01, 10, 40)
+    lambdas = np.linspace(0.01, 12, 60)
 
     Deltas_mesh, lambdas_mesh = np.meshgrid(Deltas, lambdas)
     Fs = F_star(Deltas_mesh, lambdas_mesh, T)
 
-    #surf = ax.plot_surface(Deltas_mesh, lambdas_mesh, Fs, cmap=cmx.coolwarm,
-    #                       linewidth=0, antialiased=False)
+    surf = ax.plot_surface(Deltas_mesh, lambdas_mesh, Fs, cmap=cmx.Spectral,
+                           linewidth=0, antialiased=False)
 
-    MF_Deltas = np.zeros(np.size(lambdas))
-    F_line = np.zeros(np.size(lambdas))
-    for i in range(np.size(lambdas)):
-        lambda_SC = lambdas[i]
-        Delta = MF_Delta(lambda_SC, T)
-        MF_Deltas[i] = Delta
-        F_line[i] = F_star(Delta, lambda_SC, T)
+    MF_Deltas = MF_Delta(lambdas, T)
+    F_line = F_star(MF_Deltas, lambdas, T)
 
-    ax.plot(MF_Deltas, F_line, "k-")
+    plt.plot(MF_Deltas, lambdas, F_line, "k-")
+
+    ax.set_xlabel(r'$ \Delta $', fontsize=16)
+    ax.set_ylabel(r'$ \lambda_{SC} $', fontsize=16)
+    ax.set_zlabel(r'$ F(\Delta, \lambda_{SC}) $', fontsize=16)
+    plt.title("T = " + f'{T:.2f}', fontsize=24)
+
+    plt.show()
+
+def plot_F_vs_Delta():
+    """
+    Making a 2D surface plot of F against the free parameters, Delta and lambda
+    """
+
+    fig = plt.figure()
+    fig.canvas.set_window_title('F vs Delta')
+
+    plot_ax = plt.axes([0.1, 0.2, 0.8, 0.65])
+    T_ax = plt.axes([0.1, 0.05, 0.8, 0.05])
+
+    T0 = 0.37
+
+    Deltas = np.linspace(0.001, 2, 40)
+    lambdas = np.linspace(0.01, 9, 40)
+
+    MF_Deltas = MF_Delta(lambdas, T0)
+    F_line = F_star(MF_Deltas, lambdas, T0)
+
+    plt.axes(plot_ax)
+    l, = plt.plot(MF_Deltas, F_line, "k-")
+    plot_ax.set_xlim([0, 1.3])
 
     plt.xlabel(r'$ \Delta $', fontsize=20)
-    plt.ylabel(r'$ \lambda $', fontsize=20)
-    plt.title("T = " + str(T), fontsize=24)
+    plt.ylabel(r'$ F(\Delta) $', fontsize=20)
+    plt.title("T = " + f'{T0:.2f}', fontsize=24)
+
+    T_slider = Slider(T_ax, 'T', 0.01, 1.0, valinit=T0, color='grey')
+
+    def update(val):
+        T = T_slider.val
+        MF_Deltas = MF_Delta(lambdas, T)
+        F_line = F_star(MF_Deltas, lambdas, T)
+        l.set_ydata(F_line)
+        l.set_xdata(MF_Deltas)
+
+        plot_ax.set_ylim([np.min(F_line) - 0.01, np.max(F_line) + 0.01])
+
+        plt.title("T = " + f'{T:.2f}', fontsize=24)
+        fig.canvas.draw_idle()
+
+    T_slider.on_changed(update)
 
     plt.show()
 
